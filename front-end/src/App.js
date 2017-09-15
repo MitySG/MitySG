@@ -7,7 +7,7 @@ import createHistory from 'history/createBrowserHistory';
 
 import MainApp from './components/App';
 import reducer from './components/reducer';
-import { getBuses } from './actions';
+import { getBuses, getBusStops } from './actions';
 
 const middleware = [thunk, routerMiddleware(createHistory())];
 const store = createStore(
@@ -16,6 +16,7 @@ const store = createStore(
 );
 
 store.dispatch(getBuses);
+store.dispatch(getBusStops);
 
 function App() {
   return (

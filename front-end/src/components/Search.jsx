@@ -7,11 +7,13 @@ class Search extends React.Component {
     busFilter: '',
   }
   render() {
+    console.log('bus', this.props.buses, this.props.busStops);
     const list = this.props.buses
       .filter(bus => !this.state.busFilter ||
         this.state.busFilter.trim().toLowerCase() === bus.busNumber.toLowerCase())
       .reduce((list, bus) => list.concat(bus.route), [])
-      .filter(busStop => busStop.toLowerCase().includes(this.state.searchValue.trim().toLowerCase()));
+      .map(busStopCode => ({ ...this.props.busStops[busStopCode], code: busStopCode }))
+      .filter(busStop => (busStop.description || '').toLowerCase().includes(this.state.searchValue.trim().toLowerCase()));
     return (
       <div >
         <input

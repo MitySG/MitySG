@@ -1,0 +1,38 @@
+{
+  "01012": {
+    "roadName": "Victoria rd",
+    "description": "Hotel Grand Pacific",
+    "latitude": 1.232,
+    "longitude": 2.512
+  },
+  "01015": {
+    "roadName": "Victoria rd",
+    "description": "Com center",
+    "latitude": 1.2352,
+    "longitude": 2.5152
+  },
+  "12352": {
+    "roadName": "Victoria rd",
+    "description": "Com2",
+    "latitude": 1.2352,
+    "longitude": 2.5152
+  },
+  "11012": {
+    "roadName": "Victoria rd",
+    "description": "CLB",
+    "latitude": 1.232,
+    "longitude": 2.512
+  },
+  "31015": {
+    "roadName": "Victoria rd",
+    "description": "Clementi",
+    "latitude": 1.2352,
+    "longitude": 2.5152
+  },
+  "52352": {
+    "roadName": "Victoria rd",
+    "description": "FASS",
+    "latitude": 1.2352,
+    "longitude": 2.5152
+  }
+}

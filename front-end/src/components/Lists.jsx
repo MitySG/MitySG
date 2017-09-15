@@ -5,10 +5,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const Lists = ({ list }) => (
   <MuiThemeProvider >
     <List>
-      {list.map(item => (
+      {list.map(bus => (
         <ListItem
-          key={item}
-          primaryText={item}
+          key={bus.code}
+          primaryText={bus.description}
         />
       ))}
     </List>

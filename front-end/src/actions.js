@@ -8,3 +8,12 @@ export const getBuses = (dispatch) => {
     });
   });
 };
+
+export const getBusStops = (dispatch) => {
+  api.getBusStops().then((busStops) => {
+    dispatch({
+      type: 'RECEIEVE_BUS_STOPS',
+      busStops,
+    });
+  });
+};
