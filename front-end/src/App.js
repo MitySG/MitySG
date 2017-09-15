@@ -1,10 +1,21 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import MainApp from './components/App';
-import reducer from './reducers';
+import thunk from 'redux-thunk';
+import { routerMiddleware } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 
-const store = createStore(reducer);
+import MainApp from './components/App';
+import reducer from './components/reducer';
+import { getBuses } from './actions';
+
+const middleware = [thunk, routerMiddleware(createHistory())];
+const store = createStore(
+  reducer,
+  applyMiddleware(...middleware),
+);
+
+store.dispatch(getBuses);
 
 function App() {
   return (

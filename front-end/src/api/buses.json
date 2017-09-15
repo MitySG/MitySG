@@ -1,0 +1,10 @@
+[
+  {
+    "busNumber": 96,
+    "route": ["Clementi mrt", "CLB", "FASS"]
+  },
+  {
+    "busNumber": 95,
+    "route": ["Stop 1", "CompCenter", "Stop2"]
+  }
+]
