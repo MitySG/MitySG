@@ -17,3 +17,7 @@ yarn-error.log*
 
 .idea/
 *.bak
+
+# service-worker
+main.js
+config.js
