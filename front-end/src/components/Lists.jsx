@@ -9,6 +9,7 @@ const Lists = ({ list }) => (
         <ListItem
           key={bus.code}
           primaryText={bus.description}
+          secondaryText={bus.code}
         />
       ))}
     </List>
