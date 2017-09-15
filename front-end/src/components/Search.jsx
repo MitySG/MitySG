@@ -7,7 +7,6 @@ class Search extends React.Component {
     busFilter: '',
   }
   render() {
-    console.log(this.state.busFilter, this.state.busFilter.trim());
     const list = this.props.buses
       .filter(bus => !this.state.busFilter ||
         this.state.busFilter.trim().toLowerCase() === bus.busNumber.toLowerCase())
@@ -25,7 +24,8 @@ class Search extends React.Component {
           placeholder="Filter by bus number"
           onChange={e => this.setState({ busFilter: e.target.value })}
         />
-        <Lists list={list} />
+        {list.length === 0 ? <div>No results</div> : <Lists list={list} />}
+
       </div>
     );
   }
