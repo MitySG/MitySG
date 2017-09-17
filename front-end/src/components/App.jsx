@@ -13,7 +13,7 @@ const styles = {
   },
 };
 
-export default class TabsExampleSwipeable extends React.Component {
+export default class App extends React.Component {
 
   constructor(props) {
     super(props);

@@ -1,9 +1,13 @@
 import React from 'react';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+
 import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
+
+import { persistStore, autoRehydrate } from 'redux-persist';
+
 
 import MainApp from './components/App';
 import reducer from './components/reducer';
@@ -12,8 +16,13 @@ import { getBuses, getBusStops } from './actions';
 const middleware = [thunk, routerMiddleware(createHistory())];
 const store = createStore(
   reducer,
-  applyMiddleware(...middleware),
+  compose(
+    applyMiddleware(...middleware),
+    autoRehydrate(),
+  ),
 );
+
+persistStore(store);
 
 store.dispatch(getBuses);
 store.dispatch(getBusStops);
