@@ -17,3 +17,10 @@ export const getBusStops = (dispatch) => {
     });
   });
 };
+
+export const addToFavourites = ({ bus, start, end }) => ({
+  type: 'ADD_TO_FAVOURITES',
+  bus,
+  start,
+  end,
+});

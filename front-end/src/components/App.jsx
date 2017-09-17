@@ -5,6 +5,7 @@ import SwipeableViews from 'react-swipeable-views';
 import FontIcon from 'material-ui/FontIcon';
 
 import Search from './SearchContainer';
+import Favourites from './favourites/FavouritesContainer';
 
 const styles = {
   slide: {
@@ -48,7 +49,7 @@ export default class TabsExampleSwipeable extends React.Component {
               <Search />
             </div>
             <div style={styles.slide}>
-              Favourites
+              <Favourites />
             </div>
           </SwipeableViews>
         </div>

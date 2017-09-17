@@ -10,8 +10,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 class Search extends React.Component {
   state = {
     selectedBus: '96',
-    selectedStart: undefined,
-    selectedEnd: undefined,
+    selectedStart: '01012',
+    selectedEnd: '01015',
     timeTillArrival: 'Start',
   }
   render() {
@@ -19,7 +19,7 @@ class Search extends React.Component {
       .map((code) => {
         const description = (this.props.busStops[code] || {}).description;
         return {
-          value: description,
+          value: code,
           label: description,
         };
       });
@@ -80,6 +80,11 @@ class Search extends React.Component {
 
         <RaisedButton
           label="Add to favourites"
+          onClick={() => this.props.addToFavourites({
+            bus: this.state.selectedBus,
+            start: this.state.selectedStart,
+            end: this.state.selectedEnd,
+          })}
         />
 
         <div>
