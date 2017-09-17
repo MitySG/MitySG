@@ -15,14 +15,13 @@ class Search extends React.Component {
     timeTillArrival: 'Start',
   }
   render() {
-    const busStopOptions = (this.props.buses[this.state.selectedBus] || [])
-      .map((code) => {
-        const description = (this.props.busStops[code] || {}).description;
-        return {
-          value: code,
-          label: description,
-        };
-      });
+    const busStopOptions = (this.props.buses[this.state.selectedBus] || []).map((code) => {
+      const description = (this.props.busStops[code] || {}).description;
+      return {
+        value: code,
+        label: description,
+      };
+    });
     return (
       <div className="Search">
         <div className="busSearch">
@@ -31,7 +30,15 @@ class Search extends React.Component {
             className="busSelect"
             clearable={false}
             value={this.state.selectedBus}
-            onChange={selectedBus => this.setState({ selectedBus: selectedBus.value })}
+            onChange={(selectedBus) => {
+              const busStops = this.props.buses[selectedBus.value];
+              this.setState({
+                selectedBus: selectedBus.value,
+                selectedStart: busStops[0],
+                selectedEnd: busStops[busStops.length - 1],
+              });
+            }
+            }
             options={Object.keys(this.props.buses).map(bus => ({
               value: bus,
               label: bus,
