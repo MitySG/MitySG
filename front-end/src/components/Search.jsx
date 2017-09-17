@@ -3,6 +3,10 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import './Search.css';
 
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 class Search extends React.Component {
   state = {
     selectedBus: '96',
@@ -53,6 +57,19 @@ class Search extends React.Component {
             options={busStopOptions}
           />
         </div>
+
+
+        <MuiThemeProvider >
+          <SelectField
+            floatingLabelText="Bus"
+            value={this.state.selectedBus}
+            onChange={selectedBus => this.setState({ selectedBus })}
+          >
+            <MenuItem value={1} primaryText="96" />
+            <MenuItem value={2} primaryText="95" />
+          </SelectField>
+        </MuiThemeProvider >
+
       </div>
     );
   }
