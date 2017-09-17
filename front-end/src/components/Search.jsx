@@ -80,6 +80,10 @@ class Search extends React.Component {
             onClick={() => this.setState({ timeTillArrival: 'Bus arriving in 5min...' })}
           />
 
+          <RaisedButton
+            label="Add to favourites"
+          />
+
           <div>
             <SelectField
               floatingLabelText="Bus"
