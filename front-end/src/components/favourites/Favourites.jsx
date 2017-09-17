@@ -10,7 +10,9 @@ const Favourites = ({ favourites, busStops }) => (
         key={favourite}
         primaryText={favourite.bus}
         secondaryText={`${busStops[favourite.start].description} => ${busStops[favourite.end].description}`}
-        rightIconButton={<Button><FontIcon className="material-icons">bus</FontIcon></Button>}
+        rightIconButton={<Button label="Start">
+          <FontIcon className="material-icons">directions_bus</FontIcon>
+        </Button>}
       />
       ))}
   </List>
