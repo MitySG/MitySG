@@ -6,6 +6,8 @@ const favourites = (state = [], action) => {
         ...state,
         { bus: action.bus, start: action.start, end: action.end },
       ];
+    case 'REMOVE_FROM_FAVOURITES':
+      return state.filter(favourite => JSON.stringify(favourite) !== action.favouriteStringified);
     default:
       return state;
   }

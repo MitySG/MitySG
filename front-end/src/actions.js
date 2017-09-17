@@ -24,3 +24,8 @@ export const addToFavourites = ({ bus, start, end }) => ({
   start,
   end,
 });
+
+export const removeFromFavourites = favouriteStringified => ({
+  type: 'REMOVE_FROM_FAVOURITES',
+  favouriteStringified,
+});
