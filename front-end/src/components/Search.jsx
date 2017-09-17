@@ -6,12 +6,14 @@ import './Search.css';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Search extends React.Component {
   state = {
     selectedBus: '96',
     selectedStart: undefined,
     selectedEnd: undefined,
+    timeTillArrival: 'Start',
   }
   render() {
     const busStopOptions = (this.props.buses[this.state.selectedBus] || [])
@@ -23,8 +25,9 @@ class Search extends React.Component {
         };
       });
     return (
-      <div className="Search">
-        <div className="busSearch">
+      <MuiThemeProvider >
+        <div className="Search">
+          <div className="busSearch">
           Bus
           <Select
             className="busSelect"
@@ -36,8 +39,8 @@ class Search extends React.Component {
               label: bus,
             }))}
           />
-        </div>
-        <div className="busSearch">
+          </div>
+          <div className="busSearch">
           Start
           <Select
             className="busSelect"
@@ -46,8 +49,8 @@ class Search extends React.Component {
             onChange={selectedStart => this.setState({ selectedStart: selectedStart.value })}
             options={busStopOptions}
           />
-        </div>
-        <div className="busSearch">
+          </div>
+          <div className="busSearch">
           Stop
           <Select
             className="busSelect"
@@ -56,21 +59,41 @@ class Search extends React.Component {
             onChange={selectedEnd => this.setState({ selectedEnd: selectedEnd.value })}
             options={busStopOptions}
           />
+          </div>
+
+
+          <div>
+            <SelectField
+              floatingLabelText="How long before arrival to notify?"
+              value={1}
+            >
+              <MenuItem value={1} primaryText="2min" />
+              <MenuItem value={2} primaryText="5min" />
+              <MenuItem value={3} primaryText="10min" />
+            </SelectField>
+          </div>
+
+          <RaisedButton
+            label={this.state.timeTillArrival}
+            className="startButton"
+            primary
+            onClick={() => this.setState({ timeTillArrival: 'Bus arriving in 5min...' })}
+          />
+
+          <div>
+            <SelectField
+              floatingLabelText="Bus"
+              value={1}
+              onChange={selectedBus => this.setState({ selectedBus })}
+            >
+              <MenuItem value={1} primaryText="96" />
+              <MenuItem value={2} primaryText="95" />
+            </SelectField>
+          </div>
+
         </div>
+      </MuiThemeProvider >
 
-
-        <MuiThemeProvider >
-          <SelectField
-            floatingLabelText="Bus"
-            value={this.state.selectedBus}
-            onChange={selectedBus => this.setState({ selectedBus })}
-          >
-            <MenuItem value={1} primaryText="96" />
-            <MenuItem value={2} primaryText="95" />
-          </SelectField>
-        </MuiThemeProvider >
-
-      </div>
     );
   }
 }
