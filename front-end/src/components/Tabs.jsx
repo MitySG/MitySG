@@ -39,6 +39,11 @@ export default class App extends React.Component {
               label="Favourites"
               value={2}
             />
+            <Tab
+              icon={<FontIcon className="material-icons">settings</FontIcon>}
+              label="Settings"
+              value={3}
+            />
           </Tabs>
           <SwipeableViews
             index={this.props.slideIndex}
@@ -52,6 +57,9 @@ export default class App extends React.Component {
             </div>
             <div style={styles.slide}>
               <Favourites />
+            </div>
+            <div style={styles.slide}>
+              Settings
             </div>
           </SwipeableViews>
         </div>
