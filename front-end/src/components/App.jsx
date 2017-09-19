@@ -6,6 +6,7 @@ import FontIcon from 'material-ui/FontIcon';
 
 import Search from './SearchContainer';
 import Favourites from './favourites/FavouritesContainer';
+import Journey from './journey/JourneyContainer';
 
 const styles = {
   slide: {
@@ -36,9 +37,14 @@ export default class App extends React.Component {
               value={0}
             />
             <Tab
+              icon={<FontIcon className="material-icons">location_on</FontIcon>}
+              label="Journey"
+              value={1}
+            />
+            <Tab
               icon={<FontIcon className="material-icons">favorite</FontIcon>}
               label="Favourites"
-              value={1}
+              value={2}
             />
           </Tabs>
           <SwipeableViews
@@ -47,6 +53,9 @@ export default class App extends React.Component {
           >
             <div style={styles.slide}>
               <Search />
+            </div>
+            <div style={styles.slide}>
+              <Journey />
             </div>
             <div style={styles.slide}>
               <Favourites />
