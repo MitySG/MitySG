@@ -16,20 +16,13 @@ const styles = {
 
 export default class App extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      slideIndex: 0,
-    };
-  }
-
   render() {
     return (
       <MuiThemeProvider>
         <div>
           <Tabs
-            value={this.state.slideIndex}
-            onChange={slideIndex => this.setState({ slideIndex })}
+            value={this.props.slideIndex}
+            onChange={this.props.setSlideIndex}
           >
             <Tab
               icon={<FontIcon className="material-icons">search</FontIcon>}
@@ -48,8 +41,8 @@ export default class App extends React.Component {
             />
           </Tabs>
           <SwipeableViews
-            index={this.state.slideIndex}
-            onChangeIndex={this.handleChange}
+            index={this.props.slideIndex}
+            onChangeIndex={this.props.setSlideIndex}
           >
             <div style={styles.slide}>
               <Search />

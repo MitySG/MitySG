@@ -9,7 +9,7 @@ import createHistory from 'history/createBrowserHistory';
 import { persistStore, autoRehydrate } from 'redux-persist';
 
 
-import MainApp from './components/App';
+import Tabs from './components/TabsContainer';
 import reducer from './components/reducer';
 import { getBuses, getBusStops } from './actions';
 
@@ -30,7 +30,7 @@ store.dispatch(getBusStops);
 function App() {
   return (
     <Provider store={store}>
-      <MainApp />
+      <Tabs />
     </Provider>
   );
 }

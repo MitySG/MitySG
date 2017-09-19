@@ -29,3 +29,8 @@ export const removeFromFavourites = favouriteStringified => ({
   type: 'REMOVE_FROM_FAVOURITES',
   favouriteStringified,
 });
+
+export const setSlideIndex = slideIndex => ({
+  type: 'SET_SLIDE_INDEX',
+  slideIndex,
+});
