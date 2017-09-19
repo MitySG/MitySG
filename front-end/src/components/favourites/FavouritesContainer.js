@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Favourites from './Favourites';
-import { removeFromFavourites } from '../../actions';
+import { removeFromFavourites, setCurrentTrip, setSlideIndex } from '../../actions';
 
 const mapStateToProps = state => ({
   favourites: state.favourites,
@@ -9,5 +9,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { removeFromFavourites },
+  { removeFromFavourites, setCurrentTrip, setSlideIndex },
 )(Favourites);

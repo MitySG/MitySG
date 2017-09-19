@@ -3,7 +3,7 @@ import { List, ListItem } from 'material-ui/List';
 import Button from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
 
-const Favourites = ({ favourites, busStops, removeFromFavourites }) => (
+const Favourites = ({ favourites, busStops, removeFromFavourites, setCurrentTrip, setSlideIndex }) => (
   <List>
     {favourites.map((favourite) => {
       const favouriteStringified = JSON.stringify(favourite);
@@ -12,9 +12,17 @@ const Favourites = ({ favourites, busStops, removeFromFavourites }) => (
           key={favouriteStringified}
           primaryText={favourite.bus}
           secondaryText={`${busStops[favourite.start].description} => ${busStops[favourite.end].description}`}
-          rightIconButton={<Button label="Start">
-            <FontIcon className="material-icons">directions_bus</FontIcon>
-          </Button>}
+          rightIconButton={
+            <Button
+              label="Start"
+              onClick={() => {
+                setCurrentTrip(favourite);
+                setSlideIndex(1);
+              }}
+            >
+              <FontIcon className="material-icons">directions_bus</FontIcon>
+            </Button>
+          }
           leftIcon={
             <FontIcon
               className="material-icons"
