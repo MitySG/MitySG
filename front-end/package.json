@@ -6,6 +6,7 @@
     "bootstrap": "^3.3.7",
     "history": "^4.7.2",
     "material-ui": "^0.19.1",
+    "mitt": "^1.1.2",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.2",
     "react-dom": "^15.6.1",
@@ -17,7 +18,8 @@
     "react-swipeable-views": "^0.12.8",
     "redux": "^3.7.2",
     "redux-persist": "^4.9.1",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "web-push": "^3.2.3"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
