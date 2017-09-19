@@ -82,7 +82,15 @@ class Search extends React.Component {
           label={this.state.timeTillArrival}
           className="startButton"
           primary
-          onClick={() => this.setState({ timeTillArrival: 'Bus arriving in 5min...' })}
+          onClick={() => {
+            this.setState({ timeTillArrival: 'Bus arriving in 5min...' });
+            this.props.setSlideIndex(1);
+            this.props.setCurrentTrip({
+              bus: this.state.selectedBus,
+              start: this.state.selectedStart,
+              end: this.state.selectedEnd,
+            });
+          }}
         />
 
         <RaisedButton

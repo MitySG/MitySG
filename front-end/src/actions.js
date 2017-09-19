@@ -34,3 +34,8 @@ export const setSlideIndex = slideIndex => ({
   type: 'SET_SLIDE_INDEX',
   slideIndex,
 });
+
+export const setCurrentTrip = currentTrip => ({
+  type: 'SET_CURRENT_TRIP',
+  currentTrip,
+});

@@ -4,7 +4,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import FontIcon from 'material-ui/FontIcon';
 
-import Search from './SearchContainer';
+import Search from './search/SearchContainer';
 import Favourites from './favourites/FavouritesContainer';
 import Journey from './journey/JourneyContainer';
 
