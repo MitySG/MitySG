@@ -22,7 +22,7 @@ function sendSubscriptionToServer(subscription) {
   console.log("Subscription Sent")
   console.log(JSON.stringify(subscription.toJSON()));
   xhr.onload = function () {
-    console.log(JSON.parse(this.responseText));
+    console.log(this.responseText);
   };
 }
 
