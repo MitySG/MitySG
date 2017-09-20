@@ -18,6 +18,7 @@ function sendSubscriptionToServer(subscription) {
   const url = "https://huy3vicolc.execute-api.us-east-1.amazonaws.com/dev/subscribe";
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr.send(JSON.stringify(subscription.toJSON()));
   console.log("Subscription Sent")
   console.log(JSON.stringify(subscription.toJSON()));
