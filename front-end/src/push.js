@@ -10,7 +10,7 @@ function buildApplicationServerKey() {
   const base64 = 'BBFNCDSVirGYfrhSp5Q1u-ksUTnn7HMUnigBiZ0dvYdsNjtL4OtlRjuf4Gki55eZohpa-FiWFOvUIVI7UKRucx0';
   const rfc4648 = base64.replace(/-/g, '+').replace(/_/g, '/');
   const characters = atob(rfc4648).split('').map(character => character.charCodeAt(0));
-  console.log("PUBLIC KY");
+  console.log("PUBLIC KEY");
   console.log(base64);
   return new Uint8Array(characters);
 }
@@ -19,13 +19,18 @@ function sendSubscriptionToServer(subscription) {
   // This is where you'd update the subscription on the server.
   document.querySelector('.js-subscription').innerHTML = JSON.stringify(subscription.toJSON());
 
-  const xhr = new XMLHttpRequest();
-  const url = "http://localhost:8000";
+  let xhr = new XMLHttpRequest();
+  // let url = "http://localhost:8000";
+  // let url = "https://zjh5q71uma.execute-api.ap-southeast-1.amazonaws.com/prod/testfunction";
+  let url = "https://huy3vicolc.execute-api.us-east-1.amazonaws.com/dev/subscribe";
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   xhr.send(JSON.stringify(subscription.toJSON()));
   console.log("SENT")
   console.log(JSON.stringify(subscription.toJSON()));
+  xhr.onload = function () {
+    console.log(JSON.parse(this.responseText));
+  };
 }
 
 function removeSubscriptionFromServer(subscription) {
@@ -87,8 +92,7 @@ const initializeState = function () {
 
 const subscribe = function () {
   function permissionDenied() {
-    emitter.emit(ERROR, 'Um Push-Benachrichtigungen zu erhalten, ' +
-      'müssen Sie Benachrichtigungen für diese Website in Ihrem Browser erlauben.');
+    emitter.emit(ERROR, 'Please allow notifications to use our service.');
     unsubscribe();
   }
 
@@ -105,8 +109,8 @@ const subscribe = function () {
         .catch((error) => {
           console.error('Unable to subscribe to messaging server.', error);
           emitter.emit(ERROR,
-            'Bei der Anmeldung am externen Benachrichtigungsdienst ist ein Fehler aufgetreten. ' +
-            'Bitte versuchen Sie es in ein paar Minuten wieder oder wenden sich an Ihren Ansprechpartner.',
+            'An error occurred while logging in to the external notification service. ' +
+            'Please try again in a few minutes.',
           );
         });
     });
@@ -141,8 +145,7 @@ const unsubscribe = function () {
         }).catch((error) => {
           console.error('Unable to unsubscribe to messaging server.', error);
           emitter.emit(ERROR,
-            'Bei der Abmeldung am externen Benachrichtigungsdienst ist ein Fehler aufgetreten. ' +
-            'Sie werden von uns dennoch keine Push-Benachrichtigungen mehr erhalten.',
+            'An error occurred while logging off to the external notification service.'
           );
         });
         removeSubscriptionFromServer();

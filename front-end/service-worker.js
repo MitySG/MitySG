@@ -22,13 +22,13 @@ self.addEventListener('pushsubscriptionchange', (event) => {
   event.waitUntil(
     self.registration.pushManager.subscribe(options)
       .then((subscription) => { // eslint-disable-line no-unused-vars
-        // Send new subscription to application server.
+      // Send new subscription to application server.
       }),
   );
 });
 
 self.addEventListener('notificationclick', (event) => {
-  let url = 'http://localhost:8080/';
+  let url = 'https://mitysg.netlify.com/';
   if (event.notification.data) {
     url = event.notification.data;
   }
