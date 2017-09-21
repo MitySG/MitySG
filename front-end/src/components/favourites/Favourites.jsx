@@ -35,7 +35,7 @@ const Favourites = ({ favourites, busStops, removeFromFavourites, setCurrentTrip
       );
     })}
   </List>
-  );
+);
 
 
 export default Favourites;

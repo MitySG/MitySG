@@ -7,9 +7,9 @@ const Favourites = ({ favourites, busStops, currentTrip }) => (
   <div>
     { !currentTrip ? 'You have not started a journey' :
     <ListItem
-      primaryText={currentTrip.bus}
-      secondaryText={`${busStops[currentTrip.start].description} => ${busStops[currentTrip.end].description}`}
-    />
+        primaryText={currentTrip.bus}
+        secondaryText={`${busStops[currentTrip.start].description} => ${busStops[currentTrip.end].description}`}
+      />
     }
 
     <iframe
