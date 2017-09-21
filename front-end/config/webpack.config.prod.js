@@ -316,7 +316,6 @@ module.exports = {
     //   staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     // }),
     new SWPrecacheWebpackPlugin({
-      //...
       importScripts: paths.sWPrecacheImportScript ? [paths.sWPrecacheImportScript] : undefined,
     }),
     // Moment.js is an extremely popular library that bundles large locale files

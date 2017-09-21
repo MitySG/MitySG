@@ -5,7 +5,7 @@ self.addEventListener('push', (event) => {
     const title = data.title;
     const options = {
       body: data.body,
-      icon: data.icon || './public/favicon.ico',
+      icon: data.icon || './favicon.ico',
       tag: data.tag || 'default',
       data: data.url,
     };

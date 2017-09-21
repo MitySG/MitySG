@@ -6,17 +6,6 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import push from './push';
 
-const rootEl = document.getElementById('root');
-ReactDOM.render(<App />, rootEl);
+ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
 push.subscribe();
-
-if (module.hot) {
-  module.hot.accept('./App', () => {
-    const NextApp = require('./App').default;
-    ReactDOM.render(
-      <NextApp />,
-      rootEl,
-    );
-  });
-}
