@@ -22,6 +22,10 @@ function ensureSlash(path, needsSlash) {
   }
 }
 
+const sWPrecacheImportScript = fs.existsSync(resolveApp('public/service-worker-import.js')) ?
+  'service-worker-import.js' : undefined;
+
+
 const getPublicUrl = appPackageJson =>
   envPublicUrl || require(appPackageJson).homepage;
 
@@ -52,4 +56,5 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  sWPrecacheImportScript,
 };
