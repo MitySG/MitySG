@@ -9,19 +9,24 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 class Search extends React.Component {
   state = {
-    selectedBus: '96',
-    selectedStart: '01012',
-    selectedEnd: '01015',
+    selectedBus: null,
+    selectedStart: null,
+    selectedEnd: null,
     timeTillArrival: 'Start',
   }
+
   render() {
-    const busStopOptions = (this.props.buses[this.state.selectedBus] || []).map((code) => {
+    const defaultBus = Object.keys(this.props.buses)[0];
+    const defaultRoute = this.props.buses[defaultBus] || [];
+
+    const busStopOptions = (this.props.buses[this.state.selectedBus] || defaultRoute).map((code) => {
       const description = (this.props.busStops[code] || {}).description;
       return {
         value: code,
         label: description,
       };
     });
+
     return (
       <div className="Search">
         <div className="busSearch">
@@ -29,7 +34,7 @@ class Search extends React.Component {
           <Select
             className="busSelect"
             clearable={false}
-            value={this.state.selectedBus}
+            value={this.state.selectedBus || defaultBus}
             onChange={(selectedBus) => {
               const busStops = this.props.buses[selectedBus.value];
               this.setState({
@@ -50,7 +55,7 @@ class Search extends React.Component {
           <Select
             className="busSelect"
             clearable={false}
-            value={this.state.selectedStart}
+            value={this.state.selectedStart || defaultRoute[0]}
             onChange={selectedStart => this.setState({ selectedStart: selectedStart.value })}
             options={busStopOptions}
           />
@@ -60,7 +65,7 @@ class Search extends React.Component {
           <Select
             className="busSelect"
             clearable={false}
-            value={this.state.selectedEnd}
+            value={this.state.selectedEnd || defaultRoute[defaultRoute.length - 1]}
             onChange={selectedEnd => this.setState({ selectedEnd: selectedEnd.value })}
             options={busStopOptions}
           />
