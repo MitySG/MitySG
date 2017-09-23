@@ -106,17 +106,6 @@ class Search extends React.Component {
             end: this.state.selectedEnd || defaultRoute[defaultRoute.length - 1],
           })}
         />
-
-        <div>
-          <SelectField
-            floatingLabelText="Bus"
-            value={1}
-            onChange={selectedBus => this.setState({ selectedBus })}
-          >
-            <MenuItem value={1} primaryText="96" />
-            <MenuItem value={2} primaryText="95" />
-          </SelectField>
-        </div>
       </div>
     );
   }
