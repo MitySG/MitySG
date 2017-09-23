@@ -91,9 +91,9 @@ class Search extends React.Component {
             this.setState({ timeTillArrival: 'Bus arriving in 5min...' });
             this.props.setSlideIndex(1);
             this.props.setCurrentTrip({
-              bus: this.state.selectedBus,
-              start: this.state.selectedStart,
-              end: this.state.selectedEnd,
+              bus: this.state.selectedBus || defaultBus,
+              start: this.state.selectedStart || defaultRoute[0],
+              end: this.state.selectedEnd || defaultRoute[defaultRoute.length - 1],
             });
           }}
         />
@@ -101,9 +101,9 @@ class Search extends React.Component {
         <RaisedButton
           label="Add to favourites"
           onClick={() => this.props.addToFavourites({
-            bus: this.state.selectedBus,
-            start: this.state.selectedStart,
-            end: this.state.selectedEnd,
+            bus: this.state.selectedBus || defaultBus,
+            start: this.state.selectedStart || defaultRoute[0],
+            end: this.state.selectedEnd || defaultRoute[defaultRoute.length - 1],
           })}
         />
 
@@ -117,7 +117,6 @@ class Search extends React.Component {
             <MenuItem value={2} primaryText="95" />
           </SelectField>
         </div>
-
       </div>
     );
   }
