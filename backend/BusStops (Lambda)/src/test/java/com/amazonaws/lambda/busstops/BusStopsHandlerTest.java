@@ -37,7 +37,5 @@ public class BusStopsHandlerTest {
 
         BusStopResult output = handler.handleRequest(input, ctx);
 
-        // TODO: validate output here if needed.
-        Assert.assertEquals("Hello from Lambda!", output);
     }
 }

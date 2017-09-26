@@ -16,22 +16,32 @@ public class BusStopsHandler implements RequestHandler<ApiGatewayRequest, BusSto
 	    		"jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin","Admin123");  
 	    		Statement stmt=con.createStatement();  
 	    		
-	    		ResultSet rs;
+	    		ResultSet rs; 
 	    		
-	    		if (input.getBody().no == null || input.getBody().no.equals("ALL") || input.getBody().no.equals("")) {
-	    			rs = stmt.executeQuery("select * from bus_stops"); 
+	    		String id = input.getQueryStringParameters().get("id");
+	    		
+	    		if (id == null) {
+	    			rs = stmt.executeQuery("select * from bus_stops");
 	    		} else {
-	    			rs = stmt.executeQuery("select * from bus_stops where list_no = "+input.getBody().no); 
+	    			rs = stmt.executeQuery("select * from bus_stops WHERE list_no='"+id+"'");
 	    		}
 	    		
 	    		Hashtable<String, String> headers = new Hashtable<String, String>();
 	    		headers.put("Content-Type", "application/json");
+	    		headers.put("Access-Control-Allow-Origin", "*");
 	    		
-	    		ArrayList<BusStop> stops = new ArrayList<BusStop>();
+	    		Hashtable<String, Hashtable<String, String>> stops = new Hashtable<String, Hashtable<String, String>>();
 	    		
-	    		while(rs.next())  
-	    			stops.add(new BusStop(rs.getString("list_name"), rs.getString("list_no"), rs.getDouble("list_lat"), rs.getDouble("list_lng")));
-	
+	    		//ArrayList<BusStop> stops = new ArrayList<BusStop>();
+	    		
+	    		while(rs.next())  {
+	    			Hashtable<String, String> stopData = new Hashtable<String, String>();
+	    			stopData.put("description", rs.getString("list_name"));
+	    			stopData.put("latitude", rs.getString("list_lat"));
+	    			stopData.put("longitude", rs.getString("list_lng"));
+	    			stops.put(rs.getString("list_no"), stopData);
+	    		}
+	    		
 	    		con.close();  
 
 	    		Gson gson = new GsonBuilder().create();
