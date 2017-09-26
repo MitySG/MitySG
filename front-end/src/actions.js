@@ -6,7 +6,7 @@ export const getBuses = (dispatch) => {
       type: 'RECEIVE_BUSES',
       buses,
     });
-  });
+  }).catch(err => console.log(err));
 };
 
 export const getBusStops = (dispatch) => {
@@ -15,7 +15,7 @@ export const getBusStops = (dispatch) => {
       type: 'RECEIEVE_BUS_STOPS',
       busStops,
     });
-  });
+  }).catch(err => console.log(err));
 };
 
 export const addToFavourites = ({ bus, start, end }) => ({

@@ -1,8 +1,7 @@
 const [get, post] = ['GET', 'POST'].map(method =>
   path => fetch(path, {
     method,
-  }).then(response => response.json())
-    .catch(err => console.log(err)),
+  }).then(response => response.json()),
 );
 
 export default {
