@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Search from './Search';
+import Home from './Home';
 import { addToFavourites, setSlideIndex, setCurrentTrip } from '../../actions';
 
 const mapStateToProps = state => ({
@@ -10,4 +10,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { addToFavourites, setSlideIndex, setCurrentTrip },
-)(Search);
+)(Home);

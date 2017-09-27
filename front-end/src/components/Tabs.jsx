@@ -4,7 +4,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import FontIcon from 'material-ui/FontIcon';
 
-import Search from './search/SearchContainer';
+import Home from './search/HomeContainer';
 import Favourites from './favourites/FavouritesContainer';
 import Journey from './journey/JourneyContainer';
 
@@ -50,7 +50,7 @@ export default class App extends React.Component {
             onChangeIndex={this.props.setSlideIndex}
           >
             <div style={styles.slide}>
-              <Search />
+              <Home />
             </div>
             <div style={styles.slide}>
               <Journey />
