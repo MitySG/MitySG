@@ -2,6 +2,11 @@
   display: flex;
 }
 
+.title {
+  color: rgb(0, 188, 212);
+  margin-top: 20px;
+}
+
 .slider {
   width: 100px;
   margin-left: 15px;

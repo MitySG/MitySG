@@ -1,0 +1,13 @@
+.home {
+  max-width: 380px;
+  max-height: 400px;
+  margin: auto;
+}
+
+.nextAndBackButtons {
+  margin: 12px;
+}
+
+.nextButton {
+  margin: 12px;
+}

@@ -9,11 +9,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Slider from './Slider';
 import AutoComplete from './AutoComplete';
+import './Home.css';
 
 class VerticalLinearStepper extends React.Component {
 
   state = {
-    finished: false,
     stepIndex: 3,
     selectedBus: null,
     selectedStart: null,
@@ -25,7 +25,6 @@ class VerticalLinearStepper extends React.Component {
     const { stepIndex } = this.state;
     this.setState({
       stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2,
     });
   };
 
@@ -40,14 +39,14 @@ class VerticalLinearStepper extends React.Component {
     const { stepIndex } = this.state;
 
     return (
-      <div style={{ margin: '12px 0' }}>
+      <div styleName={stepIndex === 3 ? '' : 'nextAndBackButtons'}>
         <RaisedButton
-          label={stepIndex === 3 ? 'Begin' : 'Next'}
+          label={stepIndex === 3 ? 'Begin Journey' : 'Next'}
           disableTouchRipple
           disableFocusRipple
           primary
           onClick={this.handleNext}
-          style={{ marginRight: 12 }}
+          styleName="nextButton"
         />
         {step > 0 && (
           <FlatButton
@@ -63,14 +62,14 @@ class VerticalLinearStepper extends React.Component {
   }
 
   render() {
-    const { finished, stepIndex } = this.state;
+    const { stepIndex } = this.state;
 
     const busStopOptions = (this.props.buses[this.state.selectedBus] || []).map(code =>
       this.props.busStops[code].description,
     );
 
     return (
-      <div style={{ maxWidth: 380, maxHeight: 400, margin: 'auto' }}>
+      <div styleName="home">
         <Stepper activeStep={stepIndex} orientation="vertical">
           <Step>
             <StepLabel>Choose your transit</StepLabel>
@@ -112,9 +111,6 @@ class VerticalLinearStepper extends React.Component {
             <StepLabel>Notification options</StepLabel>
             <StepContent>
               <Slider
-                step={1}
-                min={1}
-                max={10}
                 value={this.props.notificationValue}
                 onChange={(e, value) => this.props.setNotificationValue(value)}
               />
@@ -122,19 +118,6 @@ class VerticalLinearStepper extends React.Component {
             </StepContent>
           </Step>
         </Stepper>
-        {finished && (
-          <p style={{ margin: '20px 0', textAlign: 'center' }}>
-            <a
-              href="#"
-              onClick={(event) => {
-                event.preventDefault();
-                this.setState({ stepIndex: 0, finished: false });
-              }}
-            >
-              Click here
-            </a> to reset the example.
-          </p>
-        )}
       </div>
     );
   }
