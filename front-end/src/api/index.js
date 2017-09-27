@@ -1,10 +1,12 @@
+const API_BASE_URL = 'https://mityserver.tk/';
+
 const [get, post] = ['GET', 'POST'].map(method =>
-  path => fetch(path, {
+  path => fetch(API_BASE_URL + path, {
     method,
   }).then(response => response.json()),
 );
 
 export default {
-  getBuses: () => get('https://zihgyx1zp8.execute-api.ap-southeast-1.amazonaws.com/prod/BusServices'),
-  getBusStops: () => get('https://q5nyw1vwna.execute-api.ap-southeast-1.amazonaws.com/prod/BusStops'),
+  getBuses: () => get('busServices'),
+  getBusStops: () => get('busStops'),
 };
