@@ -6,6 +6,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import hello.models.BusService;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,29 +26,35 @@ import java.util.stream.Stream;
 public class BusServicesController {
 
     @RequestMapping("/busServices")
-    public String busServices(@RequestParam(value="service", defaultValue = "-1") String service) {
+    public String busServices() {
         StringBuilder contentBuilder = new StringBuilder();
         try (Stream<String> stream = Files.lines( Paths.get("./services.json"), StandardCharsets.UTF_8))
         {
             stream.forEach(s -> contentBuilder.append(s).append("\n"));
             String serviceRawData = contentBuilder.toString();
 
-            if (service.equals("-1")) {
-                return serviceRawData;
-            } else {
-                BusService serviceRoute = getBusServiceAPI(service);
-
-                Map<String, Object> tempObj = new HashMap<String, Object>();
-                tempObj.put(service, serviceRoute.getRoute1());
-
-                return new ObjectMapper().writeValueAsString(tempObj);
-            }
+            return serviceRawData;
         }
         catch (Exception e)
         {
             e.printStackTrace();
             System.out.println(e.getMessage());
 
+            return null;
+        }
+    }
+
+    @RequestMapping("/busServices/{service}")
+    public String busServices(@PathVariable(value="service") String service) {
+
+        BusService serviceRoute = getBusServiceAPI(service);
+
+        Map<String, Object> tempObj = new HashMap<String, Object>();
+        tempObj.put(service, serviceRoute.getRoute1());
+
+        try {
+            return new ObjectMapper().writeValueAsString(tempObj);
+        } catch (Exception e) {
             return null;
         }
     }
