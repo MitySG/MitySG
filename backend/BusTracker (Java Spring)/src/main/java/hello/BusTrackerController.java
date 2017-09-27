@@ -6,9 +6,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import hello.models.*;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,11 +21,12 @@ public class BusTrackerController {
     private BusArrivalController baCon = new BusArrivalController();
     private BusServicesController bsCon = new BusServicesController();
 
-    @RequestMapping("/busTracker")
-    public Location busTracker(@RequestParam(value="startingStop") String startingStop,
-                                              @RequestParam(value="endingStop") String endingStop,
-                                              @RequestParam(value="service") String service,
-                                              @RequestParam(value="alert", defaultValue="3") String alertString) {
+    @RequestMapping(value = "/busTracker/{service}", method = RequestMethod.POST)
+    public Location busTracker(@RequestParam(value="start") String startingStop,
+                                              @RequestParam(value="end") String endingStop,
+                                              @PathVariable(value="service") String service,
+                                              @RequestParam(value="alert", defaultValue="3") String alertString,
+                                              @RequestBody String subscription) {
 
         BusArrivalRequest request = new BusArrivalRequest(startingStop, service);
 
@@ -57,6 +56,25 @@ public class BusTrackerController {
         currentStopIndex += 1;
         incomingBusNo = 0;
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+
+        try {
+            PushSubscription sub = objectMapper.readValue(subscription, PushSubscription.class);
+
+            PushRequest pushReq = new PushRequest(sub, "Your bus is arriving");
+
+            HttpResponse<String> resp = Unirest.post("https://huy3vicolc.execute-api.us-east-1.amazonaws.com/dev/push")
+                    .body(objectMapper.writeValueAsString(pushReq))
+                    .asString();
+
+            System.out.println(resp.getBody());
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
+
         System.out.println("Entering Intermediate Bus Stops Phase");
 
         while (currentStopIndex != endingStopIndex) {
@@ -67,7 +85,26 @@ public class BusTrackerController {
         }
         System.out.println("Exiting Intermediate Bus Stops Phase");
 
-        return toLastBusStop(request, busLocation, alert);
+        request = new BusArrivalRequest(busRoute.get(currentStopIndex), service);
+        Location finalLocation = toLastBusStop(request, busLocation, alert);
+
+        try {
+            PushSubscription sub = objectMapper.readValue(subscription, PushSubscription.class);
+
+            PushRequest pushReq = new PushRequest(sub, "You are reaching your destination");
+
+            HttpResponse<String> resp = Unirest.post("https://huy3vicolc.execute-api.us-east-1.amazonaws.com/dev/push")
+                    .body(objectMapper.writeValueAsString(pushReq))
+                    .asString();
+
+            System.out.println(resp.getBody());
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
+
+        return finalLocation;
     }
 
     private Location toLastBusStop(BusArrivalRequest request, Location busLocation, int alert) {

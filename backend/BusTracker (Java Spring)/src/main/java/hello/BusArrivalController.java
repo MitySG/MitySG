@@ -8,6 +8,7 @@ import com.mashape.unirest.http.Unirest;
 import hello.models.BusArrivalDataContainer;
 import hello.models.BusArrivalRequest;
 import hello.models.BusArrivalResponse;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BusArrivalController {
 
-    @RequestMapping("/busArrival")
+    @RequestMapping("/busArrival/{service}")
     public BusArrivalDataContainer busArrival(@RequestParam(value="stop") String stop,
-                                        @RequestParam(value="service") String service) {
+                                        @PathVariable(value="service") String service) {
         BusArrivalRequest request = new BusArrivalRequest(stop, service);
 
         return getBusArrivalAPI(request);
