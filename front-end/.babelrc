@@ -1,6 +1,8 @@
 {
   "presets": ["react", "stage-0"],
   "plugins": [
-    ["react-css-modules"]
+    ["react-css-modules", {
+      "webpackHotModuleReloading": true
+    }]
   ]
 }
