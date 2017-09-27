@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+}
+
+.slider {
+  width: 100px;
+  margin-left: 15px;
+  margin-right: 10px;
+}
+
+.label {
+  margin-top: 23px;
+  font-weight: bold;
+}

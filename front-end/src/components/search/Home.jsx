@@ -7,13 +7,14 @@ import {
 } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import Slider from './Slider';
 import AutoComplete from './AutoComplete';
 
 class VerticalLinearStepper extends React.Component {
 
   state = {
     finished: false,
-    stepIndex: 0,
+    stepIndex: 3,
     selectedBus: null,
     selectedStart: null,
     selectedEnd: null,
@@ -41,7 +42,7 @@ class VerticalLinearStepper extends React.Component {
     return (
       <div style={{ margin: '12px 0' }}>
         <RaisedButton
-          label={stepIndex === 2 ? 'Finish' : 'Next'}
+          label={stepIndex === 3 ? 'Begin' : 'Next'}
           disableTouchRipple
           disableFocusRipple
           primary
@@ -105,6 +106,19 @@ class VerticalLinearStepper extends React.Component {
                 onUpdateInput={selectedEnd => this.setState({ selectedEnd })}
               />
               {this.renderStepActions(2)}
+            </StepContent>
+          </Step>
+          <Step>
+            <StepLabel>Notification options</StepLabel>
+            <StepContent>
+              <Slider
+                step={1}
+                min={1}
+                max={10}
+                value={this.props.notificationValue}
+                onChange={(e, value) => this.props.setNotificationValue(value)}
+              />
+              {this.renderStepActions(3)}
             </StepContent>
           </Step>
         </Stepper>

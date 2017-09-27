@@ -35,6 +35,11 @@ export const setSlideIndex = slideIndex => ({
   slideIndex,
 });
 
+export const setNotificationValue = value => ({
+  type: 'SET_NOTIFICATION_VALUE',
+  value,
+});
+
 export const setCurrentTrip = currentTrip => ({
   type: 'SET_CURRENT_TRIP',
   currentTrip,
