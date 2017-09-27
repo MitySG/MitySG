@@ -14,11 +14,10 @@ import './Home.css';
 class VerticalLinearStepper extends React.Component {
 
   state = {
-    stepIndex: 3,
+    stepIndex: 0,
     selectedBus: null,
     selectedStart: null,
     selectedEnd: null,
-    timeTillArrival: 'Start',
   };
 
   handleNext = () => {
@@ -45,7 +44,19 @@ class VerticalLinearStepper extends React.Component {
           disableTouchRipple
           disableFocusRipple
           primary
-          onClick={this.handleNext}
+          onClick={() => {
+            if (stepIndex === 3) {
+              this.setState({ timeTillArrival: 'Bus arriving in 5min...' });
+              this.props.setSlideIndex(1);
+              this.props.setCurrentTrip({
+                bus: this.state.selectedBus,
+                start: this.state.selectedStart,
+                end: this.state.selectedEnd,
+              });
+            } else {
+              this.handleNext();
+            }
+          }}
           styleName="nextButton"
         />
         {step > 0 && (
@@ -63,10 +74,10 @@ class VerticalLinearStepper extends React.Component {
 
   render() {
     const { stepIndex } = this.state;
-
-    const busStopOptions = (this.props.buses[this.state.selectedBus] || []).map(code =>
-      this.props.busStops[code].description,
-    );
+    const busStopOptions = (this.props.buses[this.state.selectedBus] || []).map(code => ({
+      text: (this.props.busStops[code] || {}).description,
+      value: code,
+    }));
 
     return (
       <div styleName="home">
@@ -115,6 +126,15 @@ class VerticalLinearStepper extends React.Component {
                 onChange={(e, value) => this.props.setNotificationValue(value)}
               />
               {this.renderStepActions(3)}
+
+              <RaisedButton
+                label="Add to favourites"
+                onClick={() => this.props.addToFavourites({
+                  bus: this.state.selectedBus,
+                  start: this.state.selectedStart,
+                  end: this.state.selectedEnd,
+                })}
+              />
             </StepContent>
           </Step>
         </Stepper>
