@@ -83,20 +83,20 @@ const initializeState = function () {
   });
 };
 
-const subscribe = function () {
+const subscribe = function (callback) {
   function permissionDenied() {
     emitter.emit(ERROR, 'Please allow notifications to use our service.');
     unsubscribe();
   }
 
-  function permissionGranted() {
+  function permissionGranted(callback) {
     navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
       serviceWorkerRegistration.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: buildApplicationServerKey(),
         })
         .then((subscription) => {
-          sendSubscriptionToServer(subscription);
+          callback(subscription);
           emitter.emit(SUBSCRIBED);
         })
         .catch((error) => {
@@ -118,11 +118,11 @@ const subscribe = function () {
         permissionDenied();
         return;
       }
-      permissionGranted();
+      permissionGranted(callback);
     });
     return;
   }
-  permissionGranted();
+  permissionGranted(callback);
 };
 
 const unsubscribe = function () {
