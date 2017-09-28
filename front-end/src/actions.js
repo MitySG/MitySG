@@ -52,5 +52,9 @@ export const setCurrentTrip = currentTrip => (dispatch) => {
     type: 'SET_CURRENT_TRIP',
     currentTrip,
   });
-  api.startBusTrip(currentTrip);
+  if (currentTrip.bus === undefined) {
+    api.startTrainTrip(currentTrip);
+  } else {
+    api.startBusTrip(currentTrip);
+  }
 };
