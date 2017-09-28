@@ -12,7 +12,7 @@ class AutoCompleteComponent extends React.Component {
         <AutoComplete
           open={this.state.open}
           autoFocus
-          menuStyle={{ maxHeight: '300px' }}
+          menuStyle={{ maxHeight: '200px' }}
           onClick={() => this.setState({ open: true })}
           filter={(searchText, key) => !key || key.toLowerCase().includes(searchText.toLowerCase())}
           {...this.props}
