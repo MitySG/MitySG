@@ -25,4 +25,3 @@ if (module.hot) {
 }
 
 registerServiceWorker();
-push.subscribe();
