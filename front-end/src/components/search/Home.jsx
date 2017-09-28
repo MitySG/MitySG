@@ -20,56 +20,12 @@ class VerticalLinearStepper extends React.Component {
     selectedEnd: null,
   };
 
-  handleNext = () => {
-    const { stepIndex } = this.state;
-    this.setState({
-      stepIndex: stepIndex + 1,
-    });
-  };
+  onNext() {
+    this.setState({ stepIndex: this.state.stepIndex + 1 });
+  }
 
-  handlePrev = () => {
-    const { stepIndex } = this.state;
-    if (stepIndex > 0) {
-      this.setState({ stepIndex: stepIndex - 1 });
-    }
-  };
-
-  renderStepActions(step) {
-    const { stepIndex } = this.state;
-
-    return (
-      <div styleName={stepIndex === 3 ? '' : 'nextAndBackButtons'}>
-        <RaisedButton
-          label={stepIndex === 3 ? 'Begin Journey' : 'Next'}
-          disableTouchRipple
-          disableFocusRipple
-          primary
-          onClick={() => {
-            if (stepIndex === 3) {
-              this.setState({ timeTillArrival: 'Bus arriving in 5min...' });
-              this.props.setSlideIndex(1);
-              this.props.setCurrentTrip({
-                bus: this.state.selectedBus,
-                start: this.state.selectedStart,
-                end: this.state.selectedEnd,
-              });
-            } else {
-              this.handleNext();
-            }
-          }}
-          styleName="nextButton"
-        />
-        {step > 0 && (
-          <FlatButton
-            label="Back"
-            disabled={stepIndex === 0}
-            disableTouchRipple
-            disableFocusRipple
-            onClick={this.handlePrev}
-          />
-        )}
-      </div>
-    );
+  onPrev() {
+    this.setState({ stepIndex: this.state.stepIndex - 1 });
   }
 
   render() {
@@ -90,8 +46,11 @@ class VerticalLinearStepper extends React.Component {
                 floatingLabelText="Bus Service Number"
                 hintText="Enter bus number"
                 onUpdateInput={selectedBus => this.setState({ selectedBus })}
+                searchText={this.state.selectedBus}
+                onNext={() => this.onNext()}
+                onPrev={() => this.onPrev()}
+                stepIndex={this.state.stepIndex}
               />
-              {this.renderStepActions(0)}
             </StepContent>
           </Step>
           <Step>
@@ -102,8 +61,11 @@ class VerticalLinearStepper extends React.Component {
                 floatingLabelText="Starting bus stop"
                 hintText="Enter bus stop"
                 onUpdateInput={selectedStart => this.setState({ selectedStart })}
+                searchText={this.state.selectedStart}
+                onNext={() => this.onNext()}
+                onPrev={() => this.onPrev()}
+                stepIndex={this.state.stepIndex}
               />
-              {this.renderStepActions(1)}
             </StepContent>
           </Step>
           <Step>
@@ -114,8 +76,11 @@ class VerticalLinearStepper extends React.Component {
                 floatingLabelText="Destination stop"
                 hintText="Enter bus stop"
                 onUpdateInput={selectedEnd => this.setState({ selectedEnd })}
+                searchText={this.state.selectedEnd}
+                onNext={() => this.onNext()}
+                onPrev={() => this.onPrev()}
+                stepIndex={this.state.stepIndex}
               />
-              {this.renderStepActions(2)}
             </StepContent>
           </Step>
           <Step>
@@ -125,8 +90,6 @@ class VerticalLinearStepper extends React.Component {
                 value={this.props.notificationValue}
                 onChange={(e, value) => this.props.setNotificationValue(value)}
               />
-              {this.renderStepActions(3)}
-
               <RaisedButton
                 label="Add to favourites"
                 onClick={() => this.props.addToFavourites({
