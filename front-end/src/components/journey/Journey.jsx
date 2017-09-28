@@ -12,17 +12,19 @@ const Favourites = props => (
       secondaryText={`${props.startStop} => ${props.endStop}`}
     />
     }
-
-    <iframe
-      title="Google Maps"
-      width="100%"
-      height="600"
-      frameBorder="0"
-      src={`https://www.google.com/maps/embed/v1/directions?key=${API_KEY}` +
-           `&origin=${props.startStop}` +
-           `&destination=${props.endStop}`}
-      allowFullScreen
-    />
+    <div styleName="map">
+      <iframe
+        styleName="mapframe"
+        title="Google Maps"
+        width="100%"
+        height="400"
+        frameBorder="0"
+        src={`https://www.google.com/maps/embed/v1/directions?key=${API_KEY}` +
+             `&origin=${props.startStop}&destination=${props.endStop}` +
+             '&mode=transit'}
+        allowFullScreen
+      />
+    </div>
   </div>
 );
 

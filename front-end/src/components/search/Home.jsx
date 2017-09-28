@@ -136,7 +136,10 @@ class VerticalLinearStepper extends React.Component {
               <RaisedButton
                 label="Add to favourites"
                 labelStyle={{ fontSize: '10px' }}
-                onClick={() => this.props.addToFavourites(this.getTrip())}
+                onClick={() => {
+                  this.props.addToFavourites(this.getTrip());
+                  this.props.setSlideIndex(2);
+                }}
               />
               <StepButtons
                 isLast
