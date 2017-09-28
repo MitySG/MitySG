@@ -38,7 +38,12 @@ export const setNotificationValue = value => ({
   value,
 });
 
-export const setCurrentTrip = currentTrip => ({
-  type: 'SET_CURRENT_TRIP',
-  currentTrip,
-});
+
+export const setCurrentTrip = currentTrip => (dispatch) => {
+  dispatch({
+    type: 'SET_CURRENT_TRIP',
+    currentTrip,
+  });
+
+  api.getBusArrival(currentTrip.bus, currentTrip.stop).then(data => console.log(data));
+};
