@@ -5,11 +5,16 @@ import './Journey.css';
 const API_KEY = 'AIzaSyA2AhaWAntXpasV6qrmiugcvBwaXDIyAls';
 
 class Favourites extends React.Component {
-  componentWillMount() {
-    this.props.getBusArrival(this.props.startStop, this.props.endStop);
+  componentDidMount() {
+    if (this.props.currentTrip.bus) {
+      this.props.getBusArrival(this.props.startStop, this.props.endStop);
+    } else {
+      this.props.getTrainArrival((this.props.trainStations[this.props.startStop] || {}).id,
+        (this.props.trainStations[this.props.endStop] || {}).id);
+    }
   }
 
-  renderTrip() {
+  renderTrip(start, end) {
     if (!this.props.eta) {
       return (
         <div>
@@ -21,8 +26,8 @@ class Favourites extends React.Component {
       <div>
         <TripInfo
           trip={this.props.currentTrip}
-          startStop={this.props.start}
-          endStop={this.props.end}
+          startStop={start}
+          endStop={end}
         />
         {this.props.eta} min till arrival
       </div>
@@ -33,10 +38,10 @@ class Favourites extends React.Component {
     const { currentTrip, startStop, endStop } = this.props;
     const start = currentTrip.bus ? (startStop || {}).description : startStop;
     const end = currentTrip.bus ? (endStop || {}).description : endStop;
-
+    const mrtString = currentTrip.bus ? '' : '+MRT+Station';
     return (
       <div>
-        {currentTrip ? this.renderTrip() : <span styleName="label">You have not started a journey</span>
+        {currentTrip ? this.renderTrip(start, end) : <span styleName="label">You have not started a journey</span>
         }
         <div styleName="map">
           <iframe
@@ -46,7 +51,7 @@ class Favourites extends React.Component {
             height="400"
             frameBorder="0"
             src={`https://www.google.com/maps/embed/v1/directions?key=${API_KEY}` +
-                 `&origin=${start}&destination=${end}&mode=transit`}
+                 `&origin=${start + mrtString}&destination=${end + mrtString}&mode=transit`}
             allowFullScreen
           />
         </div>

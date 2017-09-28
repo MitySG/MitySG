@@ -71,3 +71,12 @@ export const getBusArrival = (start, end) => (dispatch) => {
     });
   });
 };
+
+export const getTrainArrival = (start, end) => (dispatch) => {
+  api.getTrainArrival(start, end).then((eta) => {
+    dispatch({
+      type: 'SET_ETA',
+      eta,
+    });
+  });
+};

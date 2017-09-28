@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Journey from './Journey';
-import { getBusArrival } from '../../actions';
+import { getBusArrival, getTrainArrival } from '../../actions';
 
 const mapStateToProps = state => ({
   currentTrip: state.currentTrip,
@@ -10,10 +10,11 @@ const mapStateToProps = state => ({
   endStop: state.currentTrip.bus
     ? state.busStops[(state.currentTrip || {}).end]
     : state.currentTrip.end,
+  trainStations: state.trainStations,
   eta: state.eta,
 });
 
 export default connect(
   mapStateToProps,
-  { getBusArrival },
+  { getBusArrival, getTrainArrival },
 )(Journey);
