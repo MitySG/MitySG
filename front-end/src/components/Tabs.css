@@ -1,9 +1,9 @@
 .tab {
-  margin-top: 30px;
+  margin-top: 20px;
+  flex: 1;
 }
 
-.navigation {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+.container {
+  display: flex;
+  flex-direction: column;
 }
