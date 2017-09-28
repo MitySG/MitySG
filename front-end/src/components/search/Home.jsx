@@ -10,14 +10,14 @@ import FlatButton from 'material-ui/FlatButton';
 import Slider from './Slider';
 import AutoComplete from './AutoComplete';
 import './Home.css';
+import StepButtons from './StepButtonsContainer';
 
 class VerticalLinearStepper extends React.Component {
-
   state = {
     stepIndex: 0,
-    selectedBus: null,
-    selectedStart: null,
-    selectedEnd: null,
+    selectedBus: undefined,
+    selectedStart: {},
+    selectedEnd: {},
   };
 
   onNext() {
@@ -28,13 +28,18 @@ class VerticalLinearStepper extends React.Component {
     this.setState({ stepIndex: this.state.stepIndex - 1 });
   }
 
+  getBusStopCode(routes, text) {
+    return routes.find(code =>
+      this.props.busStops[code].description.toLowerCase() === text.toLowerCase().trim());
+  }
+
   render() {
     const { stepIndex } = this.state;
     const busStopOptions = (this.props.buses[this.state.selectedBus] || []).map(code => ({
       text: (this.props.busStops[code] || {}).description,
       value: code,
     }));
-
+    const routes = this.props.buses[this.state.selectedBus];
     return (
       <div styleName="home">
         <Stepper activeStep={stepIndex} orientation="vertical">
@@ -47,6 +52,9 @@ class VerticalLinearStepper extends React.Component {
                 hintText="Enter bus number"
                 onUpdateInput={selectedBus => this.setState({ selectedBus })}
                 searchText={this.state.selectedBus}
+              />
+              <StepButtons
+                nextDisabled={routes === undefined}
                 onNext={() => this.onNext()}
                 onPrev={() => this.onPrev()}
                 stepIndex={this.state.stepIndex}
@@ -60,8 +68,18 @@ class VerticalLinearStepper extends React.Component {
                 dataSource={busStopOptions}
                 floatingLabelText="Starting bus stop"
                 hintText="Enter bus stop"
-                onUpdateInput={selectedStart => this.setState({ selectedStart })}
-                searchText={this.state.selectedStart}
+                onUpdateInput={(text) => {
+                  this.setState({
+                    selectedStart: {
+                      text,
+                      value: this.getBusStopCode(routes, text),
+                    },
+                  });
+                }}
+                searchText={this.state.selectedStart.text}
+              />
+              <StepButtons
+                nextDisabled={this.state.selectedStart.value === undefined}
                 onNext={() => this.onNext()}
                 onPrev={() => this.onPrev()}
                 stepIndex={this.state.stepIndex}
@@ -72,11 +90,23 @@ class VerticalLinearStepper extends React.Component {
             <StepLabel>Select destination</StepLabel>
             <StepContent>
               <AutoComplete
-                dataSource={busStopOptions}
+                dataSource={
+                  busStopOptions.filter(option => option.value !== this.state.selectedStart.value)
+                }
                 floatingLabelText="Destination stop"
                 hintText="Enter bus stop"
-                onUpdateInput={selectedEnd => this.setState({ selectedEnd })}
-                searchText={this.state.selectedEnd}
+                onUpdateInput={(text) => {
+                  this.setState({
+                    selectedEnd: {
+                      text,
+                      value: this.getBusStopCode(routes, text),
+                    },
+                  });
+                }}
+                searchText={this.state.selectedEnd.text}
+              />
+              <StepButtons
+                nextDisabled={this.state.selectedEnd.value === undefined}
                 onNext={() => this.onNext()}
                 onPrev={() => this.onPrev()}
                 stepIndex={this.state.stepIndex}
@@ -97,6 +127,11 @@ class VerticalLinearStepper extends React.Component {
                   start: this.state.selectedStart,
                   end: this.state.selectedEnd,
                 })}
+              />
+              <StepButtons
+                onNext={() => this.onNext()}
+                onPrev={() => this.onPrev()}
+                stepIndex={this.state.stepIndex}
               />
             </StepContent>
           </Step>

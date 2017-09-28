@@ -3,13 +3,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import './StepButtons.css';
 
-const StepButtons = ({ stepIndex, onNext, onPrev }) => (
+const StepButtons = ({ stepIndex, onNext, onPrev, nextDisabled }) => (
   <div styleName={stepIndex === 3 ? '' : 'nextAndBackButtons'}>
     <RaisedButton
       label={stepIndex === 3 ? 'Begin Journey' : 'Next'}
       disableTouchRipple
       disableFocusRipple
       primary
+      disabled={nextDisabled}
       onClick={() => {
         if (stepIndex === 3) {
           this.props.setSlideIndex(1);
@@ -25,14 +26,13 @@ const StepButtons = ({ stepIndex, onNext, onPrev }) => (
       styleName="nextButton"
     />
     {stepIndex > 0 && (
-    <FlatButton
-      label="Back"
-      disabled={stepIndex === 0}
-      disableTouchRipple
-      disableFocusRipple
-      onClick={onPrev}
-    />
-  )}
+      <FlatButton
+        label="Back"
+        disableTouchRipple
+        disableFocusRipple
+        onClick={onPrev}
+      />
+    )}
   </div>
 );
 

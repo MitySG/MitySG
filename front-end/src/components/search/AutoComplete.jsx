@@ -1,6 +1,5 @@
 import React from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
-import StepButtons from './StepButtonsContainer';
 
 class AutoCompleteComponent extends React.Component {
   state = {
@@ -18,14 +17,7 @@ class AutoCompleteComponent extends React.Component {
           filter={(searchText, key) => !key || key.toLowerCase().includes(searchText.toLowerCase())}
           {...this.props}
         />
-        <StepButtons
-          nextDisabled={!this.props.dataSource.includes(this.props.searchText)}
-          onNext={this.props.onNext}
-          onPrev={this.props.onPrev}
-          stepIndex={this.props.stepIndex}
-        />
       </div>
-
     );
   }
 }
