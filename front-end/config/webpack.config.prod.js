@@ -201,9 +201,7 @@ module.exports = {
                     },
                   ],
                 },
-                extractTextPluginOptions
-              )
-            ),
+                extractTextPluginOptions)),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           // "file" loader makes sure assets end up in the `build` folder.
