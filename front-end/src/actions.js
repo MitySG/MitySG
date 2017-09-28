@@ -18,6 +18,15 @@ export const getBusStops = (dispatch) => {
   }).catch(err => console.log(err));
 };
 
+export const getTrainStations = (dispatch) => {
+  api.getTrainStations().then((trainStations) => {
+    dispatch({
+      type: 'RECEIVE_TRAIN_STATIONS',
+      trainStations,
+    });
+  }).catch(err => console.log(err));
+};
+
 export const addToFavourites = favourite => ({
   type: 'ADD_TO_FAVOURITES',
   favourite,
@@ -38,12 +47,10 @@ export const setNotificationValue = value => ({
   value,
 });
 
-
 export const setCurrentTrip = currentTrip => (dispatch) => {
   dispatch({
     type: 'SET_CURRENT_TRIP',
     currentTrip,
   });
-
-  api.getBusArrival(currentTrip.bus, currentTrip.stop).then(data => console.log(data));
+  api.startBusTrip(currentTrip);
 };
