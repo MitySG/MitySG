@@ -1,16 +1,19 @@
 import React from 'react';
-import { ListItem } from 'material-ui/List';
+import TripInfo from './TripInfo';
 import './Journey.css';
 
 const API_KEY = 'AIzaSyA2AhaWAntXpasV6qrmiugcvBwaXDIyAls';
 
 const Favourites = props => (
   <div>
-    { !props.currentTrip ? <span styleName="label">You have not started a journey</span> :
-      <ListItem
-      primaryText={props.currentTrip.bus}
-      secondaryText={`${props.startStop} => ${props.endStop}`}
-    />
+    {props.currentTrip ?
+      <TripInfo
+        trip={props.currentTrip}
+        startStop={props.startStop}
+        endStop={props.endStop}
+      />
+      :
+      <span styleName="label">You have not started a journey</span>
     }
     <div styleName="map">
       <iframe

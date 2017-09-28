@@ -1,11 +1,13 @@
 
 const favourites = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_TO_FAVOURITES':
+    case 'ADD_TO_FAVOURITES': {
+      const stringifiedFavourite = action.favourite;
       return [
-        ...state,
         action.favourite,
+        ...state.filter(favourite => JSON.stringify(favourite) !== stringifiedFavourite),
       ];
+    }
     case 'REMOVE_FROM_FAVOURITES':
       return state.filter(favourite => JSON.stringify(favourite) !== action.favouriteStringified);
     default:
