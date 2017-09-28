@@ -33,6 +33,15 @@ class VerticalLinearStepper extends React.Component {
       this.props.busStops[code].description.toLowerCase() === text.toLowerCase().trim());
   }
 
+  getTrip() {
+    return {
+      bus: this.state.selectedBus,
+      start: this.state.selectedStart.value,
+      end: this.state.selectedEnd.value,
+      timeBeforeArrivalToNotify: this.props.notificationValue,
+    };
+  }
+
   render() {
     const { stepIndex } = this.state;
     const busStopOptions = (this.props.buses[this.state.selectedBus] || []).map(code => ({
@@ -56,7 +65,6 @@ class VerticalLinearStepper extends React.Component {
               <StepButtons
                 nextDisabled={routes === undefined}
                 onNext={() => this.onNext()}
-                onPrev={() => this.onPrev()}
                 stepIndex={this.state.stepIndex}
               />
             </StepContent>
@@ -122,14 +130,15 @@ class VerticalLinearStepper extends React.Component {
               />
               <RaisedButton
                 label="Add to favourites"
-                onClick={() => this.props.addToFavourites({
-                  bus: this.state.selectedBus,
-                  start: this.state.selectedStart,
-                  end: this.state.selectedEnd,
-                })}
+                labelStyle={{ fontSize: '10px' }}
+                onClick={() => this.props.addToFavourites(this.getTrip())}
               />
               <StepButtons
-                onNext={() => this.onNext()}
+                isLast
+                onNext={() => {
+                  this.props.setSlideIndex(1);
+                  this.props.setCurrentTrip(this.getTrip());
+                }}
                 onPrev={() => this.onPrev()}
                 stepIndex={this.state.stepIndex}
               />

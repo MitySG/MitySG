@@ -7,7 +7,7 @@ const API_KEY = 'AIzaSyA2AhaWAntXpasV6qrmiugcvBwaXDIyAls';
 const Favourites = ({ busStops, currentTrip }) => (
   <div>
     { !currentTrip ? <span styleName="label">You have not started a journey</span> :
-    <ListItem
+      <ListItem
       primaryText={currentTrip.bus}
       secondaryText={`${busStops[currentTrip.start].description} => ${busStops[currentTrip.end].description}`}
     />

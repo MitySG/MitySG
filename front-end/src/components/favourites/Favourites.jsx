@@ -11,7 +11,7 @@ const Favourites = ({ favourites, busStops, removeFromFavourites, setCurrentTrip
         <ListItem
           key={favouriteStringified}
           primaryText={favourite.bus}
-          secondaryText={`${busStops[favourite.start].description} => ${busStops[favourite.end].description}`}
+          secondaryText={`${(busStops[favourite.start] || {}).description} => ${(busStops[favourite.end] || {}).description}`}
           rightIconButton={
             <Button
               label="Start"

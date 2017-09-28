@@ -18,11 +18,9 @@ export const getBusStops = (dispatch) => {
   }).catch(err => console.log(err));
 };
 
-export const addToFavourites = ({ bus, start, end }) => ({
+export const addToFavourites = favourite => ({
   type: 'ADD_TO_FAVOURITES',
-  bus,
-  start,
-  end,
+  favourite,
 });
 
 export const removeFromFavourites = favouriteStringified => ({
