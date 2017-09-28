@@ -6,12 +6,14 @@ const API_KEY = 'AIzaSyA2AhaWAntXpasV6qrmiugcvBwaXDIyAls';
 
 class Favourites extends React.Component {
   componentDidMount() {
-    if (this.props.currentTrip.bus) {
-      this.props.getBusArrival(this.props.startStop, this.props.endStop);
-    } else {
-      this.props.getTrainArrival((this.props.trainStations[this.props.startStop] || {}).id,
-        (this.props.trainStations[this.props.endStop] || {}).id);
-    }
+    setInterval(() => {
+      if (this.props.currentTrip.bus) {
+        this.props.getBusArrival(this.props.startStop, this.props.endStop);
+      } else {
+        this.props.getTrainArrival((this.props.trainStations[this.props.startStop] || {}).id,
+          (this.props.trainStations[this.props.endStop] || {}).id);
+      }
+    }, 60000);
   }
 
   renderTrip(start, end) {
