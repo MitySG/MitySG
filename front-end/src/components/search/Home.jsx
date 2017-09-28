@@ -59,7 +59,11 @@ class VerticalLinearStepper extends React.Component {
                 dataSource={Object.keys(this.props.buses)}
                 floatingLabelText="Bus Service Number"
                 hintText="Enter bus number"
-                onUpdateInput={selectedBus => this.setState({ selectedBus })}
+                onUpdateInput={selectedBus => this.setState({
+                  selectedBus,
+                  selectedStart: {},
+                  selectedEnd: {},
+                })}
                 searchText={this.state.selectedBus}
               />
               <StepButtons
@@ -82,6 +86,7 @@ class VerticalLinearStepper extends React.Component {
                       text,
                       value: this.getBusStopCode(routes, text),
                     },
+                    selectedEnd: {},
                   });
                 }}
                 searchText={this.state.selectedStart.text}
