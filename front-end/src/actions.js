@@ -18,6 +18,15 @@ export const getBusStops = (dispatch) => {
   }).catch(err => console.log(err));
 };
 
+export const getTrainStations = (dispatch) => {
+  api.getTrainStations().then((trainStations) => {
+    dispatch({
+      type: 'RECEIVE_TRAIN_STATIONS',
+      trainStations,
+    });
+  }).catch(err => console.log(err));
+};
+
 export const addToFavourites = favourite => ({
   type: 'ADD_TO_FAVOURITES',
   favourite,

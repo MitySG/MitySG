@@ -19,4 +19,5 @@ export default {
       post(`busTracker/${bus}?start=${start}&end=${stop}&alert=${timeBeforeArrivalToNotify}`, subscription.toJSON());
     });
   },
+  getTrainStations: () => get('trainStations'),
 };

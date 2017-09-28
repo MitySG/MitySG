@@ -11,7 +11,7 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 
 import Tabs from './components/TabsContainer';
 import reducer from './components/reducer';
-import { getBuses, getBusStops } from './actions';
+import { getBuses, getBusStops, getTrainStations } from './actions';
 
 const middleware = [thunk, routerMiddleware(createHistory())];
 const store = createStore(
@@ -26,6 +26,7 @@ persistStore(store);
 
 store.dispatch(getBuses);
 store.dispatch(getBusStops);
+store.dispatch(getTrainStations);
 
 function App() {
   return (
