@@ -37,7 +37,7 @@ class VerticalLinearStepper extends React.Component {
 
   getTrip() {
     return {
-      bus: this.state.selectedBus,
+      bus: this.state.isBus ? this.state.selectedBus : undefined,
       start: this.state.selectedStart.value,
       end: this.state.selectedEnd.value,
       timeBeforeArrivalToNotify: this.props.notificationValue,

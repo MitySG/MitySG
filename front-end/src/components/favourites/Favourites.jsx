@@ -9,10 +9,9 @@ const Favourites = ({ favourites, busStops, removeFromFavourites, setCurrentTrip
     {favourites.map((favourite) => {
       const favouriteStringified = JSON.stringify(favourite);
       return (
-        <div>
+        <div key={favouriteStringified}>
           <TripInfo
             trip={favourite}
-            key={favouriteStringified}
             startStop={favourite.bus
               ? (busStops[favourite.start] || {}).description
               : favourite.start}
