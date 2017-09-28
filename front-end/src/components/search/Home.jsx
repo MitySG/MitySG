@@ -7,6 +7,7 @@ import {
 } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import Paper from 'material-ui/Paper';
 import Slider from './Slider';
 import AutoComplete from './AutoComplete';
 import './Home.css';
@@ -54,26 +55,32 @@ class VerticalLinearStepper extends React.Component {
     })) : Object.keys(trainStations);
     const stops = isBus ? buses[selectedBus] : stopOptions;
     return (
-      <div styleName="home">
+      <Paper styleName="home" zDepth={3}>
         <Stepper activeStep={this.state.stepIndex} orientation="vertical">
           <Step>
             <StepLabel>Choose your transit</StepLabel>
             <StepContent>
-              <input
-                type="radio"
-                id="bus"
-                checked={isBus}
-                onChange={() => this.setState({ isBus: true })}
-              />
-              <label htmlFor="bus">Bus</label>
+              <div styleName="radioGroup">
+                <input
+                  type="radio"
+                  id="bus"
+                  styleName="radio"
+                  checked={isBus}
+                  onChange={() => this.setState({ isBus: true })}
+                />
+                <label styleName="label" htmlFor="bus">Bus</label>
+              </div>
 
-              <input
-                type="radio"
-                id="mrt"
-                checked={!isBus}
-                onChange={() => this.setState({ isBus: false })}
-              />
-              <label htmlFor="mrt">MRT</label>
+              <div styleName="radio">
+                <input
+                  type="radio"
+                  id="mrt"
+                  styleName="radio"
+                  checked={!isBus}
+                  onChange={() => this.setState({ isBus: false })}
+                />
+                <label styleName="label" htmlFor="mrt">MRT</label>
+              </div>
               { isBus &&
                 <AutoComplete
                   dataSource={Object.keys(buses)}
@@ -170,7 +177,7 @@ class VerticalLinearStepper extends React.Component {
             </StepContent>
           </Step>
         </Stepper>
-      </div>
+      </Paper>
     );
   }
 }

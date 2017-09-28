@@ -38,9 +38,9 @@ class Favourites extends React.Component {
 
   render() {
     const { currentTrip, startStop, endStop } = this.props;
-    const start = currentTrip.bus ? (startStop || {}).description : startStop;
-    const end = currentTrip.bus ? (endStop || {}).description : endStop;
-    const mrtString = currentTrip.bus ? '' : '+MRT+Station';
+    const start = (currentTrip || {}).bus ? (startStop || {}).description : startStop;
+    const end = (currentTrip || {}).bus ? (endStop || {}).description : endStop;
+    const mrtString = (currentTrip || {}).bus ? '' : '+MRT+Station';
     return (
       <div>
         {currentTrip ? this.renderTrip(start, end) : <span styleName="label">You have not started a journey</span>

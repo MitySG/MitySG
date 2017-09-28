@@ -1,9 +1,27 @@
 .home {
   max-width: 380px;
-  max-height: 400px;
+  max-height: 600px;
+  padding: 30px 15px;
   margin: auto;
+  background: #181818;
 }
 
 .nextAndBackButtons {
   margin: 12px;
+}
+
+.label {
+  margin-left: 20px;
+  color: white;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+.radio {
+  cursor: pointer;
+  line-height: 30px;
+}
+
+.radioGroup {
+  margin-top: 10px;
 }

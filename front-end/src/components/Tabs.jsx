@@ -17,6 +17,13 @@ const muiTheme = getMuiTheme({
     backgroundColor: '#220a32',
     unselectedColor: 'grey',
   },
+  stepper: {
+    textColor: 'white',
+    disabledTextColor: 'white',
+  },
+  paper: {
+    backgroundColor: '#181818',
+  },
 });
 
 

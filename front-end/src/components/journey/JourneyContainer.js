@@ -4,12 +4,12 @@ import { getBusArrival, getTrainArrival } from '../../actions';
 
 const mapStateToProps = state => ({
   currentTrip: state.currentTrip,
-  startStop: state.currentTrip.bus
+  startStop: (state.currentTrip || {}).bus
     ? state.busStops[(state.currentTrip || {}).start]
-    : state.currentTrip.start,
-  endStop: state.currentTrip.bus
+    : (state.currentTrip || {}).start,
+  endStop: (state.currentTrip || {}).bus
     ? state.busStops[(state.currentTrip || {}).end]
-    : state.currentTrip.end,
+    : (state.currentTrip || {}).end,
   trainStations: state.trainStations,
   eta: state.eta,
 });
