@@ -1,7 +1,10 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
 import FontIcon from 'material-ui/FontIcon';
+import Paper from 'material-ui/Paper';
 
 import Home from './search/HomeContainer';
 import Favourites from './favourites/FavouritesContainer';
@@ -9,8 +12,15 @@ import Journey from './journey/JourneyContainer';
 
 import './Tabs.css';
 
+const muiTheme = getMuiTheme({
+  bottomNavigation: {
+    backgroundColor: '#220a32',
+    unselectedColor: 'grey',
+  },
+});
+
 const App = props => (
-  <MuiThemeProvider>
+  <MuiThemeProvider muiTheme={muiTheme}>
     <div>
       <div styleName="tab">
         {props.slideIndex === 0 && <Home />}
@@ -18,15 +28,15 @@ const App = props => (
         {props.slideIndex === 2 && <Favourites />}
         {props.slideIndex === 3 && 'Settings'}
       </div>
-      <div styleName="navigation">
+      <Paper styleName="navigation">
         <BottomNavigation selectedIndex={props.slideIndex}>
           <BottomNavigationItem
-            icon={<FontIcon className="material-icons">search</FontIcon>}
+            icon={<FontIcon className="material-icons">home</FontIcon>}
             label="Home"
             onClick={() => props.setSlideIndex(0)}
           />
           <BottomNavigationItem
-            icon={<FontIcon className="material-icons">location_on</FontIcon>}
+            icon={<FontIcon className="material-icons">directions_bus</FontIcon>}
             label="Journey"
             onClick={() => props.setSlideIndex(1)}
           />
@@ -41,7 +51,7 @@ const App = props => (
             onClick={() => props.setSlideIndex(3)}
           />
         </BottomNavigation>
-      </div>
+      </Paper>
     </div>
   </MuiThemeProvider>
 );
