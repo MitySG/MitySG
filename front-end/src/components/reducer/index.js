@@ -6,6 +6,7 @@ import favourites from '../favourites/reducers/favourites';
 import slideIndex from './slideIndex';
 import notificationValue from './notificationValue';
 import currentTrip from './currentTrip';
+import eta from './eta';
 
 const reducer = combineReducers({
   buses,
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   notificationValue,
   currentTrip,
   trainStations,
+  eta,
 });
 
 export default reducer;

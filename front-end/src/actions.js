@@ -62,3 +62,12 @@ export const setCurrentTrip = (currentTrip, trainStations) => (dispatch) => {
     api.startBusTrip(currentTrip);
   }
 };
+
+export const getBusArrival = (start, end) => (dispatch) => {
+  api.getBusArrival(start, end).then((eta) => {
+    dispatch({
+      type: 'SET_ETA',
+      eta,
+    });
+  });
+};
