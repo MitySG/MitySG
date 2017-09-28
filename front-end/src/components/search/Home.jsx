@@ -163,7 +163,7 @@ class VerticalLinearStepper extends React.Component {
                 isLast
                 onNext={() => {
                   this.props.setSlideIndex(1);
-                  this.props.setCurrentTrip(this.getTrip());
+                  this.props.setCurrentTrip(this.getTrip(), trainStations);
                 }}
                 onPrev={() => this.onPrev()}
               />

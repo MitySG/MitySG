@@ -47,13 +47,17 @@ export const setNotificationValue = value => ({
   value,
 });
 
-export const setCurrentTrip = currentTrip => (dispatch) => {
+export const setCurrentTrip = (currentTrip, trainStations) => (dispatch) => {
   dispatch({
     type: 'SET_CURRENT_TRIP',
     currentTrip,
   });
   if (currentTrip.bus === undefined) {
-    api.startTrainTrip(currentTrip);
+    api.startTrainTrip({
+      timeBeforeArrivalToNotify: currentTrip.timeBeforeArrivalToNotify,
+      start: (trainStations[currentTrip.start] || {}).id,
+      end: (trainStations[currentTrip.end] || {}).id,
+    });
   } else {
     api.startBusTrip(currentTrip);
   }

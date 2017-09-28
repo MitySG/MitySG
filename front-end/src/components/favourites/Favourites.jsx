@@ -4,7 +4,7 @@ import Button from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
 import TripInfo from '../journey/TripInfo';
 
-const Favourites = ({ favourites, busStops, removeFromFavourites, setCurrentTrip, setSlideIndex }) => (
+const Favourites = ({ favourites, busStops, trainStations, removeFromFavourites, setCurrentTrip, setSlideIndex }) => (
   <List>
     {favourites.map((favourite) => {
       const favouriteStringified = JSON.stringify(favourite);
@@ -22,7 +22,7 @@ const Favourites = ({ favourites, busStops, removeFromFavourites, setCurrentTrip
           <Button
             label="Start"
             onClick={() => {
-              setCurrentTrip(favourite);
+              setCurrentTrip(favourite, trainStations);
               setSlideIndex(1);
             }}
           >

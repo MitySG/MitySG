@@ -5,6 +5,7 @@ import { removeFromFavourites, setCurrentTrip, setSlideIndex } from '../../actio
 const mapStateToProps = state => ({
   favourites: state.favourites,
   busStops: state.busStops,
+  trainStations: state.trainStations,
 });
 
 export default connect(
