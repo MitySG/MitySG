@@ -52,4 +52,5 @@ export const setCurrentTrip = currentTrip => (dispatch) => {
     type: 'SET_CURRENT_TRIP',
     currentTrip,
   });
+  api.startBusTrip(currentTrip);
 };
