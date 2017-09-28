@@ -16,4 +16,5 @@ export default {
   getBusStops: () => get('busStops'),
   startBusTrip: ({ bus, start, stop, timeBeforeArrivalToNotify }) =>
     post(`busTracker/${bus}?start=${start}&end=${stop}&alert=${timeBeforeArrivalToNotify}`, push.subscribe()),
+  getTrainStations: () => get('trainStations'),
 };
