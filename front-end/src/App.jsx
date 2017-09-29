@@ -22,11 +22,11 @@ const store = createStore(
   reducer,
   compose(
     applyMiddleware(...middleware),
-    autoRehydrate(),
+  //  autoRehydrate(),
   ),
 );
 
-persistStore(store);
+// persistStore(store);
 
 // store.dispatch(getBuses);
 // store.dispatch(getBusStops);

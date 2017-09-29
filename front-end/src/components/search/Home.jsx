@@ -16,6 +16,11 @@ import StepButtons from './StepButtonsContainer';
 
 const emptyLabel = { label: '' };
 class VerticalLinearStepper extends React.Component {
+  constructor(props) {
+    super(props);
+    window.ga('set', 'page', '/Home');
+  }
+
   state = {
     stepIndex: 0,
     selectedBus: emptyLabel,

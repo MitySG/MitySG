@@ -5,7 +5,12 @@ import './Journey.css';
 
 const API_KEY = 'AIzaSyA2AhaWAntXpasV6qrmiugcvBwaXDIyAls';
 
-class Favourites extends React.Component {
+class Journey extends React.Component {
+  constructor(props) {
+    super(props);
+    window.ga('set', 'page', '/Journey');
+  }
+
   componentDidMount() {
     this.getArrivalTime();
     setInterval(() => {
@@ -70,4 +75,4 @@ class Favourites extends React.Component {
   }
 }
 
-export default Favourites;
+export default Journey;
