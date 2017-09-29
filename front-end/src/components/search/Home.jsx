@@ -8,6 +8,7 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Slider from './Slider';
 import AutoComplete from './AutoComplete';
 import './Home.css';
@@ -60,27 +61,22 @@ class VerticalLinearStepper extends React.Component {
           <Step>
             <StepLabel>Choose your transit</StepLabel>
             <StepContent>
-              <div styleName="radioGroup">
-                <input
-                  type="radio"
-                  id="bus"
-                  styleName="radio"
-                  checked={isBus}
-                  onChange={() => this.setState({ isBus: true })}
+              <RadioButtonGroup
+                name="BusOrMRT"
+                defaultSelected="Bus"
+                onChange={(e, value) => {
+                  this.setState({ isBus: value === 'Bus' });
+                }}
+              >
+                <RadioButton
+                  value="Bus"
+                  label="Bus"
                 />
-                <label styleName="label" htmlFor="bus">Bus</label>
-              </div>
-
-              <div styleName="radio">
-                <input
-                  type="radio"
-                  id="mrt"
-                  styleName="radio"
-                  checked={!isBus}
-                  onChange={() => this.setState({ isBus: false })}
+                <RadioButton
+                  value="MRT"
+                  label="MRT"
                 />
-                <label styleName="label" htmlFor="mrt">MRT</label>
-              </div>
+              </RadioButtonGroup>
               { isBus &&
                 <AutoComplete
                   data={Object.keys(buses)}
