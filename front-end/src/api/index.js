@@ -16,9 +16,9 @@ export default {
   getBusStops: () => get('busStops'),
   getBusArrival: (start, end) => get(`busTiming/${start.latitude},${start.longitude}/${end.latitude},${end.longitude}/`),
   getTrainArrival: (start, end) => get(`trainTiming/${start}/${end}`),
-  startBusTrip: ({ bus, start, stop, timeBeforeArrivalToNotify }) => push.subscribe(subscription =>
-    post(`busTracker/${bus}?start=${start}&end=${stop}&alert=${timeBeforeArrivalToNotify}`, subscription.toJSON())),
-  startTrainTrip: ({ start, stop, timeBeforeArrivalToNotify }) => push.subscribe(subscription =>
-    post(`trainTracker/${start}/${stop}?alert=${timeBeforeArrivalToNotify}`, subscription.toJSON())),
+  startBusTrip: ({ bus, start, end, timeBeforeArrivalToNotify }) => push.subscribe(subscription =>
+    post(`busTracker/${bus}?start=${start}&end=${end}&alert=${timeBeforeArrivalToNotify}`, subscription.toJSON())),
+  startTrainTrip: ({ start, end, timeBeforeArrivalToNotify }) => push.subscribe(subscription =>
+    post(`trainTracker/${start}/${end}?alert=${timeBeforeArrivalToNotify}`, subscription.toJSON())),
   getTrainStations: () => get('trainStations'),
 };
