@@ -28,9 +28,9 @@ const store = createStore(
 
 persistStore(store);
 
-// store.dispatch(getBuses);
-// store.dispatch(getBusStops);
-// store.dispatch(getTrainStations);
+store.dispatch(getBuses);
+store.dispatch(getBusStops);
+store.dispatch(getTrainStations);
 
 function App() {
   return (
