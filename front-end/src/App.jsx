@@ -9,11 +9,11 @@ import createHistory from 'history/createBrowserHistory';
 import { persistStore, autoRehydrate } from 'redux-persist';
 
 
-import Tabs from './components/TabsContainer';
-import reducer from './components/reducer';
+import Tabs from './components/tabs/TabsContainer';
+import reducer from './reducers';
 import { getBuses, getBusStops, getTrainStations } from './actions';
 
-import * as GA from './api/analytics';
+import * as GA from './actions/googleAnalytics';
 
 GA.initialize('UA-107231469-1');
 

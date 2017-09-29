@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.2",
-    "autosuggest-highlight": "^3.1.0",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
@@ -37,7 +36,6 @@
     "promise": "8.0.1",
     "prop-types": "^15.6.0",
     "react": "^15.6.1",
-    "react-autosuggest": "^9.3.2",
     "react-dev-utils": "^3.1.0",
     "react-dom": "^15.6.1",
     "react-error-overlay": "^1.0.10",

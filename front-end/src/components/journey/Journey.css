@@ -1,13 +1,26 @@
+.paper {
+  max-width: 370px;
+  padding: 20px;
+  margin: auto;
+  margin-top: 20px;
+}
+
 .label {
-  font-weight: bold;
+  text-align: center;
 }
 
-.map {
+.trip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.mapframe {
-  position: absolute;
-  bottom: 56px;
-  width: 100%;
-  height: 80%;
+.data {
+  color: #2ab7ca;
+}
+
+.eta {
+  margin-top: 10px;
+  text-align: center;
+  padding: 10px 5px;
 }

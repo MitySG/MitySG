@@ -1,0 +1,15 @@
+.paper {
+  max-width: 370px;
+  padding: 25px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 2em;
+}
+
+.link {
+  color: grey;
+}

@@ -15,11 +15,11 @@ function buildApplicationServerKey() {
 
 function sendSubscriptionToServer(subscription) {
   const xhr = new XMLHttpRequest();
-  const url = "https://huy3vicolc.execute-api.us-east-1.amazonaws.com/dev/subscribe";
-  xhr.open("POST", url, true);
+  const url = 'https://huy3vicolc.execute-api.us-east-1.amazonaws.com/dev/subscribe';
+  xhr.open('POST', url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   xhr.send(JSON.stringify(subscription.toJSON()));
-  console.log("Subscription Sent")
+  console.log('Subscription Sent');
   console.log(JSON.stringify(subscription.toJSON()));
   xhr.onload = function () {
     console.log(this.responseText);
@@ -92,9 +92,9 @@ const subscribe = function (callback) {
   function permissionGranted(callback) {
     navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
       serviceWorkerRegistration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: buildApplicationServerKey(),
-        })
+        userVisibleOnly: true,
+        applicationServerKey: buildApplicationServerKey(),
+      })
         .then((subscription) => {
           callback(subscription);
           emitter.emit(SUBSCRIBED);
@@ -138,7 +138,7 @@ const unsubscribe = function () {
         }).catch((error) => {
           console.error('Unable to unsubscribe to messaging server.', error);
           emitter.emit(ERROR,
-            'An error occurred while logging off to the external notification service.'
+            'An error occurred while logging off to the external notification service.',
           );
         });
         removeSubscriptionFromServer();

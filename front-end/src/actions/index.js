@@ -1,4 +1,5 @@
 import api from './api';
+import push from '../push';
 
 export const getBuses = (dispatch) => {
   api.getBuses().then((buses) => {
@@ -48,10 +49,12 @@ export const setNotificationValue = value => ({
 });
 
 export const setCurrentTrip = (currentTrip, trainStations) => (dispatch) => {
+  push.unsubscribe();
   dispatch({
     type: 'SET_CURRENT_TRIP',
     currentTrip,
   });
+  if (!currentTrip) return;
   if (currentTrip.bus === undefined) {
     api.startTrainTrip({
       timeBeforeArrivalToNotify: currentTrip.timeBeforeArrivalToNotify,
@@ -80,3 +83,13 @@ export const getTrainArrival = (start, end) => (dispatch) => {
     });
   });
 };
+
+export const setCurrentCoords = coords => ({
+  type: 'SET_CURRENT_COORDS',
+  coords,
+});
+
+export const setNearestStop = stop => ({
+  type: 'SET_NEAREST_STOP',
+  stop,
+});

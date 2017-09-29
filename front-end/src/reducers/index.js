@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
-import buses from '../buses/reducers/buses';
-import trainStations from '../buses/reducers/trainStations';
-import busStops from '../buses/reducers/busStops';
-import favourites from '../favourites/reducers/favourites';
+import buses from './buses';
+import trainStations from './trainStations';
+import busStops from './busStops';
+import favourites from '../components/favourites/reducers/favourites';
 import slideIndex from './slideIndex';
 import notificationValue from './notificationValue';
 import currentTrip from './currentTrip';
 import eta from './eta';
+import currentCoords from '../components/journey/reducers/currentCoords';
+import nearestStop from '../components/journey/reducers/nearestStop';
 
 const reducer = combineReducers({
   buses,
@@ -17,6 +19,8 @@ const reducer = combineReducers({
   currentTrip,
   trainStations,
   eta,
+  currentCoords,
+  nearestStop,
 });
 
 export default reducer;

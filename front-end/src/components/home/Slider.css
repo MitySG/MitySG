@@ -5,6 +5,7 @@
 .title {
   color: rgb(0, 188, 212);
   margin-top: 20px;
+  font-size: 0.8em;
 }
 
 .slider {
@@ -15,5 +16,4 @@
 
 .label {
   margin-top: 23px;
-  font-weight: bold;
 }

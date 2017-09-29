@@ -7,11 +7,11 @@ import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNaviga
 import FontIcon from 'material-ui/FontIcon';
 import Paper from 'material-ui/Paper';
 
-import Home from './search/HomeContainer';
-import Favourites from './favourites/FavouritesContainer';
-import Journey from './journey/JourneyContainer';
-import WelcomeScreen from './search/WelcomeScreen';
-
+import Home from '../home/HomeContainer';
+import Favourites from '../favourites/FavouritesContainer';
+import Journey from '../journey/JourneyContainer';
+import WelcomeScreen from '../home/WelcomeScreen';
+import About from '../about/About';
 
 import './Tabs.css';
 
@@ -25,6 +25,10 @@ const muiTheme = getMuiTheme({
     disabledTextColor: 'grey',
   },
   paper: {
+    backgroundColor: '#181818',
+  },
+  snackbar: {
+    textColor: 'white',
     backgroundColor: '#181818',
   },
 });
@@ -43,7 +47,7 @@ class App extends React.Component {
     window.removeEventListener('onorientationchange', this.calcVH);
   }
 
-  calcVH() {
+  calcVH() { // https://stackoverflow.com/questions/39384154/calculating-viewport-height-on-chrome-android-with-css
     const vH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     this.ref.setAttribute('style', `height:${vH}px;`);
   }
@@ -60,9 +64,9 @@ class App extends React.Component {
                 : <Home />)}
             {props.slideIndex === 1 && <Journey />}
             {props.slideIndex === 2 && <Favourites />}
-            {props.slideIndex === 3 && 'Settings'}
+            {props.slideIndex === 3 && <About />}
           </div>
-          <Paper>
+          <Paper styleName={props.slideIndex === 2 ? 'nav' : ''}>
             <BottomNavigation selectedIndex={props.slideIndex}>
               <BottomNavigationItem
                 icon={<FontIcon className="material-icons">home</FontIcon>}
@@ -80,8 +84,8 @@ class App extends React.Component {
                 onClick={() => props.setSlideIndex(2)}
               />
               <BottomNavigationItem
-                icon={<FontIcon className="material-icons">settings</FontIcon>}
-                label="Settings"
+                icon={<FontIcon className="material-icons">info</FontIcon>}
+                label="About"
                 onClick={() => props.setSlideIndex(3)}
               />
             </BottomNavigation>

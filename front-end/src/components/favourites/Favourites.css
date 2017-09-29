@@ -1,0 +1,31 @@
+.paper {
+  max-width: 370px;
+  padding: 10px 10px 20px 10px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.container {
+  overflow-y: auto;
+}
+
+.title {
+  text-align: center;
+  font-size: 2em;
+}
+
+.list {
+
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 10px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

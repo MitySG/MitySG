@@ -4,9 +4,9 @@ import FlatButton from 'material-ui/FlatButton';
 import './StepButtons.css';
 
 const StepButtons = props => (
-  <div styleName={props.isLast ? '' : 'nextAndBackButtons'}>
+  <div>
     <RaisedButton
-      label={props.isLast ? 'Begin Journey' : 'Next'}
+      label={props.label || 'Next'}
       disableTouchRipple
       disableFocusRipple
       primary
