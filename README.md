@@ -25,4 +25,8 @@
 	* Setup Digital Ocean Hosing for Rest API Server
 	* Setup domain name and SSL encryption for the webpage
 * Wang Riwu (A0135766W)
-    * Worked on front-end React code
+    * Front-end developer
+	* Implemented all design mockups for the front-end
+	* Implemented front-end logic
+	* Implemented front-end API integration with back-end
+	* Added Google Analytics
