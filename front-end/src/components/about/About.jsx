@@ -32,9 +32,8 @@ class About extends React.Component {
           ))}
           {' between 10 Sep 2017 to 30 Sep 2017 for '}
           <a styleName="link" target="_blank" rel="noreferrer noopener" href="http://www.cs3216.com/coursework/mobile/">CS3216 assignment 3</a>.
-          <p>You can contact us <a styleName="link" target="_blank" rel="noreferrer noopener" href="https://github.com/MitySG/MitySG/issues">here</a>.</p>
         </p>
-
+        <p>You can contact us <a styleName="link" target="_blank" rel="noreferrer noopener" href="https://github.com/MitySG/MitySG/issues">here</a>.</p>
       </Paper>
     );
   }

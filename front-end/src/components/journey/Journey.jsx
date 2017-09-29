@@ -59,6 +59,11 @@ class Journey extends React.Component {
         ? this.props.startStop
         : this.props.trainStations[this.props.startStop]);
     }
+
+    this.checkIfTripExpired();
+    window.onfocus = () => {
+      this.checkIfTripExpired();
+    };
   }
 
   getArrivalTime(start) {
@@ -67,6 +72,13 @@ class Journey extends React.Component {
       this.props.getBusArrival(start, this.props.endStop);
     } else {
       this.props.getTrainArrival(start.id, (this.props.trainStations[this.props.endStop] || {}).id);
+    }
+  }
+
+  checkIfTripExpired() {
+    const currentTrip = this.props.currentTrip;
+    if (currentTrip && (Date.now() - currentTrip.started > 120 * 60000)) {
+      this.props.setCurrentTrip(null);
     }
   }
 

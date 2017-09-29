@@ -52,7 +52,10 @@ export const setCurrentTrip = (currentTrip, trainStations) => (dispatch) => {
   push.unsubscribe();
   dispatch({
     type: 'SET_CURRENT_TRIP',
-    currentTrip,
+    currentTrip: currentTrip && {
+      ...currentTrip,
+      started: Date.now(),
+    },
   });
   if (!currentTrip) return;
   if (currentTrip.bus === undefined) {
