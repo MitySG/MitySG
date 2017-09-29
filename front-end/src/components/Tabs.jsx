@@ -1,6 +1,7 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 
 import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
 import FontIcon from 'material-ui/FontIcon';
@@ -13,13 +14,13 @@ import Journey from './journey/JourneyContainer';
 import './Tabs.css';
 
 const muiTheme = getMuiTheme({
+  ...darkBaseTheme,
   bottomNavigation: {
     backgroundColor: '#220a32',
-    unselectedColor: 'grey',
   },
   stepper: {
     textColor: 'white',
-    disabledTextColor: 'white',
+    disabledTextColor: 'grey',
   },
   paper: {
     backgroundColor: '#181818',

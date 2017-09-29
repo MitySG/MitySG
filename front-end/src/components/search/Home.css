@@ -1,9 +1,7 @@
 .home {
   max-width: 380px;
-  max-height: 600px;
   padding: 30px 15px;
   margin: auto;
-  background: #181818;
 }
 
 .nextAndBackButtons {

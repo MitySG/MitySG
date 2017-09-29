@@ -13,12 +13,13 @@ import AutoComplete from './AutoComplete';
 import './Home.css';
 import StepButtons from './StepButtonsContainer';
 
+const emptyLabel = { label: '' };
 class VerticalLinearStepper extends React.Component {
   state = {
     stepIndex: 0,
-    selectedBus: undefined,
-    selectedStart: {},
-    selectedEnd: {},
+    selectedBus: emptyLabel,
+    selectedStart: emptyLabel,
+    selectedEnd: emptyLabel,
     isBus: true,
   };
 
@@ -38,7 +39,7 @@ class VerticalLinearStepper extends React.Component {
 
   getTrip() {
     return {
-      bus: this.state.isBus ? this.state.selectedBus : undefined,
+      bus: this.state.isBus ? this.state.selectedBus.value : undefined,
       start: this.state.selectedStart.value,
       end: this.state.selectedEnd.value,
       timeBeforeArrivalToNotify: this.props.notificationValue,
@@ -49,11 +50,10 @@ class VerticalLinearStepper extends React.Component {
     const { isBus, selectedBus } = this.state;
     const { buses, busStops, trainStations } = this.props;
 
-    const stopOptions = isBus ? (buses[selectedBus] || []).map(code => ({
-      text: (busStops[code] || {}).description,
-      value: code,
-    })) : Object.keys(trainStations);
-    const stops = isBus ? buses[selectedBus] : stopOptions;
+    const stopOptions = isBus
+      ? (buses[selectedBus.value] || []).map(code => (busStops[code] || {}).description)
+      : Object.keys(trainStations);
+    const stops = isBus ? buses[selectedBus.value] : stopOptions;
     return (
       <Paper styleName="home" zDepth={3}>
         <Stepper activeStep={this.state.stepIndex} orientation="vertical">
@@ -83,15 +83,29 @@ class VerticalLinearStepper extends React.Component {
               </div>
               { isBus &&
                 <AutoComplete
-                  dataSource={Object.keys(buses)}
-                  floatingLabelText="Bus Service Number"
-                  hintText="Enter bus number"
-                  onUpdateInput={text => this.setState({
-                    selectedBus: text,
-                    selectedStart: {},
-                    selectedEnd: {},
-                  })}
-                  searchText={selectedBus}
+                  data={Object.keys(buses)}
+                  inputProps={{
+                    placeholder: 'Enter bus number',
+                    value: selectedBus.label,
+                    onChange: (e, { newValue }) => {
+                      // somewhat hackish, but works
+                      // since there's at most one letter in bus service number
+                      let value;
+                      if (buses[newValue.toLowerCase()]) {
+                        value = newValue.toLowerCase();
+                      } else if (buses[newValue.toUpperCase()]) {
+                        value = newValue.toUpperCase();
+                      }
+                      this.setState({
+                        selectedBus: {
+                          label: newValue,
+                          value,
+                        },
+                        selectedStart: emptyLabel,
+                        selectedEnd: emptyLabel,
+                      });
+                    },
+                  }}
                 />
               }
               <StepButtons
@@ -104,19 +118,20 @@ class VerticalLinearStepper extends React.Component {
             <StepLabel>Select starting stop</StepLabel>
             <StepContent>
               <AutoComplete
-                dataSource={stopOptions}
-                floatingLabelText={isBus ? 'Starting bus stop' : 'Starting train station'}
-                hintText={isBus ? 'Enter bus stop' : 'Enter train station'}
-                onUpdateInput={(text) => {
-                  this.setState({
-                    selectedStart: {
-                      text,
-                      value: this.getCode(stops, text),
-                    },
-                    selectedEnd: {},
-                  });
+                data={stopOptions}
+                inputProps={{
+                  placeholder: isBus ? 'Enter bus stop' : 'Enter train station',
+                  value: this.state.selectedStart.label,
+                  onChange: (e, { newValue }) => {
+                    this.setState({
+                      selectedStart: {
+                        label: newValue,
+                        value: this.getCode(stops, newValue),
+                      },
+                      selectedEnd: emptyLabel,
+                    });
+                  },
                 }}
-                searchText={this.state.selectedStart.text}
               />
               <StepButtons
                 nextDisabled={this.state.selectedStart.value === undefined}
@@ -129,20 +144,20 @@ class VerticalLinearStepper extends React.Component {
             <StepLabel>Select destination</StepLabel>
             <StepContent>
               <AutoComplete
-                dataSource={stopOptions.filter(option =>
-                  (isBus ? option.value : option) !== this.state.selectedStart.value)
-                }
-                floatingLabelText="Destination stop"
-                hintText="Enter bus stop"
-                onUpdateInput={(text) => {
-                  this.setState({
-                    selectedEnd: {
-                      text,
-                      value: this.getCode(stops, text),
-                    },
-                  });
+                data={stopOptions.filter(option => option.toLowerCase() !==
+                  this.state.selectedStart.label.toLowerCase())}
+                inputProps={{
+                  placeholder: isBus ? 'Enter bus stop' : 'Enter train station',
+                  value: this.state.selectedEnd.label,
+                  onChange: (e, { newValue }) => {
+                    this.setState({
+                      selectedEnd: {
+                        label: newValue,
+                        value: this.getCode(stops, newValue),
+                      },
+                    });
+                  },
                 }}
-                searchText={this.state.selectedEnd.text}
               />
               <StepButtons
                 nextDisabled={this.state.selectedEnd.value === undefined}
