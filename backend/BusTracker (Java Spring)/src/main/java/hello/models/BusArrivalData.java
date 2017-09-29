@@ -12,8 +12,8 @@ public class BusArrivalData {
     String originCode;
     String destinationCode;
     String estimatedArrival;
-    float latitude;
-    float longitude;
+    double latitude;
+    double longitude;
     public String getOriginCode() {
         return originCode;
     }
@@ -38,7 +38,7 @@ public class BusArrivalData {
     public void setEstimatedArrival(String estimatedArrival) {
         this.estimatedArrival = estimatedArrival;
     }
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
     public void setLatitude(String latitude) {
@@ -48,7 +48,7 @@ public class BusArrivalData {
             this.latitude = Float.parseFloat(latitude);
         }
     }
-    public float getLongitude() {
+    public double getLongitude() {
         return this.longitude;
     }
 

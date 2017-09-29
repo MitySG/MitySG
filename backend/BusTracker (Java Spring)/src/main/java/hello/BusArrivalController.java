@@ -18,7 +18,7 @@ public class BusArrivalController {
 
     @RequestMapping("/busArrival/{service}")
     public BusArrivalDataContainer busArrival(@RequestParam(value="stop") String stop,
-                                        @PathVariable(value="service") String service) {
+                                                @PathVariable(value="service") String service) {
         BusArrivalRequest request = new BusArrivalRequest(stop, service);
 
         return getBusArrivalAPI(request);
