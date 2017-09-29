@@ -1,4 +1,4 @@
-# MitySG - CS3216 Assignment 3
+# MitySG - CS3216 Assignment 3 (Group 7)
 
 ‘MitySG: Am I There Yet?’ is a localised public transport notification web app that allows commuters to be glued to their screens and yet be aware about their transit arrival. Doing away with simply listing bus arrival timings, ‘MitySG’ pushes notifications the user when their user’s bus is arriving and when they are arriving at their destination (both Bus and MRT).
 
@@ -14,6 +14,8 @@
 	* Data Scraping and Data Collection for Bus Stops & Stations
 	* Consumption of REST APIs from LTA, Google Maps and busrouter.sg
 	* Algorithm to track buses based on LTA's API
+	* REST Endpoints for most backend calls
+	* Serialization and Deserialization of the JSON data
 	* Request to Push Server for Push Notification
 * Oh Han Gyeol (A0144061U)
     * Setup on Push Notification Server
