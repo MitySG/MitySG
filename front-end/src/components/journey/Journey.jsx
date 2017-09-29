@@ -1,4 +1,5 @@
 import React from 'react';
+import Paper from 'material-ui/Paper';
 import TripInfo from './TripInfo';
 import './Journey.css';
 
@@ -43,8 +44,10 @@ class Favourites extends React.Component {
     const mrtString = (currentTrip || {}).bus ? '' : '+MRT+Station';
     return (
       <div>
-        {currentTrip ? this.renderTrip(start, end) : <span styleName="label">You have not started a journey</span>
-        }
+        <Paper zDepth={3}>
+          {currentTrip ? this.renderTrip(start, end) : <span styleName="label">You have not started a journey</span>
+          }
+        </Paper>
         <div styleName="map">
           <iframe
             styleName="mapframe"
