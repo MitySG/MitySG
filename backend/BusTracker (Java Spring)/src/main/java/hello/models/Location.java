@@ -1,9 +1,9 @@
 package hello.models;
 
 public class Location {
-    public float lat, lon;
+    public double lat, lon;
 
-    public Location(float lat, float lon) {
+    public Location(double lat, double lon) {
         this.lat = lat;
         this.lon = lon;
     }
