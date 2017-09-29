@@ -1,26 +1,44 @@
-.home {
-  max-width: 380px;
+.paper {
+  max-width: 260px;
   margin: auto;
+  text-align: center;
+  padding: 10px;
 }
 
-.container {
-  align-items: center;
-  align-self: center;
-  align-content: center;
-  margin: auto;
-  max-width: 380px;
+.steps {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.underscore {
+  text-align: center;
+  font-style: italic;
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.title {
+  text-align: center;
+  font-style: italic;
+  color: white;
+  font-size: 40px;
+  margin-top: 20px;
 }
 
 .image {
+  margin: auto;
   width: 200px;
   height:100px;
-  background: url(../../images/logo.png);
-  opacity: 0.5;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
+  background-image: url(../../images/logo.png);
   z-index: -1;
   content: '';
+}
+
+.bottomText {
+  color: grey;
+  font-style: italic;
+  font-size: 0.8em;
+  margin-top: 8px;
 }
