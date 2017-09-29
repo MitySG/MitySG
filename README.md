@@ -8,6 +8,7 @@
 * Chan Jin Jia (A0156579L)
     * UI/UX Designer
     * Created Mockups of the Application
+	* Designed assets and logos
     * Handled logic for UX Flow
 * Jeremy Jee De Sheng (A0139963N)
     * Setup Java Spring Backend REST Server
