@@ -1,0 +1,26 @@
+.home {
+  max-width: 380px;
+  margin: auto;
+}
+
+.container {
+  align-items: center;
+  align-self: center;
+  align-content: center;
+  margin: auto;
+  max-width: 380px;
+}
+
+.image {
+  width: 200px;
+  height:100px;
+  background: url(../../images/logo.png);
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+  content: '';
+}

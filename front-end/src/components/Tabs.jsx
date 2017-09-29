@@ -10,6 +10,8 @@ import Paper from 'material-ui/Paper';
 import Home from './search/HomeContainer';
 import Favourites from './favourites/FavouritesContainer';
 import Journey from './journey/JourneyContainer';
+import WelcomeScreen from './search/WelcomeScreen';
+
 
 import './Tabs.css';
 
@@ -29,6 +31,9 @@ const muiTheme = getMuiTheme({
 
 
 class App extends React.Component {
+  state = {
+    isAtWelcomeScreen: true,
+  }
   componentDidMount() {
     this.calcVH();
     window.addEventListener('onorientationchange', this.calcVH);
@@ -49,7 +54,10 @@ class App extends React.Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div styleName="container" ref={(ref) => { this.ref = ref; }}>
           <div styleName="tab">
-            {props.slideIndex === 0 && <Home />}
+            {props.slideIndex === 0 &&
+              (this.state.isAtWelcomeScreen
+                ? <WelcomeScreen onBeginJourney={() => this.setState({ isAtWelcomeScreen: false })} />
+                : <Home />)}
             {props.slideIndex === 1 && <Journey />}
             {props.slideIndex === 2 && <Favourites />}
             {props.slideIndex === 3 && 'Settings'}

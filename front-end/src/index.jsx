@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import push from './push';
 
 const render = (Component) => {
   ReactDOM.render(
