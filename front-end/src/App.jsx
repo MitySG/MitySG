@@ -13,6 +13,10 @@ import Tabs from './components/TabsContainer';
 import reducer from './components/reducer';
 import { getBuses, getBusStops, getTrainStations } from './actions';
 
+import * as GA from './api/analytics';
+
+GA.initialize('UA-107231469-1');
+
 const middleware = [thunk, routerMiddleware(createHistory())];
 const store = createStore(
   reducer,
@@ -24,9 +28,9 @@ const store = createStore(
 
 persistStore(store);
 
-store.dispatch(getBuses);
-store.dispatch(getBusStops);
-store.dispatch(getTrainStations);
+// store.dispatch(getBuses);
+// store.dispatch(getBusStops);
+// store.dispatch(getTrainStations);
 
 function App() {
   return (
