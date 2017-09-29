@@ -19,8 +19,7 @@
 
 .suggestionsContainerOpen {
   display: block;
-  position: fixed;
-  top: 221px;
+  position: relative;
   width: 200px;
   border: 1px solid #aaa;
   background-color: #fff;
