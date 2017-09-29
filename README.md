@@ -16,8 +16,10 @@
 	* Algorithm to track buses based on LTA's API
 	* Request to Push Server for Push Notification
 * Oh Han Gyeol (A0144061U)
-    * Worked on Push Notification Server
+    * Setup on Push Notification Server
 	* Worked on Service Workers
-	* Worked on Push Subscription Service
+	* Worked on Push Notification Service
+	* Setup Digital Ocean Hosing for Rest API Server
+	* Setup domain name and SSL encryption for the webpage
 * Wang Riwu (A0135766W)
     * Worked on front-end React code
