@@ -4,7 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import { StepLabel } from 'material-ui/Stepper';
 import './WelcomeScreen.css';
-import Logo from '../../images/logo.png';
 
 class WelcomeScreen extends React.Component {
   static childContextTypes = { stepper: PropTypes.object };

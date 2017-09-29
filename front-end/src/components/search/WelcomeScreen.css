@@ -31,9 +31,7 @@
   margin: auto;
   width: 200px;
   height:100px;
-  background-image: url(../../images/logo.png);
-  z-index: -1;
-  content: '';
+  background-image: url(../../images/logo-200-100.png);
 }
 
 .bottomText {
