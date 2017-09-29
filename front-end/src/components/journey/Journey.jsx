@@ -7,18 +7,23 @@ const API_KEY = 'AIzaSyA2AhaWAntXpasV6qrmiugcvBwaXDIyAls';
 
 class Favourites extends React.Component {
   componentDidMount() {
+    this.getArrivalTime();
     setInterval(() => {
-      if (this.props.currentTrip.bus) {
-        this.props.getBusArrival(this.props.startStop, this.props.endStop);
-      } else {
-        this.props.getTrainArrival((this.props.trainStations[this.props.startStop] || {}).id,
-          (this.props.trainStations[this.props.endStop] || {}).id);
-      }
+      this.getArrivalTime();
     }, 60000);
   }
 
+  getArrivalTime() {
+    if (this.props.currentTrip.bus) {
+      this.props.getBusArrival(this.props.startStop, this.props.endStop);
+    } else {
+      this.props.getTrainArrival((this.props.trainStations[this.props.startStop] || {}).id,
+        (this.props.trainStations[this.props.endStop] || {}).id);
+    }
+  }
+
   renderTrip(start, end) {
-    if (!this.props.eta) {
+    if (this.props.eta === null) {
       return (
         <div>
           Trip is not available
