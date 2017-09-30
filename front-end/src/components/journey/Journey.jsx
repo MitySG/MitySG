@@ -44,42 +44,60 @@ class Journey extends React.Component {
         latitude: coords.latitude,
         longitude: coords.longitude,
       });
-      if (this.props.currentTrip && this.props.busStops && this.props.trainStations) {
-        const stops = this.props.currentTrip.bus ? this.props.busStops : this.props.trainStations;
-        const [key, nearestStop] = getNearestStop(coords, stops);
-        this.props.setNearestStop(this.props.currentTrip.bus ? nearestStop.description : key);
-        this.getArrivalTime(nearestStop);
-      }
+      this.getArrivalTime(coords);
     });
-  }
 
-  componentDidMount() {
-    if (!this.props.currentCoords.latitude && this.props.currentTrip) {
-      this.getArrivalTime(this.props.currentTrip.bus
-        ? this.props.startStop
-        : this.props.trainStations[this.props.startStop]);
-    }
-
-    this.checkIfTripExpired();
     window.onfocus = () => {
-      this.checkIfTripExpired();
+      this.isCurrentTripValid();
     };
   }
 
-  getArrivalTime(start) {
-    if (!this.props.currentTrip || !start) return;
-    if (this.props.currentTrip.bus) {
-      this.props.getBusArrival(start, this.props.endStop);
-    } else {
-      this.props.getTrainArrival(start.id, (this.props.trainStations[this.props.endStop] || {}).id);
+  componentWillMount() {
+    if (this.isCurrentTripValid()) {
+      if (this.props.currentCoords.latitude) {
+        this.getArrivalTimeFromCoords();
+      } else {
+        this.getArrivalTime(this.props.currentTrip.bus
+          ? this.props.startStop
+          : this.props.trainStations[this.props.startStop]);
+      }
     }
   }
 
-  checkIfTripExpired() {
+  getArrivalTimeFromCoords(coords = this.props.currentCoords) {
+    if (this.props.currentTrip && this.props.busStops && this.props.trainStations) {
+      const [busCode, busStop] = getNearestStop(coords, this.props.busStops);
+      const [trainName, trainStation] = getNearestStop(coords, this.props.trainStations);
+      this.props.setNearestStop({
+        bus: busStop.description,
+        mrt: trainName,
+      });
+
+      this.getArrivalTime(this.props.currentTrip.bus ? busStop : trainStation);
+    }
+  }
+
+  getArrivalTime(start) {
+    if (!start || !this.props.currentTrip) {
+      return;
+    }
+    if (this.props.currentTrip.bus) {
+      this.props.getBusArrival(start, this.props.endStop);
+    } else {
+      this.props.getTrainArrival(start.id,
+        (this.props.trainStations[this.props.endStop] || {}).id);
+    }
+  }
+
+  isCurrentTripValid() {
     const currentTrip = this.props.currentTrip;
-    if (currentTrip && (Date.now() - currentTrip.started > 120 * 60000)) {
+    if (currentTrip) {
+      if (Date.now() - currentTrip.started < 120 * 60000) {
+        return true;
+      }
       this.props.setCurrentTrip(null);
     }
+    return false;
   }
 
   renderTrip(start, end) {
@@ -109,7 +127,10 @@ class Journey extends React.Component {
         <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
           <div>
             <Paper styleName="eta">
-            You are near: <span styleName="data">{this.props.nearestStop}</span>
+            You are near:{' '}
+              <span styleName="data">
+                {this.props.nearestStop[this.props.currentTrip.bus ? 'bus' : 'mrt'] || 'Unknown'}
+              </span>
             </Paper>
             <Paper styleName="eta">
             Time till destination: <span styleName="data">{this.props.eta} min</span>

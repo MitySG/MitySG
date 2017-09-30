@@ -94,5 +94,5 @@ export const setCurrentCoords = coords => ({
 
 export const setNearestStop = stop => ({
   type: 'SET_NEAREST_STOP',
-  stop,
+  ...stop,
 });
