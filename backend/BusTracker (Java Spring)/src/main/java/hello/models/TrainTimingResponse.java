@@ -10,7 +10,7 @@ import java.util.Map;
 public class TrainTimingResponse {
     private int timing;
 
-    @JsonProperty("routes")
+    @JsonProperty("rows")
     private void setTiming(List<Map<String, Object>> routes) {
         if (routes.isEmpty()) {
             timing = -1;
@@ -20,31 +20,21 @@ public class TrainTimingResponse {
 
         Map<String, Object> route = routes.get(0);
 
-        List<Map<String, Object>> legs = (List<Map<String, Object>>) route.get("legs");
+        List<Map<String, Object>> elements = (List<Map<String, Object>>) route.get("elements");
 
-        if (legs.isEmpty()) {
+        if (elements.isEmpty()) {
             timing = -1;
 
             return;
         }
 
-        Map<String, Object> leg = (Map<String, Object>) legs.get(0);
-        List<Map<String, Object>> steps = (List<Map<String, Object>>) leg.get("steps");
+        Map<String, Object> leg = (Map<String, Object>) elements.get(0);
+        Map<String, Object> duration = (Map<String, Object>) leg.get("duration");
 
-        int durationMins = 0;
+        durationMins = ((Integer) duration.get("value"));
 
-        for (int i = 0; i < steps.size(); i++) {
-            Map<String, Object> step = steps.get(i);
 
-            String travelMode = (String) step.get("travel_mode");
-
-            if (travelMode.equals(("TRANSIT"))) {
-                Map<String, Object> duration = (Map<String, Object>) step.get("duration");
-                durationMins = ((Integer) duration.get("value"));
-            }
-        }
-
-        timing = durationMins/60;
+        timing = Math.round(durationMins/60.0);
     }
 
     public int getTiming() {
