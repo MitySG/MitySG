@@ -21,7 +21,7 @@ class Maps extends React.Component {
   render() {
     const { start, end } = this.props;
     const mode = start ? 'directions' : 'place';
-    const query = start ? `&origin=${start}&destination=${end}&mode=transit`
+    const query = start ? `&origin=${encodeURIComponent(start)}&destination=${encodeURIComponent(end)}&mode=transit`
       : `&q=${this.props.currentCoords.latitude},${this.props.currentCoords.longitude}`;
     return (
       <iframe
