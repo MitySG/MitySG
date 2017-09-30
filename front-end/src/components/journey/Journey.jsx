@@ -44,7 +44,7 @@ class Journey extends React.Component {
         latitude: coords.latitude,
         longitude: coords.longitude,
       });
-      this.getArrivalTime(coords);
+      this.getArrivalTimeFromCoords(coords);
     });
 
     window.onfocus = () => {
@@ -72,7 +72,6 @@ class Journey extends React.Component {
         bus: busStop.description,
         mrt: trainName,
       });
-
       this.getArrivalTime(this.props.currentTrip.bus ? busStop : trainStation);
     }
   }
@@ -133,7 +132,7 @@ class Journey extends React.Component {
               </span>
             </Paper>
             <Paper styleName="eta">
-            Time till destination: <span styleName="data">{this.props.eta} min</span>
+            Time till destination: <span styleName="data">{this.props.eta < 0 ? 'Unknown' : `${this.props.eta} min`}</span>
             </Paper>
           </div>
         </MuiThemeProvider>
