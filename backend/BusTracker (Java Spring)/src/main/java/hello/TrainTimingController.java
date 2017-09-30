@@ -33,7 +33,7 @@ public class TrainTimingController {
 
     public int getTrainTimingAPI(String startID, String endID) {
         try {
-            HttpResponse<JsonNode> jsonResponse = Unirest.get("https://maps.googleapis.com/maps/api/directions/json?origin=place_id:"+startID+"&destination=place_id:"+endID+"&mode=transit&transit_mode=subway&key=AIzaSyCR0lbKFMJUV4pTdj4a5KIgoy95tEOAxBA")
+            HttpResponse<JsonNode> jsonResponse = Unirest.get("https://maps.googleapis.com/maps/api/directions/json?origins=place_id:"+startID+"&destinations=place_id:"+endID+"&mode=transit&transit_mode=train&key=AIzaSyCR0lbKFMJUV4pTdj4a5KIgoy95tEOAxBA")
                     .asJson();
 
             TrainTimingResponse response = new ObjectMapper().readValue(jsonResponse.getBody().toString(), TrainTimingResponse.class);
