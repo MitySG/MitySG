@@ -1,13 +1,18 @@
 .paper {
-  max-width: 260px;
+  max-width: 250px;
   margin: auto;
   text-align: center;
-  padding: 10px;
+  padding: 20px 10px;
+}
+
+.intro {
+  font-size: 0.9em;
+  color: #2ab7ca;
 }
 
 .steps {
-  display: inline-block;
-  margin-bottom: 5px;
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 .underscore {
@@ -39,5 +44,5 @@
   color: grey;
   font-style: italic;
   font-size: 0.8em;
-  margin-top: 8px;
+  margin-top: 15px;
 }

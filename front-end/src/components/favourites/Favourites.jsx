@@ -35,7 +35,7 @@ class Favourites extends React.Component {
 
           <Paper styleName="paper" zDepth={3} >
             <div styleName="title">Favourites</div>
-            <div styleName="list">
+            <div>
               {favourites.map((favourite, index) => {
                 const favouriteStringified = JSON.stringify(favourite);
                 return (
@@ -52,6 +52,7 @@ class Favourites extends React.Component {
                       />
                       <div styleName="buttons">
                         <Button
+                          styleName="button"
                           primary={!!favourite.bus}
                           secondary={!favourite.bus}
                           label="Start"
@@ -66,6 +67,7 @@ class Favourites extends React.Component {
                           }
                         />
                         <FlatButton
+                          labelStyle={{ fontSize: '0.8em', color: 'grey' }}
                           label="Remove"
                           onClick={() => removeFromFavourites(favouriteStringified)}
                         />

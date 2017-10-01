@@ -25,6 +25,7 @@ class WelcomeScreen extends React.Component {
 
 
         <Paper styleName="paper" zDepth={3}>
+          <div styleName="intro">Go to your bus stop / MRT station</div>
           <div styleName="steps">
             {
               ['Choose transit mode', 'Select start and destination', 'Sit back and enjoy'].map((text, index) => (
