@@ -51,6 +51,10 @@ export const setNotificationValue = value => ({
 export const setCurrentTrip = (currentTrip, trainStations) => (dispatch) => {
   push.unsubscribe();
   dispatch({
+    type: 'SET_ETA',
+    eta: null,
+  });
+  dispatch({
     type: 'SET_CURRENT_TRIP',
     currentTrip: currentTrip && {
       ...currentTrip,
