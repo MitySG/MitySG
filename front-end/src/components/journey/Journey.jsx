@@ -101,13 +101,7 @@ class Journey extends React.Component {
   }
 
   renderTrip(start, end) {
-    if (this.props.eta === null) {
-      return (
-        <div>
-          Trip is not available
-        </div>
-      );
-    }
+    const hasEta = this.props.eta < 0 || this.props.eta === undefined || this.props.eta === null;
     return (
       <div>
         <div styleName="trip">
@@ -117,8 +111,9 @@ class Journey extends React.Component {
             endStop={end}
           />
           <RaisedButton
+            styleName="button"
             secondary
-            label="CANCEL TRIP"
+            label="CANCEL"
             onClick={() => {
               this.props.setCurrentTrip(null);
               this.props.setSlideIndex(2);
@@ -134,7 +129,7 @@ class Journey extends React.Component {
               </span>
             </Paper>
             <Paper styleName="eta">
-            Time till destination: <span styleName="data">{this.props.eta < 0 ? 'Unknown' : `${this.props.eta} min`}</span>
+            Time till destination: <span styleName="data">{hasEta ? 'Unknown' : `${this.props.eta} min`}</span>
             </Paper>
           </div>
         </MuiThemeProvider>

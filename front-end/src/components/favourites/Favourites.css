@@ -14,10 +14,6 @@
   font-size: 2em;
 }
 
-.list {
-
-}
-
 .listItem {
   display: flex;
   justify-content: space-between;
@@ -25,7 +21,12 @@
 }
 
 .buttons {
+  margin-left: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.button {
+  width: 105px;
 }
