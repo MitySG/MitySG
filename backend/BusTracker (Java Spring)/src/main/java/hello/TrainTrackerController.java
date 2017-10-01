@@ -36,7 +36,8 @@ public class TrainTrackerController {
             sleep(waitingTime * 60 * 1000);
 
             ObjectMapper objectMapper = new ObjectMapper();
-
+            objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+            
             PushSubscription sub = objectMapper.readValue(subscription, PushSubscription.class);
 
             PushRequest pushReq = new PushRequest(sub, "You are reaching your destination");
