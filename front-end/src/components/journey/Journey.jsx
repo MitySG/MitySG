@@ -95,6 +95,7 @@ class Journey extends React.Component {
         return true;
       }
       this.props.setCurrentTrip(null);
+      this.props.setSlideIndex(2);
     }
     return false;
   }
@@ -120,6 +121,7 @@ class Journey extends React.Component {
             label="CANCEL TRIP"
             onClick={() => {
               this.props.setCurrentTrip(null);
+              this.props.setSlideIndex(2);
             }}
           />
         </div>
