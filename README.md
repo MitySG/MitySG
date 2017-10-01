@@ -6,12 +6,12 @@
 
 ## Group Members
 * Chan Jin Jia (A0156579L)
-  * UI/UX Designer
-  * Created Mockups of the Application
+    * UI/UX Designer
+    * Created Mockups of the Application
 	* Designed assets and logos
-  * Handled logic for UX Flow
+    * Handled logic for UX Flow
 * Jeremy Jee De Sheng (A0139963N)
-  * Setup Java Spring Backend REST Server
+    * Setup Java Spring Backend REST Server
 	* Data Scraping and Data Collection for Bus Stops & Stations
 	* Consumption of REST APIs from LTA, Google Maps and busrouter.sg
 	* Algorithm to track buses based on LTA's API
@@ -19,15 +19,15 @@
 	* Serialization and Deserialization of the JSON data
 	* Request to Push Server for Push Notification
 * Oh Han Gyeol (A0144061U)
-  * Setup on Push Notification Server
+    * Setup on Push Notification Server
 	* Worked on Service Workers
 	* Worked on Push Notification Service
 	* Setup Digital Ocean Hosing for Rest API Server
 	* Setup domain name and SSL encryption for the webpage
 * Wang Riwu (A0135766W)
-  * Front-end developer
+    * Front-end developer
 	* Implemented all design mockups for the front-end
 	* Implemented front-end logic
 	* Implemented front-end API integration with back-end
 	* Added Google Analytics
-  * Implemented geolocation
+	* Implemented geolocation
