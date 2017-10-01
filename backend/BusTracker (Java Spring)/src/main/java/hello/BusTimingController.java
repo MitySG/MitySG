@@ -33,7 +33,7 @@ public class BusTimingController {
 
     public int getBusTimingAPI(String startCoord, String endCoord) {
         try {
-            HttpResponse<JsonNode> jsonResponse = Unirest.get("https://maps.googleapis.com/maps/api/distancematrix/json?origin="+startCoord+"&destination="+endCoord+"&mode=transit&transit_mode=bus&key=AIzaSyA2AhaWAntXpasV6qrmiugcvBwaXDIyAls")
+            HttpResponse<JsonNode> jsonResponse = Unirest.get("https://maps.googleapis.com/maps/api/distancematrix/json?origin="+startCoord+"&destination="+endCoord+"&mode=transit&transit_mode=bus&key=AIzaSyCa7XoJq19NrhUE8WzZFrTlaq8Mzc0iqZ4")
                     .asJson();
 
             System.out.println(endCoord);
