@@ -33,7 +33,7 @@ public class TrainTrackerController {
         System.out.println("Travel Time: "+travelTime+", Alert Time: "+alertString+", Waiting Time: "+ waitingTime);
 
         try {
-            sleep(waitingTime * 1000);
+            sleep(waitingTime * 60 * 1000);
 
             ObjectMapper objectMapper = new ObjectMapper();
 
