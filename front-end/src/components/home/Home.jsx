@@ -65,13 +65,17 @@ class VerticalLinearStepper extends React.Component {
       <Paper styleName="paper" zDepth={3}>
         <Stepper activeStep={this.state.stepIndex} orientation="vertical">
           <Step>
-            <StepLabel>Choose your transit</StepLabel>
+            <StepLabel>Choose your transit mode</StepLabel>
             <StepContent>
               <RadioButtonGroup
                 name="BusOrMRT"
-                defaultSelected="Bus"
+                defaultSelected={isBus ? 'Bus' : 'MRT'}
                 onChange={(e, value) => {
-                  this.setState({ isBus: value === 'Bus' });
+                  this.setState({
+                    isBus: value === 'Bus',
+                    selectedStart: emptyLabel,
+                    selectedEnd: emptyLabel,
+                  });
                 }}
               >
                 <RadioButton
