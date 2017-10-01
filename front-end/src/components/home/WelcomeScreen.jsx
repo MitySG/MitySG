@@ -8,14 +8,15 @@ import './WelcomeScreen.css';
 class WelcomeScreen extends React.Component {
   static childContextTypes = { stepper: PropTypes.object };
 
-  constructor(props) {
-    super(props);
-    window.ga('set', 'page', '/WelcomeScreen');
-  }
   getChildContext() {
     const { orientation } = 'vertical';
     return { stepper: { orientation } };
   }
+
+  componentDidMount() {
+    window.ga('set', 'page', '/WelcomeScreen');
+  }
+
   render() {
     return (
       <div>

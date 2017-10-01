@@ -8,14 +8,10 @@ import TripInfo from '../journey/TripInfo';
 import './Favourites.css';
 
 class Favourites extends React.Component {
-  constructor(props) {
-    super(props);
-    window.ga('set', 'page', '/Favourites');
-  }
-
   componentDidMount() {
     this.calcVH();
     window.addEventListener('onorientationchange', this.calcVH);
+    window.ga('set', 'page', '/Favourites');
   }
 
   componentWillUnmount() {

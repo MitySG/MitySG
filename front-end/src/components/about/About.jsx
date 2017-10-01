@@ -1,11 +1,9 @@
 import React from 'react';
-import Button from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import './About.css';
 
 class About extends React.Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     window.ga('set', 'page', '/About');
   }
 

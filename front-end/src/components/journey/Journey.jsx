@@ -36,7 +36,6 @@ function getNearestStop(coords, stops) {
 class Journey extends React.Component {
   constructor(props) {
     super(props);
-    window.ga('set', 'page', '/Journey');
 
     navigator.geolocation.watchPosition((position) => {
       const coords = position.coords;
@@ -65,6 +64,10 @@ class Journey extends React.Component {
           : this.props.trainStations[this.props.startStop]);
       }
     }
+  }
+
+  componentDidMount() {
+    window.ga('set', 'page', '/Journey');
   }
 
   getArrivalTimeFromCoords(coords = this.props.currentCoords) {
