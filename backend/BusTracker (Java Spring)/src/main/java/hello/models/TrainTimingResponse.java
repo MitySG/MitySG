@@ -31,7 +31,7 @@ public class TrainTimingResponse {
         Map<String, Object> leg = (Map<String, Object>) elements.get(0);
         Map<String, Object> duration = (Map<String, Object>) leg.get("duration");
 
-        durationMins = ((Integer) duration.get("value"));
+        int durationMins = ((Integer) duration.get("value"));
 
 
         timing = Math.round(durationMins/60.0);
