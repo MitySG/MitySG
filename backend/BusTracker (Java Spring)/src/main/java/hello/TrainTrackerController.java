@@ -33,10 +33,11 @@ public class TrainTrackerController {
         System.out.println("Travel Time: "+travelTime+", Alert Time: "+alertString+", Waiting Time: "+ waitingTime);
 
         try {
-            sleep(waitingTime * 1000);
+            sleep(waitingTime * 60 * 1000);
 
             ObjectMapper objectMapper = new ObjectMapper();
-
+            objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+            
             PushSubscription sub = objectMapper.readValue(subscription, PushSubscription.class);
 
             PushRequest pushReq = new PushRequest(sub, "You are reaching your destination");
