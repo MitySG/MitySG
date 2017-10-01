@@ -34,7 +34,7 @@ public class TrainTimingResponse {
         float durationMins = (float) ((Integer) duration.get("value"));
 
 
-        timing = Math.round(durationMins/60.0f);
+        timing = (int) Math.round(durationMins/60.0f);
     }
 
     public int getTiming() {
