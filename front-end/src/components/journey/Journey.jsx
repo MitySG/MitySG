@@ -22,7 +22,7 @@ const distance = (a, b) => {
       Math.sin(dLon / 2) * Math.sin(dLon / 2)
     ;
   const c = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
-  const d = R * c;
+  const d = R * c * 1000;
   return d;
 };
 
@@ -40,6 +40,9 @@ class Journey extends React.Component {
 
     navigator.geolocation.watchPosition((position) => {
       const coords = position.coords;
+      if (distance(this.props.currentCoords, coords) < 100) {
+        return;
+      }
       this.props.setCurrentCoords({
         latitude: coords.latitude,
         longitude: coords.longitude,
