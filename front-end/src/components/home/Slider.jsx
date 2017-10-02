@@ -9,7 +9,7 @@ const SliderComponent = props => (
       <Slider
         styleName="slider"
         step={1}
-        min={1}
+        min={2}
         max={10}
         {...props}
       />
