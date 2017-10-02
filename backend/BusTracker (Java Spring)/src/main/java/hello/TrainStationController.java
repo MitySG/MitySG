@@ -47,12 +47,12 @@ public class TrainStationController {
 
     @RequestMapping("/trainStations")
     public Map<String, StationData> stations() {
-        return getStationAPI("select * from stations").getStations();
+        return getStationAPI("select * from TrainStations").getStations();
     }
 
     @RequestMapping("/trainStations/{name}")
     public Map<String, StationData> stations(@PathVariable(value="name") String name) {
-        return getStationAPI("select * from stations WHERE name=\""+ name.replace('+', ' ') +"\"").getStations();
+        return getStationAPI("select * from TrainStations WHERE name=\""+ name.replace('+', ' ') +"\"").getStations();
     }
 
     public StationDataContainer getStationAPI(String sql) {
