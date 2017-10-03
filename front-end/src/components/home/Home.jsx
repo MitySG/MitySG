@@ -37,10 +37,9 @@ class VerticalLinearStepper extends React.Component {
     this.setState({ stepIndex: this.state.stepIndex - 1 });
   }
 
-  getCode(stops, text) {
-    return stops.find(stop =>
-      (this.state.isBus ? this.props.busStops[stop].description : stop).toLowerCase() ===
-      text.toLowerCase().trim());
+  getCode(stopOptions, text) {
+    return stopOptions.find(stop =>
+      stop.text.toLowerCase() === text.toLowerCase().trim());
   }
 
   getTrip() {
@@ -55,11 +54,17 @@ class VerticalLinearStepper extends React.Component {
   render() {
     const { isBus, selectedBus } = this.state;
     const { buses, busStops, trainStations } = this.props;
-
-    const stopOptions = isBus
-      ? (buses[selectedBus.value] || []).map(code => (busStops[code] || {}).description || '')
-      : Object.keys(trainStations);
-    const stops = isBus ? buses[selectedBus.value] : stopOptions;
+    let stopOptions;
+    let routes;
+    if (isBus) {
+      routes = buses[selectedBus.value] || [];
+      stopOptions = routes.reduce((a, b) => a.concat(b), []).map(code => ({
+        value: code,
+        text: (busStops[code] || {}).description || '',
+      }));
+    } else {
+      stopOptions = Object.keys(trainStations).map(station => ({ text: station }));
+    }
     return (
       <Paper styleName="paper" zDepth={3}>
         <Stepper activeStep={this.state.stepIndex} orientation="vertical">
@@ -112,7 +117,7 @@ class VerticalLinearStepper extends React.Component {
                 />
               }
               <StepButtons
-                nextDisabled={stops === undefined}
+                nextDisabled={stopOptions.length === 0}
                 onNext={() => this.onNext()}
               />
             </StepContent>
@@ -128,7 +133,7 @@ class VerticalLinearStepper extends React.Component {
                   this.setState({
                     selectedStart: {
                       label: newValue,
-                      value: this.getCode(stops, newValue),
+                      value: this.getCode(stopOptions, newValue),
                     },
                     selectedEnd: emptyLabel,
                   });
@@ -145,7 +150,7 @@ class VerticalLinearStepper extends React.Component {
             <StepLabel>Select destination</StepLabel>
             <StepContent>
               <AutoComplete
-                dataSource={stopOptions.filter(option => option.toLowerCase() !==
+                dataSource={stopOptions.filter(option => option.text.toLowerCase() !==
                   this.state.selectedStart.label.toLowerCase())}
                 hintText={isBus ? 'Enter Bus Stop' : 'Enter Train Station'}
                 searchText={this.state.selectedEnd.label}
@@ -153,7 +158,7 @@ class VerticalLinearStepper extends React.Component {
                   this.setState({
                     selectedEnd: {
                       label: newValue,
-                      value: this.getCode(stops, newValue),
+                      value: this.getCode(stopOptions, newValue),
                     },
                   });
                 }}
