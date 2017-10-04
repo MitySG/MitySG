@@ -35,6 +35,9 @@ const muiTheme = getMuiTheme({
     primaryTextColor: '#ffffff',
     secondaryTextColor: '#ffffff',
   },
+  flatButton: {
+    textColor: 'grey',
+  },
 });
 
 

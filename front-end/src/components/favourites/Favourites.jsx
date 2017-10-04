@@ -63,7 +63,7 @@ class Favourites extends React.Component {
                           }
                         />
                         <FlatButton
-                          labelStyle={{ fontSize: '0.8em', color: 'grey' }}
+                          labelStyle={{ fontSize: '0.8em' }}
                           label="Remove"
                           onClick={() => removeFromFavourites(favouriteStringified)}
                         />

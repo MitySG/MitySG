@@ -16,10 +16,10 @@ import './Home.css';
 import StepButtons from './StepButtonsContainer';
 
 const emptyLabel = { label: '' };
-class VerticalLinearStepper extends React.Component {
+class Home extends React.Component {
   static getCode(stopOptions, text) {
-    return (stopOptions.find(stop =>
-      stop.text.toLowerCase() === text.toLowerCase().trim()) || {}).code;
+    return stopOptions.findIndex(stop =>
+      stop.text.toLowerCase() === text.toLowerCase().trim());
   }
 
   state = {
@@ -53,14 +53,15 @@ class VerticalLinearStepper extends React.Component {
   }
 
   render() {
-    const { isBus, selectedBus } = this.state;
+    const { isBus, selectedBus, selectedStart, selectedEnd } = this.state;
     const { buses, busStops, trainStations } = this.props;
 
     let stopOptions;
     let routes;
     if (isBus) {
       routes = buses[selectedBus.value] || [];
-      stopOptions = routes.reduce((a, b) => a.concat(b), []).map((code) => {
+      const combinedRoutes = [...new Set(routes.reduce((a, b) => a.concat(b), []))];
+      stopOptions = combinedRoutes.map((code) => {
         const description = (busStops[code] || {}).description || '';
         const maxLen = 20;
         const descriptionTruncated = description.length > maxLen
@@ -81,6 +82,16 @@ class VerticalLinearStepper extends React.Component {
         code: station,
       }));
     }
+
+    const destinationStops = stopOptions.filter(option => option.text.toLowerCase() !==
+      selectedStart.label.toLowerCase());
+    // if (isBus) {
+    //   if (routes.length === 1) {
+    //     const stops = destinationStops.slice(selectedStart.index);
+    //   } else {
+    //     stops = (selectedStart.index < routes[0].length) ?
+    //   }
+    // }
     return (
       <Paper styleName="paper" zDepth={3}>
         <Stepper activeStep={this.state.stepIndex} orientation="vertical">
@@ -133,7 +144,7 @@ class VerticalLinearStepper extends React.Component {
                 />
               }
               <StepButtons
-                nextDisabled={stopOptions.length === 0}
+                nextDisabled={!stopOptions.length}
                 onNext={() => this.onNext()}
               />
             </StepContent>
@@ -144,19 +155,21 @@ class VerticalLinearStepper extends React.Component {
               <AutoComplete
                 dataSource={stopOptions}
                 hintText={isBus ? 'Enter Bus Stop' : 'Enter Train Station'}
-                searchText={this.state.selectedStart.label}
+                searchText={selectedStart.label}
                 onUpdateInput={(newValue) => {
+                  const index = Home.getCode(stopOptions, newValue);
                   this.setState({
                     selectedStart: {
                       label: newValue,
-                      value: Home.getCode(stopOptions, newValue),
+                      value: (stopOptions[index] || {}).code,
+                      index,
                     },
                     selectedEnd: emptyLabel,
                   });
                 }}
               />
               <StepButtons
-                nextDisabled={this.state.selectedStart.value === undefined}
+                nextDisabled={selectedStart.value === undefined}
                 onNext={() => this.onNext()}
                 onPrev={() => this.onPrev()}
               />
@@ -166,21 +179,21 @@ class VerticalLinearStepper extends React.Component {
             <StepLabel>Select destination</StepLabel>
             <StepContent>
               <AutoComplete
-                dataSource={stopOptions.filter(option => option.text.toLowerCase() !==
-                  this.state.selectedStart.label.toLowerCase())}
+                dataSource={destinationStops}
                 hintText={isBus ? 'Enter Bus Stop' : 'Enter Train Station'}
-                searchText={this.state.selectedEnd.label}
+                searchText={selectedEnd.label}
                 onUpdateInput={(newValue) => {
+                  const index = Home.getCode(stopOptions, newValue);
                   this.setState({
                     selectedEnd: {
                       label: newValue,
-                      value: Home.getCode(stopOptions, newValue),
-                    },
+                      value: (stopOptions[index] || {}).code,
+                      index },
                   });
                 }}
               />
               <StepButtons
-                nextDisabled={this.state.selectedEnd.value === undefined}
+                nextDisabled={selectedEnd.value === undefined}
                 onNext={() => this.onNext()}
                 onPrev={() => this.onPrev()}
               />
@@ -229,4 +242,4 @@ class VerticalLinearStepper extends React.Component {
   }
 }
 
-export default VerticalLinearStepper;
+export default Home;
