@@ -156,6 +156,7 @@ class Journey extends React.Component {
           <div styleName="buttons">
             <div styleName="image" />
             <RaisedButton
+              buttonStyle={{ borderRadius: '20px' }}
               primary={isSave}
               secondary={!isSave}
               label={this.state.saveLabel}

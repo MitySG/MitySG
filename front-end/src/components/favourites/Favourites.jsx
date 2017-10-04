@@ -49,6 +49,7 @@ class Favourites extends React.Component {
                       <div styleName="buttons">
                         <Button
                           styleName="button"
+                          buttonStyle={{ borderRadius: '20px' }}
                           primary={!!favourite.bus}
                           secondary={!favourite.bus}
                           label="Start"
