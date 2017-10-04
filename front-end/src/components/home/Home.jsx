@@ -6,7 +6,6 @@ import {
   StepContent,
 } from 'material-ui/Stepper';
 import MenuItem from 'material-ui/MenuItem';
-import Snackbar from 'material-ui/Snackbar';
 import Paper from 'material-ui/Paper';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Checkbox from 'material-ui/Checkbox';
@@ -14,6 +13,7 @@ import Slider from './Slider';
 import AutoComplete from './AutoComplete';
 import './Home.css';
 import StepButtons from './StepButtonsContainer';
+import Snackbar from './Snackbar';
 
 const emptyLabel = { label: '' };
 class Home extends React.Component {
@@ -28,7 +28,7 @@ class Home extends React.Component {
     selectedStart: emptyLabel,
     selectedEnd: emptyLabel,
     isBus: true,
-    isSnackOpen: false,
+    snackbarMessage: '',
   };
 
   componentDidMount() {
@@ -215,16 +215,13 @@ class Home extends React.Component {
                   } else {
                     this.props.removeFromFavourites(JSON.stringify(this.getTrip()));
                   }
-                  this.message = isInputChecked ? 'Added to favourites' : 'Removed from favourites';
-                  this.setState({ isSnackOpen: true });
+                  const snackbarMessage = isInputChecked ? 'Added to favourites' : 'Removed from favourites';
+                  this.setState({ snackbarMessage });
                 }}
               />
               <Snackbar
-                contentStyle={{ textAlign: 'center' }}
-                open={this.state.isSnackOpen}
-                message={this.message || ''}
-                autoHideDuration={3000}
-                onRequestClose={() => this.setState({ isSnackOpen: false })}
+                message={this.state.snackbarMessage}
+                onRequestClose={() => this.setState({ snackbarMessage: '' })}
               />
               <StepButtons
                 label="Start"

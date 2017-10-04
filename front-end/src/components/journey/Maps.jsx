@@ -15,7 +15,7 @@ class Maps extends React.Component {
 
   calcVH() { // https://stackoverflow.com/questions/39384154/calculating-viewport-height-on-chrome-android-with-css
     const vH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    this.ref.setAttribute('style', `height:calc(${vH}px - 300px);`);
+    this.ref.setAttribute('style', `height:calc(${vH}px - 270px);`);
   }
 
   render() {

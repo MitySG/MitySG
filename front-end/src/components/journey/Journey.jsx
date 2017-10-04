@@ -4,9 +4,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import TripInfo from './TripInfo';
 import './Journey.css';
 import Maps from './Maps';
+import Snackbar from '../home/Snackbar';
 
 const distance = (a, b) => {
   // Shamelessly copied from https://stackoverflow.com/a/27943/211319
@@ -54,6 +56,11 @@ class Journey extends React.Component {
     };
   }
 
+  state = {
+    snackbarMessage: '',
+    saveLabel: this.getTripInfo().isFavourite ? 'UNSAVE' : 'SAVE',
+  };
+
   componentWillMount() {
     if (this.isCurrentTripValid()) {
       if (this.props.currentCoords.latitude) {
@@ -68,6 +75,24 @@ class Journey extends React.Component {
 
   componentDidMount() {
     window.ga('set', 'page', '/Journey');
+  }
+
+  getTripInfo() {
+    const currentTrip = this.props.currentTrip;
+    const trip = {
+      bus: currentTrip.bus,
+      start: currentTrip.start,
+      end: currentTrip.end,
+      timeBeforeArrivalToNotify: currentTrip.timeBeforeArrivalToNotify,
+    };
+    const stringifiedTrip = JSON.stringify(trip);
+    const isFavourite = this.props.favourites.some(favourite =>
+      JSON.stringify(favourite) === stringifiedTrip);
+    return {
+      trip,
+      stringifiedTrip,
+      isFavourite,
+    };
   }
 
   getArrivalTimeFromCoords(coords = this.props.currentCoords) {
@@ -108,37 +133,58 @@ class Journey extends React.Component {
 
   renderTrip(start, end) {
     const hasEta = this.props.eta < 0 || this.props.eta === undefined || this.props.eta === null;
+    const isSave = this.state.saveLabel === 'SAVE';
     return (
       <div>
         <div styleName="trip">
-          <TripInfo
-            trip={this.props.currentTrip}
-            startStop={start}
-            endStop={end}
-          />
-          <RaisedButton
-            styleName="button"
-            secondary
-            label="CANCEL"
-            onClick={() => {
-              this.props.setCurrentTrip(null);
-              this.props.setSlideIndex(2);
-            }}
-          />
-        </div>
-        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
           <div>
-            <Paper styleName="eta">
-            You are near:{' '}
-              <span styleName="data">
-                {this.props.nearestStop[this.props.currentTrip.bus ? 'bus' : 'mrt'] || 'Unknown'}
-              </span>
-            </Paper>
-            <Paper styleName="eta">
-            Time till destination: <span styleName="data">{hasEta ? 'Unknown' : `${this.props.eta} min`}</span>
-            </Paper>
+            <TripInfo
+              trip={this.props.currentTrip}
+              startStop={start}
+              endStop={end}
+            />
+            <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+              <div>
+                <Paper styleName="eta">
+                ETA: <span styleName="data">{hasEta ? 'Unknown' : `${this.props.eta} min`}</span>
+                </Paper>
+              </div>
+            </MuiThemeProvider>
           </div>
-        </MuiThemeProvider>
+          <div styleName="buttons">
+            <div styleName="image" />
+            <RaisedButton
+              primary={isSave}
+              secondary={!isSave}
+              label={this.state.saveLabel}
+              onClick={() => {
+                const { trip, stringifiedTrip, isFavourite } = this.getTripInfo();
+                if (isFavourite) {
+                  this.setState({
+                    snackbarMessage: 'Removed from favourites',
+                    saveLabel: 'SAVE',
+                  });
+                  this.props.removeFromFavourites(stringifiedTrip);
+                } else {
+                  this.setState({
+                    snackbarMessage: 'Added to favourites',
+                    saveLabel: 'UNSAVE',
+                  });
+                  this.props.addToFavourites(trip);
+                }
+              }}
+            />
+            <Snackbar message={this.state.snackbarMessage} />
+            <FlatButton
+              labelStyle={{ fontSize: '0.8em' }}
+              label="CANCEL"
+              onClick={() => {
+                this.props.setCurrentTrip(null);
+                this.props.setSlideIndex(2);
+              }}
+            />
+          </div>
+        </div>
       </div>
     );
   }

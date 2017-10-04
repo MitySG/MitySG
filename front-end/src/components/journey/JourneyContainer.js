@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import Journey from './Journey';
-import { getBusArrival, getTrainArrival, setCurrentTrip, setCurrentCoords, setNearestStop, setSlideIndex } from '../../actions';
+import { getBusArrival, getTrainArrival, setCurrentTrip, setCurrentCoords,
+  setNearestStop, setSlideIndex, addToFavourites, removeFromFavourites } from '../../actions';
 
 const mapStateToProps = state => ({
   currentTrip: state.currentTrip,
@@ -15,9 +16,17 @@ const mapStateToProps = state => ({
   eta: state.eta,
   currentCoords: state.currentCoords,
   nearestStop: state.nearestStop,
+  favourites: state.favourites,
 });
 
 export default connect(
   mapStateToProps,
-  { getBusArrival, getTrainArrival, setCurrentTrip, setCurrentCoords, setNearestStop, setSlideIndex },
+  { getBusArrival,
+    getTrainArrival,
+    setCurrentTrip,
+    setCurrentCoords,
+    setNearestStop,
+    setSlideIndex,
+    addToFavourites,
+    removeFromFavourites },
 )(Journey);

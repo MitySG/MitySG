@@ -12,7 +12,14 @@
 .trip {
   display: flex;
   justify-content: space-between;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  margin-left: 10px;
 }
 
 .data {
@@ -25,6 +32,16 @@
   padding: 10px 5px;
 }
 
-.button {
-  margin-left: 10px;
+.image {
+  width: 100px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+:global(.webp) .image {
+  background-image: url(../../images/logo-100-50.webp);
+}
+
+:global(.no-webp) .image {
+  background-image: url(../../images/logo-100-50.png);
 }
