@@ -19,10 +19,10 @@ class Maps extends React.Component {
   }
 
   render() {
-    const { start, end } = this.props;
-    const mode = start ? 'directions' : 'place';
-    const query = start ? `&origin=${encodeURIComponent(start)}&destination=${encodeURIComponent(end)}&mode=transit`
-      : `&q=${this.props.currentCoords.latitude},${this.props.currentCoords.longitude}`;
+    const { start, end, currentCoords } = this.props;
+    const mode = 'place'; // start ? 'directions' : 'place';
+    const query = mode === 'directions' ? `&origin=${encodeURIComponent(start)}&destination=${encodeURIComponent(end)}&mode=transit`
+      : `&q=${currentCoords.latitude},${currentCoords.longitude}`;
     return (
       <iframe
         title="Google maps"

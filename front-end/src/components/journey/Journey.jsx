@@ -209,7 +209,7 @@ class Journey extends React.Component {
         <Maps
           start={start + mrtString}
           end={end + mrtString}
-          currentCoords={!start && this.props.currentCoords}
+          currentCoords={this.props.currentCoords}
         />
       </div>
     );
