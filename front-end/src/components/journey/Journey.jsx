@@ -41,7 +41,7 @@ class Journey extends React.Component {
 
     navigator.geolocation.watchPosition((position) => {
       const coords = position.coords;
-      if (distance(this.props.currentCoords, coords) < 100) {
+      if (distance(this.props.currentCoords, coords) < 200) {
         return;
       }
       this.props.setCurrentCoords({

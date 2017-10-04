@@ -10,3 +10,7 @@ body {
 :global(.no-webp) body {
   background-image: url('./images/background.png');
 }
+
+* {
+  font-family: Roboto;
+}
