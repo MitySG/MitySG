@@ -180,7 +180,6 @@ class Journey extends React.Component {
               label="CANCEL"
               onClick={() => {
                 this.props.setCurrentTrip(null);
-                this.props.setSlideIndex(2);
               }}
             />
           </div>

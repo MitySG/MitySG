@@ -59,6 +59,7 @@ class App extends React.Component {
     this.ref.setAttribute('style', `height:${vH}px;`);
   }
 
+
   render() {
     const props = this.props;
     return (
@@ -78,7 +79,10 @@ class App extends React.Component {
               <BottomNavigationItem
                 icon={<FontIcon className="material-icons">home</FontIcon>}
                 label="Home"
-                onClick={() => props.setSlideIndex(0)}
+                onClick={() => {
+                  props.setSlideIndex(0);
+                  this.setState({ isAtWelcomeScreen: true });
+                }}
               />
               <BottomNavigationItem
                 icon={<FontIcon className="material-icons">directions_bus</FontIcon>}
