@@ -97,9 +97,14 @@ class Home extends React.Component {
         const secondRouteIndex = (startIndex >= firstRouteLength)
           ? startIndex
           : routes[1].findIndex(busCode => busCode === selectedStart.value);
-        const sliceStart = firstRouteIndex >= 0 ? firstRouteIndex : secondRouteIndex;
-        const sliceEnd = secondRouteIndex >= 0 ? combinedRoutes.length : firstRouteLength;
-        destinationStops = destinationStops.slice(sliceStart, sliceEnd);
+        let validStops = [];
+        if (firstRouteIndex >= 0) {
+          validStops = validStops.concat(destinationStops.slice(firstRouteIndex, firstRouteLength));
+        }
+        if (secondRouteIndex >= 0) {
+          validStops = validStops.concat(destinationStops.slice(secondRouteIndex));
+        }
+        destinationStops = validStops;
       }
     }
     destinationStops = destinationStops.filter(option => option.text.toLowerCase() !==
