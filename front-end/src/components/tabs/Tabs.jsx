@@ -31,6 +31,10 @@ const muiTheme = getMuiTheme({
     textColor: 'white',
     backgroundColor: '#181818',
   },
+  raisedButton: {
+    primaryTextColor: 'white',
+    secondaryTextColor: 'white',
+  },
 });
 
 
