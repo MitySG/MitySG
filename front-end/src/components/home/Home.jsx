@@ -60,7 +60,7 @@ class Home extends React.Component {
     let routes;
     if (isBus) {
       routes = buses[selectedBus.value] || [];
-      const combinedRoutes = [...new Set(routes.reduce((a, b) => a.concat(b), []))];
+      const combinedRoutes = routes.reduce((a, b) => a.concat(b), []);
       stopOptions = combinedRoutes.map((code) => {
         const description = (busStops[code] || {}).description || '';
         const maxLen = 20;
@@ -83,15 +83,19 @@ class Home extends React.Component {
       }));
     }
 
-    const destinationStops = stopOptions.filter(option => option.text.toLowerCase() !==
+    let destinationStops = stopOptions;
+    if (isBus) {
+      if (routes.length === 1) {
+        destinationStops = destinationStops.slice(selectedStart.index);
+      } else if (routes.length > 1) {
+        const firstRouteLength = routes[0].length;
+        destinationStops = (selectedStart.index < firstRouteLength)
+          ? destinationStops.slice(0, firstRouteLength)
+          : destinationStops.slice(firstRouteLength);
+      }
+    }
+    destinationStops = destinationStops.filter(option => option.text.toLowerCase() !==
       selectedStart.label.toLowerCase());
-    // if (isBus) {
-    //   if (routes.length === 1) {
-    //     const stops = destinationStops.slice(selectedStart.index);
-    //   } else {
-    //     stops = (selectedStart.index < routes[0].length) ?
-    //   }
-    // }
     return (
       <Paper styleName="paper" zDepth={3}>
         <Stepper activeStep={this.state.stepIndex} orientation="vertical">
