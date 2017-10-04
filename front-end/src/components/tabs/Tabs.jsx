@@ -21,19 +21,19 @@ const muiTheme = getMuiTheme({
     backgroundColor: '#220a32',
   },
   stepper: {
-    textColor: 'white',
+    textColor: '#ffffff',
     disabledTextColor: 'grey',
   },
   paper: {
     backgroundColor: '#181818',
   },
   snackbar: {
-    textColor: 'white',
+    textColor: '#ffffff',
     backgroundColor: '#181818',
   },
   raisedButton: {
-    primaryTextColor: 'white',
-    secondaryTextColor: 'white',
+    primaryTextColor: '#ffffff',
+    secondaryTextColor: '#ffffff',
   },
 });
 

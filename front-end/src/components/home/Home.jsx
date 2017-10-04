@@ -5,6 +5,7 @@ import {
   StepLabel,
   StepContent,
 } from 'material-ui/Stepper';
+import MenuItem from 'material-ui/MenuItem';
 import Snackbar from 'material-ui/Snackbar';
 import Paper from 'material-ui/Paper';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
@@ -16,6 +17,11 @@ import StepButtons from './StepButtonsContainer';
 
 const emptyLabel = { label: '' };
 class VerticalLinearStepper extends React.Component {
+  static getCode(stopOptions, text) {
+    return (stopOptions.find(stop =>
+      stop.text.toLowerCase() === text.toLowerCase().trim()) || {}).code;
+  }
+
   state = {
     stepIndex: 0,
     selectedBus: emptyLabel,
@@ -37,11 +43,6 @@ class VerticalLinearStepper extends React.Component {
     this.setState({ stepIndex: this.state.stepIndex - 1 });
   }
 
-  getCode(stopOptions, text) {
-    return stopOptions.find(stop =>
-      stop.text.toLowerCase() === text.toLowerCase().trim());
-  }
-
   getTrip() {
     return {
       bus: this.state.isBus ? this.state.selectedBus.value : undefined,
@@ -54,16 +55,31 @@ class VerticalLinearStepper extends React.Component {
   render() {
     const { isBus, selectedBus } = this.state;
     const { buses, busStops, trainStations } = this.props;
+
     let stopOptions;
     let routes;
     if (isBus) {
       routes = buses[selectedBus.value] || [];
-      stopOptions = routes.reduce((a, b) => a.concat(b), []).map(code => ({
-        value: code,
-        text: (busStops[code] || {}).description || '',
-      }));
+      stopOptions = routes.reduce((a, b) => a.concat(b), []).map((code) => {
+        const description = (busStops[code] || {}).description || '';
+        const maxLen = 20;
+        const descriptionTruncated = description.length > maxLen
+          ? `${description.slice(0, maxLen - 3)}...` : description;
+        return {
+          code,
+          text: `${description} ${code}`,
+          value: <MenuItem
+            primaryText={descriptionTruncated}
+            secondaryText={code}
+          />,
+        };
+      });
     } else {
-      stopOptions = Object.keys(trainStations).map(station => ({ text: station }));
+      stopOptions = Object.keys(trainStations).map(station => ({
+        text: station,
+        value: station,
+        code: station,
+      }));
     }
     return (
       <Paper styleName="paper" zDepth={3}>
@@ -133,7 +149,7 @@ class VerticalLinearStepper extends React.Component {
                   this.setState({
                     selectedStart: {
                       label: newValue,
-                      value: this.getCode(stopOptions, newValue),
+                      value: Home.getCode(stopOptions, newValue),
                     },
                     selectedEnd: emptyLabel,
                   });
@@ -158,7 +174,7 @@ class VerticalLinearStepper extends React.Component {
                   this.setState({
                     selectedEnd: {
                       label: newValue,
-                      value: this.getCode(stopOptions, newValue),
+                      value: Home.getCode(stopOptions, newValue),
                     },
                   });
                 }}
