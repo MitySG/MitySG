@@ -8,3 +8,10 @@
 .favourite {
   margin-bottom: 10px;
 }
+
+.warning {
+  color: grey;
+  font-style: italic;
+  font-size: 0.8em;
+  margin-top: 12px;
+}

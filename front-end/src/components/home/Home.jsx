@@ -241,6 +241,7 @@ class Home extends React.Component {
                 message={this.state.snackbarMessage}
                 onRequestClose={() => this.setState({ snackbarMessage: '' })}
               />
+              <div styleName="warning">Be at your start point before starting!</div>
               <StepButtons
                 label="Start"
                 onNext={() => {
