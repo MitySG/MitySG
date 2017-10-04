@@ -8,7 +8,6 @@ import notificationValue from './notificationValue';
 import currentTrip from './currentTrip';
 import eta from './eta';
 import currentCoords from '../components/journey/reducers/currentCoords';
-import nearestStop from '../components/journey/reducers/nearestStop';
 
 const reducer = combineReducers({
   buses,
@@ -20,7 +19,6 @@ const reducer = combineReducers({
   trainStations,
   eta,
   currentCoords,
-  nearestStop,
 });
 
 export default reducer;

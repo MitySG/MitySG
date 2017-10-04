@@ -1,5 +1,10 @@
-.mapframe {
+.map {
   position: absolute;
+  top: 210px;
   bottom: 56px;
   width: 100%;
+}
+
+.others {
+  height: 100%;
 }

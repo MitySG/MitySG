@@ -12,6 +12,7 @@ import Favourites from '../favourites/FavouritesContainer';
 import Journey from '../journey/JourneyContainer';
 import WelcomeScreen from '../home/WelcomeScreen';
 import About from '../about/About';
+import { setVh } from '../calcVH';
 
 import './Tabs.css';
 
@@ -46,19 +47,8 @@ class App extends React.Component {
     isAtWelcomeScreen: true,
   }
   componentDidMount() {
-    this.calcVH();
-    window.addEventListener('onorientationchange', this.calcVH);
+    setVh(this.ref, 0);
   }
-
-  componentWillUnmount() {
-    window.removeEventListener('onorientationchange', this.calcVH);
-  }
-
-  calcVH() { // https://stackoverflow.com/questions/39384154/calculating-viewport-height-on-chrome-android-with-css
-    const vH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    this.ref.setAttribute('style', `height:${vH}px;`);
-  }
-
 
   render() {
     const props = this.props;
@@ -74,7 +64,7 @@ class App extends React.Component {
             {props.slideIndex === 2 && <Favourites />}
             {props.slideIndex === 3 && <About />}
           </div>
-          <Paper styleName={props.slideIndex > 0 ? 'nav' : ''}>
+          <Paper>
             <BottomNavigation selectedIndex={props.slideIndex}>
               <BottomNavigationItem
                 icon={<FontIcon className="material-icons">home</FontIcon>}

@@ -49,11 +49,6 @@ export const setNotificationValue = value => ({
 });
 
 export const setCurrentTrip = (currentTrip, trainStations) => (dispatch) => {
-  if (!('serviceWorker' in navigator)) {
-    alert('Push notification does not work on iOS / Safari!');
-    return;
-  }
-  push.unsubscribe();
   dispatch({
     type: 'SET_ETA',
     eta: null,
@@ -65,6 +60,12 @@ export const setCurrentTrip = (currentTrip, trainStations) => (dispatch) => {
       started: Date.now(),
     },
   });
+  if (!('serviceWorker' in navigator)) {
+    alert('Push notification does not work on iOS / Safari!');
+    return;
+  }
+
+  push.unsubscribe();
   if (!currentTrip) return;
   if (currentTrip.bus === undefined) {
     api.startTrainTrip({
@@ -98,9 +99,4 @@ export const getTrainArrival = (start, end) => (dispatch) => {
 export const setCurrentCoords = coords => ({
   type: 'SET_CURRENT_COORDS',
   coords,
-});
-
-export const setNearestStop = stop => ({
-  type: 'SET_NEAREST_STOP',
-  ...stop,
 });

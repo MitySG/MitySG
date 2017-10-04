@@ -5,6 +5,10 @@
   padding: 20px 10px;
 }
 
+.container {
+  overflow-y: auto;
+}
+
 .intro {
   font-size: 0.9em;
   color: #2ab7ca;

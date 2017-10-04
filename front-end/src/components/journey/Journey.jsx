@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TripInfo from './TripInfo';
 import './Journey.css';
-import Maps from './Maps';
+import Maps from './MapsContainer';
 import Snackbar from '../home/Snackbar';
 
 const distance = (a, b) => {
@@ -67,8 +67,8 @@ class Journey extends React.Component {
         this.getArrivalTimeFromCoords();
       } else {
         this.getArrivalTime(this.props.currentTrip.bus
-          ? this.props.startStop
-          : this.props.trainStations[this.props.startStop]);
+          ? this.props.busStops[this.props.currentTrip.start]
+          : this.props.trainStations[this.props.start]);
       }
     }
   }
@@ -101,10 +101,6 @@ class Journey extends React.Component {
     if (this.props.currentTrip && this.props.busStops && this.props.trainStations) {
       const [busCode, busStop] = getNearestStop(coords, this.props.busStops);
       const [trainName, trainStation] = getNearestStop(coords, this.props.trainStations);
-      this.props.setNearestStop({
-        bus: busStop.description,
-        mrt: trainName,
-      });
       this.getArrivalTime(this.props.currentTrip.bus ? busStop : trainStation);
     }
   }
@@ -114,10 +110,10 @@ class Journey extends React.Component {
       return;
     }
     if (this.props.currentTrip.bus) {
-      this.props.getBusArrival(start, this.props.endStop);
+      this.props.getBusArrival(start, this.props.busStops[this.props.currentTrip.end]);
     } else {
       this.props.getTrainArrival(start.id,
-        (this.props.trainStations[this.props.endStop] || {}).id);
+        (this.props.trainStations[this.props.currentTrip.end] || {}).id);
     }
   }
 
@@ -192,25 +188,34 @@ class Journey extends React.Component {
   }
 
   render() {
-    const { currentTrip, startStop, endStop } = this.props;
+    const { currentTrip, busStops, trainStations } = this.props;
     let start;
     let end;
-    let mrtString;
+    let startDescription;
+    let endDescription;
     if (currentTrip) {
-      start = currentTrip.bus ? (startStop || {}).description : startStop;
-      end = currentTrip.bus ? (endStop || {}).description : endStop;
-      mrtString = currentTrip.bus ? '' : '+MRT+Station';
+      if (currentTrip.bus) {
+        start = busStops[currentTrip.start];
+        end = busStops[currentTrip.end];
+        startDescription = (start || {}).description;
+        endDescription = (end || {}).description;
+      } else {
+        startDescription = currentTrip.start;
+        endDescription = currentTrip.end;
+        start = (trainStations[currentTrip.start] || {}).id;
+        end = (trainStations[currentTrip.end] || {}).id;
+      }
     }
     return (
       <div>
         <Paper zDepth={3} styleName="paper">
-          {currentTrip ? this.renderTrip(start, end) : <div styleName="label">You have not started a journey</div>
+          {currentTrip ? this.renderTrip(startDescription, endDescription) : <div styleName="label">You have not started a journey</div>
           }
         </Paper>
         <Maps
-          start={start + mrtString}
-          end={end + mrtString}
-          currentCoords={this.props.currentCoords}
+          start={start}
+          end={end}
+          isBus={!!currentTrip && !!currentTrip.bus}
         />
       </div>
     );

@@ -1,39 +1,81 @@
 import React from 'react';
+import { withScriptjs, withGoogleMap, GoogleMap, DirectionsRenderer, Marker } from 'react-google-maps';
 import './Maps.css';
+import icon from '../../images/location.png';
 
-const API_KEY = 'AIzaSyA2AhaWAntXpasV6qrmiugcvBwaXDIyAls';
+const API_KEY = 'AIzaSyBprDkFuJKkGzS5MZOy14OvSmtVm1j-DxM';
+// default to NUS if no geolocation detection
+const defaultCenter = {
+  latitude: 1.295053,
+  longitude: 103.771652,
+};
 
 class Maps extends React.Component {
+  state = {
+    directions: null,
+  }
+
   componentDidMount() {
-    this.calcVH();
-    window.addEventListener('onorientationchange', this.calcVH);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('onorientationchange', this.calcVH);
-  }
-
-  calcVH() { // https://stackoverflow.com/questions/39384154/calculating-viewport-height-on-chrome-android-with-css
-    const vH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    this.ref.setAttribute('style', `height:calc(${vH}px - 265px);`);
+    if (this.props.start) {
+      const DirectionsService = new google.maps.DirectionsService();
+      DirectionsService.route({
+        origin: this.props.isBus
+          ? new google.maps.LatLng(this.props.start.latitude, this.props.start.longitude)
+          : { placeId: this.props.start },
+        destination: this.props.isBus
+          ? new google.maps.LatLng(this.props.end.latitude, this.props.end.longitude)
+          : { placeId: this.props.end },
+        travelMode: google.maps.TravelMode.TRANSIT,
+        transitOptions: {
+          modes: [this.props.isBus ? google.maps.TransitMode.BUS : google.maps.TransitMode.TRAIN],
+          routingPreference: google.maps.TransitRoutePreference.LESS_WALKING,
+        },
+      }, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          this.setState({
+            directions: result,
+          });
+        } else {
+          console.error(`error fetching directions ${result}`);
+        }
+      });
+    }
   }
 
   render() {
-    const { start, end, currentCoords } = this.props;
-    const mode = 'place'; // start ? 'directions' : 'place';
-    const query = mode === 'directions' ? `&origin=${encodeURIComponent(start)}&destination=${encodeURIComponent(end)}&mode=transit`
-      : `&q=${currentCoords.latitude},${currentCoords.longitude}`;
+    const props = this.props;
     return (
-      <iframe
-        title="Google maps"
-        ref={(ref) => { this.ref = ref; }}
-        styleName="mapframe"
-        frameBorder="0"
-        src={`https://www.google.com/maps/embed/v1/${mode}?key=${API_KEY}${query}`}
-        allowFullScreen
-      />
+      <GoogleMap
+        defaultZoom={15}
+        defaultCenter={{
+          lat: props.currentCoords.latitude || defaultCenter.latitude,
+          lng: props.currentCoords.longitude || defaultCenter.longitude,
+        }}
+      >
+        {this.state.directions && props.start && <DirectionsRenderer directions={this.state.directions} />}
+        {props.currentCoords.latitude && <Marker
+          icon={icon}
+          position={{ lat: props.currentCoords.latitude, lng: props.currentCoords.longitude }}
+        />}
+      </GoogleMap>
+
     );
   }
 }
 
-export default Maps;
+
+const ConnectedMaps = withScriptjs(withGoogleMap(Maps));
+
+const MapWithProps = props => (
+  <div>
+    <ConnectedMaps
+      googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${API_KEY}`}
+      loadingElement={<div styleName="others" />}
+      containerElement={<div styleName="map" />}
+      mapElement={<div styleName="others" />}
+      {...props}
+    />
+  </div>
+);
+
+export default MapWithProps;

@@ -14,14 +14,10 @@ import AutoComplete from './AutoComplete';
 import './Home.css';
 import StepButtons from './StepButtonsContainer';
 import Snackbar from './Snackbar';
+import { setContentVh } from '../calcVH';
 
 const emptyLabel = { label: '' };
 class Home extends React.Component {
-  static getCode(stopOptions, text) {
-    return stopOptions.findIndex(stop =>
-      stop.text.toLowerCase() === text.toLowerCase().trim());
-  }
-
   state = {
     stepIndex: 0,
     selectedBus: emptyLabel,
@@ -29,9 +25,11 @@ class Home extends React.Component {
     selectedEnd: emptyLabel,
     isBus: true,
     snackbarMessage: '',
+    stopOptions: [],
   };
 
   componentDidMount() {
+    setContentVh(this.ref);
     window.ga('set', 'page', '/Home');
     window.ga('send', 'pageview');
   }
@@ -44,6 +42,11 @@ class Home extends React.Component {
     this.setState({ stepIndex: this.state.stepIndex - 1 });
   }
 
+  getCode(text) {
+    return (this.state.stopOptions.find(stop =>
+      stop.text.toLowerCase() === text.toLowerCase().trim()) || {}).code;
+  }
+
   getTrip() {
     return {
       bus: this.state.isBus ? this.state.selectedBus.value : undefined,
@@ -53,97 +56,108 @@ class Home extends React.Component {
     };
   }
 
-  render() {
-    const { isBus, selectedBus, selectedStart, selectedEnd } = this.state;
-    const { buses, busStops, trainStations } = this.props;
-
+  goToSelectStart() {
     let stopOptions;
-    let routes;
-    let combinedRoutes;
-    if (isBus) {
-      routes = buses[selectedBus.value] || [];
-      combinedRoutes = routes.reduce((a, b) => a.concat(b), []);
-      stopOptions = combinedRoutes.map((code) => {
-        const description = (busStops[code] || {}).description || '';
-        const maxLen = 20;
-        const descriptionTruncated = description.length > maxLen
-          ? `${description.slice(0, maxLen - 3)}...` : description;
-        return {
-          code,
-          text: `${description} ${code}`,
-          value: <MenuItem
-            primaryText={descriptionTruncated}
-            secondaryText={code}
-          />,
-        };
-      });
+    if (this.state.isBus) {
+      this.routes = this.props.buses[this.state.selectedBus.value] || [];
+      const combinedRoutes = this.routes.reduce((a, b) => a.concat(b), []);
+      stopOptions = this.mapToBusOptions([...new Set(combinedRoutes)]);
     } else {
-      stopOptions = Object.keys(trainStations).map(station => ({
+      stopOptions = Object.keys(this.props.trainStations).map(station => ({
         text: station,
         value: station,
         code: station,
       }));
     }
+    this.setState({
+      stopOptions,
+    });
+  }
 
-    let destinationStops = stopOptions;
-    if (isBus && this.state.stepIndex === 2) {
-      const startIndex = selectedStart.index;
+  goToSelectEnd() {
+    const selectedStart = this.state.selectedStart;
+    const routes = this.routes;
+    let stopOptions;
+    if (this.state.isBus) {
+      const findIndex = route => route.findIndex(code => code === selectedStart.value);
+      const firstRouteIndex = findIndex(routes[0]);
       if (routes.length === 1) {
-        destinationStops = destinationStops.slice(startIndex);
+        stopOptions = routes[0].slice(firstRouteIndex);
       } else if (routes.length > 1) {
-        const firstRouteLength = routes[0].length;
-        const firstRouteIndex = (startIndex < firstRouteLength)
-          ? startIndex
-          : routes[0].findIndex(busCode => busCode === selectedStart.value);
-        const secondRouteIndex = (startIndex >= firstRouteLength)
-          ? startIndex
-          : routes[1].findIndex(busCode => busCode === selectedStart.value);
-        let validStops = [];
-        if (firstRouteIndex >= 0) {
-          validStops = validStops.concat(destinationStops.slice(firstRouteIndex, firstRouteLength));
-        }
-        if (secondRouteIndex >= 0) {
-          validStops = validStops.concat(destinationStops.slice(secondRouteIndex));
-        }
-        destinationStops = validStops;
+        const secondRouteIndex = findIndex(routes[1]);
+        stopOptions = [
+          ...(firstRouteIndex === -1 ? [] : routes[0].slice(firstRouteIndex)),
+          ...(secondRouteIndex === -1 ? [] : routes[1].slice(secondRouteIndex)),
+        ];
       }
+      stopOptions = stopOptions.filter(option => option !== selectedStart.value);
+      stopOptions = this.mapToBusOptions(stopOptions);
+    } else {
+      stopOptions = this.state.stopOptions.filter(option => option.code !==
+        selectedStart.value);
     }
-    destinationStops = destinationStops.filter(option => option.text.toLowerCase() !==
-      selectedStart.label.toLowerCase());
+
+    this.setState({
+      stopOptions,
+    });
+  }
+
+  mapToBusOptions(routes) {
+    return routes.map((code) => {
+      const description = (this.props.busStops[code] || {}).description || '';
+      const maxLen = 20;
+      const descriptionTruncated = description.length > maxLen
+        ? `${description.slice(0, maxLen - 3)}...` : description;
+      return {
+        code,
+        text: `${description} ${code}`,
+        value: <MenuItem
+          primaryText={descriptionTruncated}
+          secondaryText={code}
+        />,
+      };
+    });
+  }
+
+  render() {
+    const { isBus, selectedBus, selectedStart, selectedEnd } = this.state;
+    const { buses, trainStations } = this.props;
+
     return (
-      <Paper styleName="paper" zDepth={3}>
-        <Stepper activeStep={this.state.stepIndex} orientation="vertical">
-          <Step>
-            <StepLabel>Choose your transit mode</StepLabel>
-            <StepContent>
-              <RadioButtonGroup
-                name="BusOrMRT"
-                defaultSelected={isBus ? 'Bus' : 'MRT'}
-                onChange={(e, value) => {
-                  this.setState({
-                    isBus: value === 'Bus',
-                    selectedStart: emptyLabel,
-                    selectedEnd: emptyLabel,
-                  });
-                }}
-              >
-                <RadioButton
-                  value="Bus"
-                  label="Bus"
-                />
-                <RadioButton
-                  value="MRT"
-                  label="MRT"
-                />
-              </RadioButtonGroup>
-              { isBus &&
+      <div ref={(ref) => { this.ref = ref; }} styleName="container">
+        <Paper styleName="paper" zDepth={3}>
+          <Stepper activeStep={this.state.stepIndex} orientation="vertical">
+            <Step>
+              <StepLabel>Choose your transit mode</StepLabel>
+              <StepContent>
+                <RadioButtonGroup
+                  name="BusOrMRT"
+                  defaultSelected={isBus ? 'Bus' : 'MRT'}
+                  onChange={(e, value) => {
+                    this.setState({
+                      isBus: value === 'Bus',
+                      selectedStart: emptyLabel,
+                      selectedEnd: emptyLabel,
+                    });
+                  }}
+                >
+                  <RadioButton
+                    value="Bus"
+                    label="Bus"
+                  />
+                  <RadioButton
+                    value="MRT"
+                    label="MRT"
+                  />
+                </RadioButtonGroup>
+                { isBus &&
                 <AutoComplete
                   dataSource={Object.keys(buses)}
                   hintText="Enter Bus Service Number"
                   searchText={selectedBus.label}
                   onUpdateInput={(newValue) => {
-                    // somewhat hackish, but works
-                    // since there's at most one letter in bus service number
+                  // somewhat hackish, but works
+                  // since there's at most one letter in bus service number
                     let value;
                     if (buses[newValue.toLowerCase()]) {
                       value = newValue.toLowerCase();
@@ -160,100 +174,107 @@ class Home extends React.Component {
                     });
                   }}
                 />
-              }
-              <StepButtons
-                nextDisabled={!stopOptions.length}
-                onNext={() => this.onNext()}
-              />
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Select start</StepLabel>
-            <StepContent>
-              <AutoComplete
-                dataSource={stopOptions}
-                hintText={isBus ? 'Enter Bus Stop' : 'Enter Train Station'}
-                searchText={selectedStart.label}
-                onUpdateInput={(newValue) => {
-                  const index = Home.getCode(stopOptions, newValue);
-                  this.setState({
-                    selectedStart: {
-                      label: newValue,
-                      value: (stopOptions[index] || {}).code,
-                      index,
-                    },
-                    selectedEnd: emptyLabel,
-                  });
-                }}
-              />
-              <StepButtons
-                nextDisabled={selectedStart.value === undefined}
-                onNext={() => this.onNext()}
-                onPrev={() => this.onPrev()}
-              />
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Select destination</StepLabel>
-            <StepContent>
-              <AutoComplete
-                dataSource={destinationStops}
-                hintText={isBus ? 'Enter Bus Stop' : 'Enter Train Station'}
-                searchText={selectedEnd.label}
-                onUpdateInput={(newValue) => {
-                  const index = Home.getCode(stopOptions, newValue);
-                  this.setState({
-                    selectedEnd: {
-                      label: newValue,
-                      value: (stopOptions[index] || {}).code,
-                      index },
-                  });
-                }}
-              />
-              <StepButtons
-                nextDisabled={selectedEnd.value === undefined}
-                onNext={() => this.onNext()}
-                onPrev={() => this.onPrev()}
-              />
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Notification options</StepLabel>
-            <StepContent>
-              <Slider
-                value={this.props.notificationValue}
-                onChange={(e, value) => this.props.setNotificationValue(value)}
-              />
-              <Checkbox
-                label="Add to favourites"
-                styleName="favourite"
-                onCheck={(e, isInputChecked) => {
-                  if (isInputChecked) {
-                    this.props.addToFavourites(this.getTrip());
-                  } else {
-                    this.props.removeFromFavourites(JSON.stringify(this.getTrip()));
-                  }
-                  const snackbarMessage = isInputChecked ? 'Added to favourites' : 'Removed from favourites';
-                  this.setState({ snackbarMessage });
-                }}
-              />
-              <Snackbar
-                message={this.state.snackbarMessage}
-                onRequestClose={() => this.setState({ snackbarMessage: '' })}
-              />
-              <div styleName="warning">Be at your start point before starting!</div>
-              <StepButtons
-                label="Start"
-                onNext={() => {
-                  this.props.setSlideIndex(1);
-                  this.props.setCurrentTrip(this.getTrip(), trainStations);
-                }}
-                onPrev={() => this.onPrev()}
-              />
-            </StepContent>
-          </Step>
-        </Stepper>
-      </Paper>
+                }
+                <StepButtons
+                  nextDisabled={this.state.isBus && !this.state.selectedBus.value}
+                  onNext={() => {
+                    this.onNext();
+                    this.goToSelectStart();
+                  }}
+                />
+              </StepContent>
+            </Step>
+            <Step>
+              <StepLabel>Select start</StepLabel>
+              <StepContent>
+                <AutoComplete
+                  dataSource={this.state.stopOptions}
+                  hintText={isBus ? 'Enter Bus Stop' : 'Enter Train Station'}
+                  searchText={selectedStart.label}
+                  onUpdateInput={(newValue) => {
+                    this.setState({
+                      selectedStart: {
+                        label: newValue,
+                        value: this.getCode(newValue),
+                      },
+                      selectedEnd: emptyLabel,
+                    });
+                  }}
+                />
+                <StepButtons
+                  nextDisabled={!selectedStart.value}
+                  onNext={() => {
+                    this.onNext();
+                    this.goToSelectEnd();
+                  }}
+                  onPrev={() => this.onPrev()}
+                />
+              </StepContent>
+            </Step>
+            <Step>
+              <StepLabel>Select destination</StepLabel>
+              <StepContent>
+                <AutoComplete
+                  dataSource={this.state.stopOptions}
+                  hintText={isBus ? 'Enter Bus Stop' : 'Enter Train Station'}
+                  searchText={selectedEnd.label}
+                  onUpdateInput={(newValue) => {
+                    this.setState({
+                      selectedEnd: {
+                        label: newValue,
+                        value: this.getCode(newValue),
+                      },
+                    });
+                  }}
+                />
+                <StepButtons
+                  nextDisabled={!selectedEnd.value}
+                  onNext={() => this.onNext()}
+                  onPrev={() => {
+                    this.onPrev();
+                    this.goToSelectStart();
+                  }}
+                />
+              </StepContent>
+            </Step>
+            <Step>
+              <StepLabel>Notification options</StepLabel>
+              <StepContent>
+                <Slider
+                  value={this.props.notificationValue}
+                  onChange={(e, value) => this.props.setNotificationValue(value)}
+                />
+                <Checkbox
+                  label="Add to favourites"
+                  styleName="favourite"
+                  onCheck={(e, isInputChecked) => {
+                    if (isInputChecked) {
+                      this.props.addToFavourites(this.getTrip());
+                    } else {
+                      this.props.removeFromFavourites(JSON.stringify(this.getTrip()));
+                    }
+                    const snackbarMessage = isInputChecked ? 'Added to favourites' : 'Removed from favourites';
+                    this.setState({ snackbarMessage });
+                  }}
+                />
+                <Snackbar
+                  message={this.state.snackbarMessage}
+                  onRequestClose={() => this.setState({ snackbarMessage: '' })}
+                />
+                <div styleName="warning">Be at your start point before starting!</div>
+                <StepButtons
+                  label="Start"
+                  onNext={() => {
+                    this.props.setSlideIndex(1);
+                    this.props.setCurrentTrip(this.getTrip(), trainStations);
+                  }}
+                  onPrev={() => this.onPrev()}
+                />
+              </StepContent>
+            </Step>
+          </Stepper>
+        </Paper>
+      </div>
     );
   }
 }
