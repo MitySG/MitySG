@@ -58,9 +58,10 @@ class Home extends React.Component {
 
     let stopOptions;
     let routes;
+    let combinedRoutes;
     if (isBus) {
       routes = buses[selectedBus.value] || [];
-      const combinedRoutes = routes.reduce((a, b) => a.concat(b), []);
+      combinedRoutes = routes.reduce((a, b) => a.concat(b), []);
       stopOptions = combinedRoutes.map((code) => {
         const description = (busStops[code] || {}).description || '';
         const maxLen = 20;
@@ -84,14 +85,21 @@ class Home extends React.Component {
     }
 
     let destinationStops = stopOptions;
-    if (isBus) {
+    if (isBus && this.state.stepIndex === 2) {
+      const startIndex = selectedStart.index;
       if (routes.length === 1) {
-        destinationStops = destinationStops.slice(selectedStart.index);
+        destinationStops = destinationStops.slice(startIndex);
       } else if (routes.length > 1) {
         const firstRouteLength = routes[0].length;
-        destinationStops = (selectedStart.index < firstRouteLength)
-          ? destinationStops.slice(0, firstRouteLength)
-          : destinationStops.slice(firstRouteLength);
+        const firstRouteIndex = (startIndex < firstRouteLength)
+          ? startIndex
+          : routes[0].findIndex(busCode => busCode === selectedStart.value);
+        const secondRouteIndex = (startIndex >= firstRouteLength)
+          ? startIndex
+          : routes[1].findIndex(busCode => busCode === selectedStart.value);
+        const sliceStart = firstRouteIndex >= 0 ? firstRouteIndex : secondRouteIndex;
+        const sliceEnd = secondRouteIndex >= 0 ? combinedRoutes.length : firstRouteLength;
+        destinationStops = destinationStops.slice(sliceStart, sliceEnd);
       }
     }
     destinationStops = destinationStops.filter(option => option.text.toLowerCase() !==
