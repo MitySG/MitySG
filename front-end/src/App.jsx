@@ -11,11 +11,7 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 
 import Tabs from './components/tabs/TabsContainer';
 import reducer from './reducers';
-import { getBuses, getBusStops, getTrainStations, setCurrentTrip } from './actions';
-
-import * as GA from './actions/googleAnalytics';
-
-GA.initialize('UA-107231469-1');
+import { getBuses, getBusStops, getTrainStations } from './actions';
 
 const middleware = [thunk, routerMiddleware(createHistory())];
 const store = createStore(

@@ -15,6 +15,7 @@ class WelcomeScreen extends React.Component {
 
   componentDidMount() {
     window.ga('set', 'page', '/WelcomeScreen');
+    window.ga('send', 'pageview');
   }
 
   render() {

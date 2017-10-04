@@ -33,6 +33,7 @@ class Home extends React.Component {
 
   componentDidMount() {
     window.ga('set', 'page', '/Home');
+    window.ga('send', 'pageview');
   }
 
   onNext() {

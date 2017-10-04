@@ -75,6 +75,7 @@ class Journey extends React.Component {
 
   componentDidMount() {
     window.ga('set', 'page', '/Journey');
+    window.ga('send', 'pageview');
   }
 
   getTripInfo() {

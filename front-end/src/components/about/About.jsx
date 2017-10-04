@@ -5,6 +5,7 @@ import './About.css';
 class About extends React.Component {
   componentDidMount() {
     window.ga('set', 'page', '/About');
+    window.ga('send', 'pageview');
   }
 
   render() {

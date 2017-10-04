@@ -12,6 +12,7 @@ class Favourites extends React.Component {
     this.calcVH();
     window.addEventListener('onorientationchange', this.calcVH);
     window.ga('set', 'page', '/Favourites');
+    window.ga('send', 'pageview');
   }
 
   componentWillUnmount() {
