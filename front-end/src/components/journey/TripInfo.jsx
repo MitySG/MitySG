@@ -19,7 +19,7 @@ const TripInfo = props => (
     <div styleName="text">
       To: <span styleName="names">{props.endStop}</span>
     </div>
-    <div>
+    <div styleName="text">
       Notify before: <span styleName="names">{props.trip.timeBeforeArrivalToNotify} min</span>
     </div>
   </div>
