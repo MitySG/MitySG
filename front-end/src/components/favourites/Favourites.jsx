@@ -29,7 +29,6 @@ class Favourites extends React.Component {
     return (
       <div styleName="container">
         <div ref={(ref) => { this.ref = ref; }}>
-
           <Paper styleName="paper" zDepth={3} >
             <div styleName="title">Favourites</div>
             <div>

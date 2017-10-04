@@ -74,7 +74,7 @@ class App extends React.Component {
             {props.slideIndex === 2 && <Favourites />}
             {props.slideIndex === 3 && <About />}
           </div>
-          <Paper styleName={props.slideIndex === 2 ? 'nav' : ''}>
+          <Paper styleName={props.slideIndex > 0 ? 'nav' : ''}>
             <BottomNavigation selectedIndex={props.slideIndex}>
               <BottomNavigationItem
                 icon={<FontIcon className="material-icons">home</FontIcon>}
