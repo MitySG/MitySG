@@ -58,7 +58,7 @@ class Journey extends React.Component {
 
   state = {
     snackbarMessage: '',
-    saveLabel: this.getTripInfo().isFavourite ? 'UNSAVE' : 'SAVE',
+    saveLabel: this.getTripInfo().isFavourite ? 'REMOVE' : 'SAVE',
   };
 
   componentWillMount() {
@@ -170,7 +170,7 @@ class Journey extends React.Component {
                 } else {
                   this.setState({
                     snackbarMessage: 'Added to favourites',
-                    saveLabel: 'UNSAVE',
+                    saveLabel: 'REMOVE',
                   });
                   this.props.addToFavourites(trip);
                 }
