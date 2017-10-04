@@ -27,7 +27,7 @@ class WelcomeScreen extends React.Component {
 
 
         <Paper styleName="paper" zDepth={3}>
-          <div styleName="intro">We'll make sure you won't miss your transit!</div>
+          <div styleName="intro">Set a MITY notification! We'll make sure you won't miss your transit!</div>
           <div styleName="steps">
             {
               ['Choose your transit', 'Select start and destination', 'Sit back and get notified!'].map((text, index) => (
