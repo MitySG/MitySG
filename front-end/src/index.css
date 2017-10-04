@@ -8,7 +8,7 @@ body {
 }
 
 :global(.no-webp) body {
-  background-image: url('./images/background.png');
+  background-image: url('./images/background.jpg');
 }
 
 * {

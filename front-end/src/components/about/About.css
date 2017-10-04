@@ -13,3 +13,7 @@
 .link {
   color: grey;
 }
+
+p {
+  font-weight: 300;
+}

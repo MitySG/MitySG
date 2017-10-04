@@ -13,8 +13,10 @@ class About extends React.Component {
       <Paper styleName="paper" zDepth={3}>
         <div styleName="title">About</div>
         <p>Always missing your bus or stop because your phone distracts you?</p>
-        <p>Mity is here to offer you a worry-free journey!</p>
-        <p>You will be prompted when your bus is arriving and when you are approaching your destination!</p>
+        <p>Worry not as Mity is a public transport application unlike any other.</p>
+        <p>Offering a worry-free journey, You will be prompted when your bus is arriving and when you are approaching your destination.</p>
+        <p>Using a mix of Google Maps and LTA APIs, we ensure a high level of accuracy.</p>
+        <p>{"No battery draining background GPS, no need to constantly check any app. We've got you covered!"}</p>
         <div styleName="title">Contact</div>
         <p>
           {'This app is created by '}
