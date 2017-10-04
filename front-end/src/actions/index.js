@@ -49,6 +49,10 @@ export const setNotificationValue = value => ({
 });
 
 export const setCurrentTrip = (currentTrip, trainStations) => (dispatch) => {
+  if (!('serviceWorker' in navigator)) {
+    alert('Push notification does not work on iOS / Safari!');
+    return;
+  }
   push.unsubscribe();
   dispatch({
     type: 'SET_ETA',

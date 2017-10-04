@@ -80,6 +80,7 @@ class Journey extends React.Component {
 
   getTripInfo() {
     const currentTrip = this.props.currentTrip;
+    if (!currentTrip) return {};
     const trip = {
       bus: currentTrip.bus,
       start: currentTrip.start,
