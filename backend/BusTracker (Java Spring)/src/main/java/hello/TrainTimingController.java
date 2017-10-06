@@ -33,12 +33,13 @@ public class TrainTimingController {
 
     public int getTrainTimingAPI(String startID, String endID) {
         try {
-            HttpResponse<JsonNode> jsonResponse = Unirest.get("https://maps.googleapis.com/maps/api/distancematrix/json?origins=place_id:"+startID+"&destinations=place_id:"+endID+"&mode=transit&transit_mode=train&key=AIzaSyBprDkFuJKkGzS5MZOy14OvSmtVm1j-DxM")
-                    .asJson();
+            String requestURL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=place_id:"+startID+"&destinations=place_id:"+endID+"&mode=transit&transit_mode=train&key=AIzaSyBprDkFuJKkGzS5MZOy14OvSmtVm1j-DxM";
+            HttpResponse<JsonNode> jsonResponse = Unirest.get(requestURL).asJson();
 
             TrainTimingResponse response = new ObjectMapper().readValue(jsonResponse.getBody().toString(), TrainTimingResponse.class);
-
-            return response.getTiming();
+            int timing = response.getTiming();
+            System.out.println("Train arrival eta " + timing + " for " + startID + " : " + endID + " with " + requestURL);
+            return timing;
         } catch (Exception e) {
             System.out.println(e.getMessage());
 

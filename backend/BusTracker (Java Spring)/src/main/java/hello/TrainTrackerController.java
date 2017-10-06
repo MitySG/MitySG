@@ -21,7 +21,7 @@ public class TrainTrackerController {
                                @PathVariable(value="end") String endID,
                                @RequestParam(value="alert", defaultValue="3") String alertString,
                                @RequestBody String subscription) {
-
+        System.out.println("Received push req: " + startID + " to " + endID);
         int travelTime = ttCon.getTrainTimingAPI(startID, endID);
         int alertTime = Integer.parseInt(alertString);
         int waitingTime = travelTime - alertTime;
@@ -42,11 +42,12 @@ public class TrainTrackerController {
 
             PushRequest pushReq = new PushRequest(sub, "You are reaching your destination");
 
+            System.out.println("Posting push");
             HttpResponse<String> resp = Unirest.post("https://huy3vicolc.execute-api.us-east-1.amazonaws.com/dev/push")
                     .body(objectMapper.writeValueAsString(pushReq))
                     .asString();
 
-            System.out.println(resp.getBody());
+            System.out.println("Push result: " + resp.getBody());
         } catch (Exception e) {
             e.printStackTrace();
 

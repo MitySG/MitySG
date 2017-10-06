@@ -37,10 +37,7 @@ export default {
   getBuses: () => get('busServices'),
   getBusStops: () => get('busStops'),
   getBusArrival: (start, end) => get(`busTiming/${start.latitude},${start.longitude}/${end.latitude},${end.longitude}/`),
-  getTrainArrival: (start, end) => {
-    console.log(`${API_BASE_URL}trainTiming/${start}/${end}`);
-    return get(`trainTiming/${start}/${end}`);
-  },
+  getTrainArrival: (start, end) => get(`trainTiming/${start}/${end}`),
   startBusTrip: ({ bus, start, end, timeBeforeArrivalToNotify }) => push.subscribe(subscription =>
     post(`busTracker/${bus}?start=${start}&end=${end}&alert=${timeBeforeArrivalToNotify}`, subscription.toJSON())),
   startTrainTrip: ({ start, end, timeBeforeArrivalToNotify }) => push.subscribe(subscription =>
