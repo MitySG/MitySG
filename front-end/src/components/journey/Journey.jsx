@@ -98,7 +98,7 @@ class Journey extends React.Component {
   }
 
   getArrivalTimeFromCoords(coords = this.props.currentCoords) {
-    if (this.props.currentTrip && this.props.busStops && this.props.trainStations) {
+    if (this.props.currentTrip && Object.keys(this.props.busStops).length && Object.keys(this.props.trainStations).length) {
       const [busCode, busStop] = getNearestStop(coords, this.props.busStops);
       const [trainName, trainStation] = getNearestStop(coords, this.props.trainStations);
       this.getArrivalTime(this.props.currentTrip.bus ? busStop : trainStation);

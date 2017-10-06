@@ -34,7 +34,7 @@ public class TrainTrackerController {
 
         try {
             sleep(waitingTime * 60 * 1000);
-
+            System.out.println("Alerting now");
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
             

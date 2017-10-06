@@ -37,21 +37,16 @@ public class BusServicesController {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String dbPW = System.getenv("DB_PASSWORD");
             Connection con= DriverManager.getConnection(
-                    "jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin","Admin123m");
+                    "jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin",dbPW);
             Statement stmt=con.createStatement();
 
             String sql = "select bs.serviceNo, brs.busStopNo, br.routeNo, bs.routes FROM BusRouteStops brs, BusRoutes br, BusServices bs WHERE bs.serviceNo = br.serviceNo AND br.routeID = brs.routeID ORDER BY brs.position";
-
-            System.out.println(sql);
 
             ResultSet rs = stmt.executeQuery(sql);
 
             Map<String, List<List<String>>> result = new HashMap<String, List<List<String>>>();
 
-            System.out.println("Test1");
-
             while(rs.next()) {
-                System.out.println("Test2");
                 String serviceNo = rs.getString("bs.serviceNo");
 
                 List<List<String>> service = result.getOrDefault(serviceNo, new ArrayList<List<String>>());
@@ -68,8 +63,6 @@ public class BusServicesController {
 
             con.close();
 
-            System.out.println("Test3");
-            System.out.println(result);
             return result;
         } catch(Exception e){
             e.printStackTrace();
@@ -126,11 +119,10 @@ public class BusServicesController {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 String dbPW = System.getenv("DB_PASSWORD");
                 Connection con= DriverManager.getConnection(
-                        "jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin","Admin123m");
+                        "jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin",dbPW);
                 Statement stmt=con.createStatement();
                 String sql = "INSERT INTO BusServices VALUES (\""+service.getNo()+"\", \"" + service.getName() + "\",\"" + service.getOperator() + "\"," + service.getRoutes() + ")";
 
-                System.out.println(sql);
                 stmt.execute(sql);
                 con.close();
             }
@@ -147,7 +139,7 @@ public class BusServicesController {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String dbPW = System.getenv("DB_PASSWORD");
             Connection con= DriverManager.getConnection(
-                    "jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin","Admin123m");
+                    "jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin",dbPW);
             Statement stmt=con.createStatement();
             Statement stmt2=con.createStatement();
             Statement stmt3=con.createStatement();
@@ -170,7 +162,6 @@ public class BusServicesController {
                 for (int i = 0; i < route1.size(); i++) {
                     String routeID = rs2.getString("routeID");
                     sql = "INSERT INTO BusRouteStops (routeID, position, busStopNo) VALUES (\""+routeID+"\", "+i+", \""+route1.get(i)+"\")";
-                    System.out.println(sql);
 
                     stmt3.execute(sql);
                 }
@@ -183,7 +174,6 @@ public class BusServicesController {
                     for (int i = 0; i < route2.size(); i++) {
                         String routeID = rs2.getString("routeID");
                         sql = "INSERT INTO BusRouteStops (routeID, position, busStopNo) VALUES (\""+routeID+"\", "+i+", \""+route2.get(i)+"\")";
-                        System.out.println(sql);
 
                         stmt3.execute(sql);
                     }
@@ -208,7 +198,6 @@ public class BusServicesController {
 
             String sql = "select brs.busStopNo, br.routeNo FROM BusRouteStops brs, BusRoutes br, BusServices bs WHERE bs.serviceNo=\""+no+"\" AND bs.serviceNo = br.serviceNo AND br.routeID = brs.routeID ORDER BY brs.position";
 
-            System.out.println(sql);
             ResultSet rs = stmt.executeQuery(sql);
 
             BusService service = new BusService();
