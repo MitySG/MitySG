@@ -4,6 +4,10 @@
 
 [Start your Worry-Free Journey today!](https://mitysg.tk/)
 
+Note: Push notification feature does not work on any iOS / MacOS browsers at the moment.
+
+Please hard refresh to clear caches and view the latest version.
+
 ## Group Members
 * Chan Jin Jia (A0156579L)
     * UI/UX Designer
