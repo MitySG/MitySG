@@ -61,14 +61,14 @@ public class BusTrackerController {
 
         try {
             PushSubscription sub = objectMapper.readValue(subscription, PushSubscription.class);
-
+            System.out.println("Bus arriving push!");
             PushRequest pushReq = new PushRequest(sub, "Your bus is arriving");
 
             HttpResponse<String> resp = Unirest.post("https://huy3vicolc.execute-api.us-east-1.amazonaws.com/dev/push")
                     .body(objectMapper.writeValueAsString(pushReq))
                     .asString();
 
-            System.out.println(resp.getBody());
+            System.out.println("response: " + resp.getBody());
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -90,14 +90,14 @@ public class BusTrackerController {
 
         try {
             PushSubscription sub = objectMapper.readValue(subscription, PushSubscription.class);
-
+            System.out.println("Pushing notification for arriving at destination!");
             PushRequest pushReq = new PushRequest(sub, "You are reaching your destination");
 
             HttpResponse<String> resp = Unirest.post("https://huy3vicolc.execute-api.us-east-1.amazonaws.com/dev/push")
                     .body(objectMapper.writeValueAsString(pushReq))
                     .asString();
 
-            System.out.println(resp.getBody());
+            System.out.println("response: " + resp.getBody());
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -119,7 +119,7 @@ public class BusTrackerController {
                 System.out.println(nextBusData.getEstimatedWait() + " more minutes");
 
                 while(nextBusData.getEstimatedWait() > 0) {
-                    sleep(60000);
+                    sleep(10000);
                     nextBusData = baCon.busArrival(request.getStop(), request.getService()).getNextBus();
                     System.out.println(nextBusData.getEstimatedWait() + " more minutes");
                 };
@@ -131,7 +131,7 @@ public class BusTrackerController {
             System.out.println(nextBusData.getEstimatedWait() + " more minutes");
 
             while(nextBusData.getEstimatedWait() > alert) {
-                sleep(60000);
+                sleep(10000);
                 nextBusData = baCon.busArrival(request.getStop(), request.getService()).getNextBus();
                 System.out.println(nextBusData.getEstimatedWait() + " more minutes");
             };
@@ -148,20 +148,20 @@ public class BusTrackerController {
         try {
             incomingBusNo = determineBusNo(request, busLocation);
 
-            System.out.println("Checking Timings for - " + request.getStop());
+            System.out.println("Checking Timings for - " + request.getStop() + " no " + incomingBusNo);
             BusArrivalData nextBusData = baCon.busArrival(request.getStop(), request.getService()).getNextBus();
             while(incomingBusNo > 0) {
                 System.out.println("Checking Bus Timings for Bus " + incomingBusNo);
                 System.out.println(nextBusData.getEstimatedWait() + "more minutes");
                 while(nextBusData.getEstimatedWait() > 0) {
-                    sleep(60000);
+                    sleep(10000);
                     nextBusData = baCon.busArrival(request.getStop(), request.getService()).getNextBus();
                     System.out.println(nextBusData.getEstimatedWait() + "more minutes");
                 };
 
                 if (incomingBusNo > 1) {
                     while(nextBusData.getEstimatedWait() <= 0) {
-                        sleep(60000);
+                        sleep(10000);
                         nextBusData = baCon.busArrival(request.getStop(), request.getService()).getNextBus();
                         System.out.println(nextBusData.getEstimatedWait() + "more minutes");
                     };
@@ -222,7 +222,7 @@ public class BusTrackerController {
             System.out.println("Before Checking First Bus");
             System.out.println(nextBusData.getEstimatedWait() + " more minutes");
             while(nextBusData.getEstimatedWait() > 0) {
-                sleep(60000);
+                sleep(10000);
                 nextBusData = baCon.busArrival(request.getStop(), request.getService()).getNextBus();
                 System.out.println(nextBusData.getEstimatedWait() + " more minutes");
             };
