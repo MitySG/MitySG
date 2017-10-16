@@ -44,6 +44,7 @@ class Journey extends React.Component {
       if (distance(this.props.currentCoords, coords) < 200) {
         return;
       }
+      console.log('current coord', this.props.currentCoords, 'new coord', coords);
       this.props.setCurrentCoords({
         latitude: coords.latitude,
         longitude: coords.longitude,
