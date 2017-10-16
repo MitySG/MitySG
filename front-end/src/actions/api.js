@@ -36,8 +36,14 @@ const [post] = ['POST'].map(method =>
 export default {
   getBuses: () => get('busServices'),
   getBusStops: () => get('busStops'),
-  getBusArrival: (start, end) => get(`busTiming/${start.latitude},${start.longitude}/${end.latitude},${end.longitude}/`),
-  getTrainArrival: (start, end) => get(`trainTiming/${start}/${end}`),
+  getBusArrival: (start, end) => {
+    console.log('getting bus arrival', start, end);
+    return get(`busTiming/${start.latitude},${start.longitude}/${end.latitude},${end.longitude}/`);
+  },
+  getTrainArrival: (start, end) => {
+    console.log('getting train arrival', start, end);
+    return get(`trainTiming/${start}/${end}`);
+  },
   startBusTrip: ({ bus, start, end, timeBeforeArrivalToNotify }) => push.subscribe(subscription =>
     post(`busTracker/${bus}?start=${start}&end=${end}&alert=${timeBeforeArrivalToNotify}`, subscription.toJSON())),
   startTrainTrip: ({ start, end, timeBeforeArrivalToNotify }) => push.subscribe(subscription =>
