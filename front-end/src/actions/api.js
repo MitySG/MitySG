@@ -1,6 +1,6 @@
 import push from '../push';
 
-const API_BASE_URL = 'https://mityserver.tk/';
+const API_BASE_URL = `${process.env.API_BASE_URL}:${process.env.MITYSG_PORT}/`;
 
 const parseResponseBody = (response) => {
   const contentType = response.headers.get('Content-Type');

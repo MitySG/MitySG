@@ -6,8 +6,6 @@
 
 Note: Push notification feature does not work on any iOS / MacOS browsers at the moment.
 
-Please hard refresh to clear caches and view the latest version.
-
 ## Group Members
 * Chan Jin Jia (A0156579L)
     * UI/UX Designer
@@ -35,3 +33,6 @@ Please hard refresh to clear caches and view the latest version.
 	* Implemented front-end API integration with back-end
 	* Added Google Analytics
 	* Implemented geolocation
+
+## Deployment
+cd "backend/BusTracker (Java Spring)" && mvn clean install

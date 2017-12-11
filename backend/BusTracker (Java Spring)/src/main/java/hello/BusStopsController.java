@@ -49,8 +49,7 @@ public class BusStopsController {
             for (int i = 0; i < res.size(); i++) {
                 LinkedHashMap<String, String> stop = res.get(i);
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                String dbPW = System.getenv("DB_PASSWORD");
-                //Connection con= DriverManager.getConnection("jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin",dbPW);
+                Connection con= DBConnection.getConnection();
                //Statement stmt=con.createStatement();
                 String sql = "UPDATE BusStops SET Longitude=" + stop.get("lng") + " WHERE busStopNo=\""+stop.get("no")+"\";";
 
@@ -67,9 +66,7 @@ public class BusStopsController {
     public Hashtable<String, Hashtable<String, String>> getBusStopAPI(String sql) {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String dbPW = System.getenv("DB_PASSWORD");
-            Connection con= DriverManager.getConnection(
-                    "jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin",dbPW);
+            Connection con= DBConnection.getConnection();
             Statement stmt=con.createStatement();
 
             ResultSet rs = stmt.executeQuery(sql);

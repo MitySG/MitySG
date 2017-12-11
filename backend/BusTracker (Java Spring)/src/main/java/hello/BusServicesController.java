@@ -31,13 +31,16 @@ import java.util.stream.Stream;
 @RestController
 public class BusServicesController {
 
+    @RequestMapping("/")
+    public String rootRoute() {
+        return "MITYSG API";
+    }
+
     @RequestMapping("/busServices")
     public Map<String, List<List<String>>> busServices() {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String dbPW = System.getenv("DB_PASSWORD");
-            Connection con= DriverManager.getConnection(
-                    "jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin",dbPW);
+            Connection con= DBConnection.getConnection();
             Statement stmt=con.createStatement();
 
             String sql = "select bs.serviceNo, brs.busStopNo, br.routeNo, bs.routes FROM BusRouteStops brs, BusRoutes br, BusServices bs WHERE bs.serviceNo = br.serviceNo AND br.routeID = brs.routeID ORDER BY brs.position";
@@ -117,9 +120,7 @@ public class BusServicesController {
                 BusServicesData service = res.getServices().get(i);
 
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                String dbPW = System.getenv("DB_PASSWORD");
-                Connection con= DriverManager.getConnection(
-                        "jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin",dbPW);
+                Connection con= DBConnection.getConnection();
                 Statement stmt=con.createStatement();
                 String sql = "INSERT INTO BusServices VALUES (\""+service.getNo()+"\", \"" + service.getName() + "\",\"" + service.getOperator() + "\"," + service.getRoutes() + ")";
 
@@ -137,9 +138,6 @@ public class BusServicesController {
     public void busParsing3() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String dbPW = System.getenv("DB_PASSWORD");
-            Connection con= DriverManager.getConnection(
-                    "jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin",dbPW);
             Statement stmt=con.createStatement();
             Statement stmt2=con.createStatement();
             Statement stmt3=con.createStatement();
@@ -191,9 +189,7 @@ public class BusServicesController {
     public BusService getBusServiceAPI(String no) {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String dbPW = System.getenv("DB_PASSWORD");
-            Connection con= DriverManager.getConnection(
-                    "jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin",dbPW);
+            Connection con= DBConnection.getConnection();
             Statement stmt=con.createStatement();
 
             String sql = "select brs.busStopNo, br.routeNo FROM BusRouteStops brs, BusRoutes br, BusServices bs WHERE bs.serviceNo=\""+no+"\" AND bs.serviceNo = br.serviceNo AND br.routeID = brs.routeID ORDER BY brs.position";

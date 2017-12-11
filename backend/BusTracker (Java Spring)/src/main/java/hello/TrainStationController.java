@@ -58,9 +58,7 @@ public class TrainStationController {
     public StationDataContainer getStationAPI(String sql) {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String dbPW = System.getenv("DB_PASSWORD");
-            Connection con= DriverManager.getConnection(
-                    "jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin",dbPW);
+            Connection con= DBConnection.getConnection();
             Statement stmt=con.createStatement();
 
             ResultSet rs = stmt.executeQuery(sql);
