@@ -1,6 +1,6 @@
 import push from '../push';
 
-const API_BASE_URL = `${process.env.API_BASE_URL}:${process.env.MITYSG_PORT}/`;
+const API_BASE_URL = 'https://wangriwu.com:3004/';
 
 const parseResponseBody = (response) => {
   const contentType = response.headers.get('Content-Type');
