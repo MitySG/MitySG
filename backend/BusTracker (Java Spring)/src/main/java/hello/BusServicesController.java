@@ -33,7 +33,7 @@ public class BusServicesController {
 
     @RequestMapping("/")
     public String rootRoute() {
-        return "MITYSG API";
+        return "";
     }
 
     @RequestMapping("/busServices")
