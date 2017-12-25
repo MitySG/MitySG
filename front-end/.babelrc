@@ -1,9 +1,17 @@
 {
   "presets": ["react-app"],
+  "env": {
+    "production": {
+      "plugins": ["transform-remove-console"]
+    }
+  },
   "plugins": [
     "react-hot-loader/babel",
-    ["react-css-modules", {
-      "webpackHotModuleReloading": true
-    }]
+    [
+      "react-css-modules",
+      {
+        "webpackHotModuleReloading": true
+      }
+    ]
   ]
 }
