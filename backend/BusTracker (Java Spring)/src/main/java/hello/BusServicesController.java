@@ -40,7 +40,7 @@ public class BusServicesController {
     public Map<String, List<List<String>>> busServices() {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con= DBConnection.getConnection();
+            Connection con= Environment.getConnection();
             Statement stmt=con.createStatement();
 
             String sql = "select bs.serviceNo, brs.busStopNo, br.routeNo, bs.routes FROM BusRouteStops brs, BusRoutes br, BusServices bs WHERE bs.serviceNo = br.serviceNo AND br.routeID = brs.routeID ORDER BY brs.position";
@@ -120,7 +120,7 @@ public class BusServicesController {
                 BusServicesData service = res.getServices().get(i);
 
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection con= DBConnection.getConnection();
+                Connection con= Environment.getConnection();
                 Statement stmt=con.createStatement();
                 String sql = "INSERT INTO BusServices VALUES (\""+service.getNo()+"\", \"" + service.getName() + "\",\"" + service.getOperator() + "\"," + service.getRoutes() + ")";
 
@@ -189,7 +189,7 @@ public class BusServicesController {
     public BusService getBusServiceAPI(String no) {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con= DBConnection.getConnection();
+            Connection con= Environment.getConnection();
             Statement stmt=con.createStatement();
 
             String sql = "select brs.busStopNo, br.routeNo FROM BusRouteStops brs, BusRoutes br, BusServices bs WHERE bs.serviceNo=\""+no+"\" AND bs.serviceNo = br.serviceNo AND br.routeID = brs.routeID ORDER BY brs.position";

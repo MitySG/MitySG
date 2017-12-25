@@ -58,7 +58,7 @@ public class TrainStationController {
     public StationDataContainer getStationAPI(String sql) {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con= DBConnection.getConnection();
+            Connection con= Environment.getConnection();
             Statement stmt=con.createStatement();
 
             ResultSet rs = stmt.executeQuery(sql);
