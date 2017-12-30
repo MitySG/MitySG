@@ -2,30 +2,39 @@ import api from './api';
 import push from '../push';
 
 export const getBuses = (dispatch) => {
-  api.getBuses().then((buses) => {
-    dispatch({
-      type: 'RECEIVE_BUSES',
-      buses,
-    });
-  }).catch(err => console.log(err));
+  api
+    .getBuses()
+    .then((buses) => {
+      dispatch({
+        type: 'RECEIVE_BUSES',
+        buses,
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 export const getBusStops = (dispatch) => {
-  api.getBusStops().then((busStops) => {
-    dispatch({
-      type: 'RECEIEVE_BUS_STOPS',
-      busStops,
-    });
-  }).catch(err => console.log(err));
+  api
+    .getBusStops()
+    .then((busStops) => {
+      dispatch({
+        type: 'RECEIEVE_BUS_STOPS',
+        busStops,
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 export const getTrainStations = (dispatch) => {
-  api.getTrainStations().then((trainStations) => {
-    dispatch({
-      type: 'RECEIVE_TRAIN_STATIONS',
-      trainStations,
-    });
-  }).catch(err => console.log(err));
+  api
+    .getTrainStations()
+    .then((trainStations) => {
+      dispatch({
+        type: 'RECEIVE_TRAIN_STATIONS',
+        trainStations,
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 export const addToFavourites = favourite => ({
@@ -61,7 +70,9 @@ export const setCurrentTrip = (currentTrip, trainStations) => (dispatch) => {
     },
   });
   if (!('serviceWorker' in navigator)) {
-    alert('Push notification does not work on iOS / Safari!');
+    if (currentTrip) {
+      alert('Push notification does not work on iOS / Safari!');
+    }
     return;
   }
 
