@@ -2,7 +2,7 @@
 
 MitySG: Am I There Yet?’ is a localised public transport notification web app that allows commuters to be glued to their screens and yet be aware about their transit arrival. Doing away with simply listing bus arrival timings, MitySG pushes notifications to the users when their buses are arriving and when they are arriving at their destinations (both Bus and MRT).
 
-[Start your Worry-Free Journey today!](https://mitysg.tk/)
+[Start your Worry-Free Journey today!](https://mity.wangriwu.com)
 
 Note: Push notification feature does not work on any iOS / MacOS browsers at the moment.
 
