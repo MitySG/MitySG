@@ -50,10 +50,10 @@ public class TrainStationController {
         return getStationAPI("select * from TrainStations").getStations();
     }
 
-    @RequestMapping("/trainStations/{name}")
+    /*@RequestMapping("/trainStations/{name}")
     public Map<String, StationData> stations(@PathVariable(value="name") String name) {
         return getStationAPI("select * from TrainStations WHERE name=\""+ name.replace('+', ' ') +"\"").getStations();
-    }
+    }*/
 
     public StationDataContainer getStationAPI(String sql) {
         try{

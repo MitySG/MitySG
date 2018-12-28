@@ -1,6 +1,6 @@
 import push from '../push';
 
-const API_BASE_URL = `${process.env.REACT_APP_MITYSG_URL}/`
+const API_BASE_URL = '/api/';
 
 const parseResponseBody = (response) => {
   const contentType = response.headers.get('Content-Type');

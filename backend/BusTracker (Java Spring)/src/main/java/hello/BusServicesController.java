@@ -90,7 +90,7 @@ public class BusServicesController {
         }*/
     }
 
-    @RequestMapping("/busServices/{service}")
+    /*@RequestMapping("/busServices/{service}")
     public List<List<String>> busServices(@PathVariable(value="service") String service) {
         BusService busService = getBusServiceAPI(service);
         List<List<String>> result = new ArrayList<List<String>>();
@@ -102,7 +102,7 @@ public class BusServicesController {
         }
 
         return result;
-    }
+    }*/
 
     /*@RequestMapping("/busParsing")
     public void busParsing() {

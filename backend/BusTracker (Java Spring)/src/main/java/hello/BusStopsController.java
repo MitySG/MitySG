@@ -29,10 +29,10 @@ public class BusStopsController {
         return getBusStopAPI("select * from BusStops");
     }
 
-    @RequestMapping("/busStops/{no}")
+    /*@RequestMapping("/busStops/{no}")
     public Hashtable<String, Hashtable<String, String>> busServices(@PathVariable(value="no") String no) {
         return getBusStopAPI("select * from BusStops WHERE busStopNo='"+no+"'");
-    }
+    }*/
 /*
     @RequestMapping("/busStopParsing")
     public void busParsing() {

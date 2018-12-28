@@ -19,7 +19,6 @@ public class BusServiceHandler implements RequestHandler<ApiGatewayRequest, BusS
 
 		Hashtable<String, String> headers = new Hashtable<String, String>();
 		headers.put("Content-Type", "application/json");
-		headers.put("Access-Control-Allow-Origin", "*");
 		
 		String no = input.getQueryStringParameters().get("no");
 		

@@ -17,19 +17,10 @@ public class BusStopsHandler implements RequestHandler<ApiGatewayRequest, BusSto
 	    		"jdbc:mysql://awsdb.chorl1j1nddl.ap-southeast-1.rds.amazonaws.com:3306/mydb","admin",dbPW);  
 	    		Statement stmt=con.createStatement();  
 	    		
-	    		ResultSet rs; 
-	    		
-	    		String id = input.getQueryStringParameters().get("id");
-	    		
-	    		if (id == null) {
-	    			rs = stmt.executeQuery("select * from bus_stops");
-	    		} else {
-	    			rs = stmt.executeQuery("select * from bus_stops WHERE list_no='"+id+"'");
-	    		}
-	    		
+	    		ResultSet rs = stmt.executeQuery("select * from bus_stops"); 
+	    			    		
 	    		Hashtable<String, String> headers = new Hashtable<String, String>();
 	    		headers.put("Content-Type", "application/json");
-	    		headers.put("Access-Control-Allow-Origin", "*");
 	    		
 	    		Hashtable<String, Hashtable<String, String>> stops = new Hashtable<String, Hashtable<String, String>>();
 	    		

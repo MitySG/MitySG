@@ -27,7 +27,6 @@ public class BusTrackerHandler implements RequestHandler<ApiGatewayRequest, BusS
 
     		Hashtable<String, String> headers = new Hashtable<String, String>();
     		headers.put("Content-Type", "application/json");
-    		headers.put("Access-Control-Allow-Origin", "*");
     		
     		BusStopResult results = new BusStopResult(false, 200, headers, input.getQueryStringParameters().get("test"));
     		return results;

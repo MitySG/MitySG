@@ -35,6 +35,8 @@ Note: Push notification feature does not work on any iOS / MacOS browsers at the
     - Added Google Analytics 
     - Implemented geolocation  
 
-## Deployment
+## Build
 
-`cd "backend/BusTracker (Java Spring)" && mvn clean install`
+```
+cd "backend/BusTracker (Java Spring)" && mvn clean install
+```
